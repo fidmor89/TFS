@@ -13,6 +13,7 @@
 		2BD389201B9BA4F1008A0A48 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BD3891F1B9BA4F1008A0A48 /* Images.xcassets */; };
 		2BD389231B9BA4F1008A0A48 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BD389211B9BA4F1008A0A48 /* LaunchScreen.xib */; };
 		2BD3892F1B9BA4F2008A0A48 /* TFSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD3892E1B9BA4F2008A0A48 /* TFSTests.swift */; };
+		2BD3893A1B9BA6AA008A0A48 /* VSORestAPIWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD389391B9BA6AA008A0A48 /* VSORestAPIWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		2BD389281B9BA4F2008A0A48 /* TFSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TFSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD3892D1B9BA4F2008A0A48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BD3892E1B9BA4F2008A0A48 /* TFSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFSTests.swift; sourceTree = "<group>"; };
+		2BD389391B9BA6AA008A0A48 /* VSORestAPIWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSORestAPIWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		2BD389151B9BA4F1008A0A48 /* TFS */ = {
 			isa = PBXGroup;
 			children = (
+				2BD389381B9BA66C008A0A48 /* APIWrapper */,
 				2BD389181B9BA4F1008A0A48 /* AppDelegate.swift */,
 				2BD3891A1B9BA4F1008A0A48 /* ViewController.swift */,
 				2BD3891C1B9BA4F1008A0A48 /* Main.storyboard */,
@@ -110,6 +113,14 @@
 				2BD3892D1B9BA4F2008A0A48 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2BD389381B9BA66C008A0A48 /* APIWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				2BD389391B9BA6AA008A0A48 /* VSORestAPIWrapper.swift */,
+			);
+			name = APIWrapper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,6 +224,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BD3891B1B9BA4F1008A0A48 /* ViewController.swift in Sources */,
+				2BD3893A1B9BA6AA008A0A48 /* VSORestAPIWrapper.swift in Sources */,
 				2BD389191B9BA4F1008A0A48 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
