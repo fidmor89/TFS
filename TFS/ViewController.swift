@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     
         println("Startin tests")
         let api: APIWrapper = APIWrapper();
-        api.login("almlatam", usr: "fidmor", pw: "FIDmor12!")
+        api.getTeamProjects("almlatam", usr: "fidmor", pw: "FIDmor12!")
 
         
 
