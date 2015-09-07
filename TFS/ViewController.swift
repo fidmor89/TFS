@@ -27,7 +27,8 @@ class ViewController: UIViewController {
         
         println("Startin tests")
         let api: APIWrapper = APIWrapper();
-        api.login()
+        api.getTeamProjects("almlatam", usr: "fidmor", pw: "FIDmor12!")
+
         
         // Change label text according to the value
         if(varView == 0){
