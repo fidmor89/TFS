@@ -32,11 +32,5 @@ class BackTableViewController : UITableViewController {
         return cell
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        var destinationViewController = segue.destinationViewController as! ViewController
-        
-        var indexPath : NSIndexPath = self.tableView.indexPathForSelectedRow()!
-        
-        destinationViewController.varView = indexPath.row
-    }
+    
 }
