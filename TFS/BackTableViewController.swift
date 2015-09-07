@@ -25,7 +25,7 @@ class BackTableViewController : UITableViewController {
     
     // Returns selected cell
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier(TableCellArray[indexPath.row], forIndexPath: indexPath) as! UITableViewCell
         
         cell.textLabel?.text = TableCellArray[indexPath.row]
         
