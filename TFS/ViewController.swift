@@ -14,7 +14,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     
-        println("Startin tests")
+
         let api: APIWrapper = APIWrapper();
         api.getTeamProjects("almlatam", usr: "fidmor", pw: "FIDmor12!")
 
