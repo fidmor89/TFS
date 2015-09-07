@@ -14,6 +14,8 @@
 		2BD389231B9BA4F1008A0A48 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BD389211B9BA4F1008A0A48 /* LaunchScreen.xib */; };
 		2BD3892F1B9BA4F2008A0A48 /* TFSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD3892E1B9BA4F2008A0A48 /* TFSTests.swift */; };
 		2BD3893A1B9BA6AA008A0A48 /* VSORestAPIWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD389391B9BA6AA008A0A48 /* VSORestAPIWrapper.swift */; };
+		3F04901D1B9D015E00677A47 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F04901C1B9D015E00677A47 /* SWRevealViewController.m */; };
+		3F04901F1B9D0B9000677A47 /* BackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F04901E1B9D0B9000677A47 /* BackTableViewController.swift */; };
 		AC76679423FEAF29AE78F1C3 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2473D57791FF230608CD470E /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -41,6 +43,10 @@
 		2BD3892D1B9BA4F2008A0A48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BD3892E1B9BA4F2008A0A48 /* TFSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFSTests.swift; sourceTree = "<group>"; };
 		2BD389391B9BA6AA008A0A48 /* VSORestAPIWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSORestAPIWrapper.swift; sourceTree = "<group>"; };
+		3F04901A1B9D015D00677A47 /* TFS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TFS-Bridging-Header.h"; sourceTree = "<group>"; };
+		3F04901B1B9D015E00677A47 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		3F04901C1B9D015E00677A47 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		3F04901E1B9D0B9000677A47 /* BackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackTableViewController.swift; sourceTree = "<group>"; };
 		962C7B73A7ADF2D69CA4F5A0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,6 +104,7 @@
 				2BD389181B9BA4F1008A0A48 /* AppDelegate.swift */,
 				2BD3891A1B9BA4F1008A0A48 /* ViewController.swift */,
 				2BD3891C1B9BA4F1008A0A48 /* Main.storyboard */,
+				3F04901E1B9D0B9000677A47 /* BackTableViewController.swift */,
 				2BD3891F1B9BA4F1008A0A48 /* Images.xcassets */,
 				2BD389211B9BA4F1008A0A48 /* LaunchScreen.xib */,
 				2BD389161B9BA4F1008A0A48 /* Supporting Files */,
@@ -108,7 +115,10 @@
 		2BD389161B9BA4F1008A0A48 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3F04901B1B9D015E00677A47 /* SWRevealViewController.h */,
+				3F04901C1B9D015E00677A47 /* SWRevealViewController.m */,
 				2BD389171B9BA4F1008A0A48 /* Info.plist */,
+				3F04901A1B9D015D00677A47 /* TFS-Bridging-Header.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -298,9 +308,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F04901F1B9D0B9000677A47 /* BackTableViewController.swift in Sources */,
 				2BD3891B1B9BA4F1008A0A48 /* ViewController.swift in Sources */,
 				2BD3893A1B9BA6AA008A0A48 /* VSORestAPIWrapper.swift in Sources */,
 				2BD389191B9BA4F1008A0A48 /* AppDelegate.swift in Sources */,
+				3F04901D1B9D015E00677A47 /* SWRevealViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,9 +442,12 @@
 			baseConfigurationReference = 033AFAAF83FA08C5B06301CE /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = TFS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TFS/TFS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -441,9 +456,11 @@
 			baseConfigurationReference = 962C7B73A7ADF2D69CA4F5A0 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = TFS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TFS/TFS-Bridging-Header.h";
 			};
 			name = Release;
 		};

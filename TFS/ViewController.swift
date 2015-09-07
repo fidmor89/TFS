@@ -10,15 +10,32 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    // View controls
+    @IBOutlet weak var Open: UIBarButtonItem!// Button that opens the sidebar
+    @IBOutlet weak var label: UILabel!// var that shows the sidebar items work
+    
+    // Other variables
+    var varView = Int()// basically useless
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-    
+        
+        // Toggles the sidebar
+        Open.target = self.revealViewController()
+        Open.action = Selector("revealToggle:")
+        
         println("Startin tests")
         let api: APIWrapper = APIWrapper();
         api.login()
         
-
+        // Change label text according to the value
+        if(varView == 0){
+            label.text = "first"
+        }
+        else {
+            label.text = "others"
+        }
     }
 
     override func didReceiveMemoryWarning() {
