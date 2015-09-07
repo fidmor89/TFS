@@ -16,7 +16,6 @@ class APIWrapper {
         
         let url: String = "https://\(account).visualstudio.com/DefaultCollection/_apis/projects?api-version=2.0"
         makeHTTPRequest(url, usr: usr, pw: pw)
-
     }
     
     private func authenticateUsingHeader(usr:String, pw:String) -> HTTPTask{
@@ -32,10 +31,7 @@ class APIWrapper {
     }
     
     func makeHTTPRequest(url: String, usr: String, pw: String){
-
         var request = authenticateUsingHeader(usr, pw:pw)
-        var httpResponseData: NSData = NSData()
-        var sc: Int = 0
         
         request.GET(url, parameters: nil, completionHandler: {(response: HTTPResponse) in
             if let err = response.error {
@@ -43,10 +39,7 @@ class APIWrapper {
                 return //also notify app of failure as needed
             }
             if let data = response.responseObject as? NSData {
-
-                httpResponseData = data
                 self.parseJSONTeamProjects(data, statusCode: response.statusCode!)
-
             }
         })
     }
@@ -54,8 +47,7 @@ class APIWrapper {
     func parseJSONTeamProjects(data: NSData, statusCode: Int) -> [teamProjects]{
         var projectList: [teamProjects] = []
         let str = NSString(data: data, encoding: NSUTF8StringEncoding)
-//        println("response: \(str)")
-        
+        //        println("response: \(str)")
         
         switch (statusCode) {
         case 200://Success, and there is a response body.
@@ -103,7 +95,6 @@ class APIWrapper {
         case 409: //There's a conflict between the request and the state of the data on the server. For example, if you attempt to submit a pull request and there is already a pull request for the commits, the response code is 409.
             
             break;
-            
         default://unhandled status code, probably a good idea to send it into AI.
             break;
         }
