@@ -16,6 +16,7 @@ class teamProjectsTest : XCTestCase {
         let teamProject = teamProjects(id: "Prueba", name: "Nuevo", description: "Es un projecto de prueba", url: "URLGenerico", state: "Commited", revision: 8)
         XCTAssertNotNil(teamProject)
         
+        //Fail case
         let invalidTeamProject = teamProjects(id: "", name: "Nuevo", description: "", url: "", state: "", revision: 9)
         XCTAssertNil(invalidTeamProject, "TeamProject not valid")
         
