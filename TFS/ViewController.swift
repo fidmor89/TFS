@@ -13,10 +13,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        println("Startin tests")
-        let api: APIWrapper = APIWrapper();
-        api.getTeamProjects("almlatam", usr: "fidmor", pw: "FIDmor12!")
     }
 
     override func didReceiveMemoryWarning() {
