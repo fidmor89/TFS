@@ -8,31 +8,54 @@
 
 import Foundation
 import SwiftyJSON
+import SwiftHTTP
 
 typealias ServiceResponse = (JSON, NSError?) -> Void
 
 class RestApiManager: NSObject {
+   
     static let sharedInstance = RestApiManager()            //To use manager class as a singleton.
-    
     let baseURL = "https://almlatam.visualstudio.com"
     
     func getTeamProjects(usr: String, pw: String, onCompletion: (JSON) -> Void) {
-        let route = baseURL + "DefaultCollection/_apis/projects?api-version=2.0"            //API request route
         
-        makeHTTPGetRequest(route, onCompletion: { json, err in
-            onCompletion(json as JSON)
+        let route = baseURL + "/DefaultCollection/_apis/projects?api-version=2.0"            //API request route
+        
+        makeHTTPGetRequest(usr, pw: pw, path: route, onCompletion:  {(data: NSData) in
+//            println(data)
+//            let readableJSON = JSON(data:data,options:NSJSONReadingOptions.MutableContainers, error:nil)
+
+            let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)        //parse NS data to JSON.
+            onCompletion(json)
         })
+        
+        
+
+
     }
     
-    func makeHTTPGetRequest(path: String, onCompletion: ServiceResponse) {
-        let request = NSMutableURLRequest(URL: NSURL(string: path)!)
+    
+    func makeHTTPGetRequest(usr: String, pw: String, path: String, onCompletion: (data: NSData) -> Void ){
+
+
+        let header:String = usr + ":" + pw                                                          //build authorization header.
+        let utf8str: NSData = header.dataUsingEncoding(NSUTF8StringEncoding)!                       //encode header
+        let base64Encoded = utf8str.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
         
-        let session = NSURLSession.sharedSession()
+        var request = HTTPTask()
+        request.requestSerializer = HTTPRequestSerializer()
+        request.requestSerializer.headers["Authorization"] = "Basic " + base64Encoded               //basic auth header with auth credentials
         
-        let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            let json:JSON = JSON(data: data)
-            onCompletion(json, error)
+        
+        //Make GET request using SwiftHTTP Pod
+        request.GET(path, parameters: nil, completionHandler: {(response: HTTPResponse) in
+            if let err = response.error {
+                println("error: \(err.localizedDescription)")
+                return                                                                              //notify app
+            }
+            if let data = response.responseObject as? NSData {
+                onCompletion(data: data)                                                            //return data from GET request.
+            }
         })
-        task.resume()
     }
 }
