@@ -11,5 +11,15 @@ import Foundation
 class Work: UIViewController {
     override func viewDidLoad() {
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        
+        self.table1.rowHeight = UITableViewAutomaticDimension
+        
+        self.table1.estimatedRowHeight = 44.0
     }
+
+    @IBOutlet var table1: UITableView!
+    
+
+
+    
 }
