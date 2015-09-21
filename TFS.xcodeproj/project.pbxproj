@@ -37,6 +37,8 @@
 		3FE1039D1BAF9DEF008D53F6 /* QueryResultsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE1039C1BAF9DEF008D53F6 /* QueryResultsTable.swift */; };
 		3FE1039F1BAFA4D9008D53F6 /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3FE1039E1BAFA4D9008D53F6 /* fontawesome-webfont.ttf */; };
 		AC76679423FEAF29AE78F1C3 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2473D57791FF230608CD470E /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		CD93FC9D1BAFBC4F009D13BF /* RestApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC480A1BAFB44D003F2C04 /* RestApiManager.swift */; };
+		CD93FCA21BAFCD7C009D13BF /* RestApiManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD93FCA11BAFCD7C009D13BF /* RestApiManagerTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +106,7 @@
 		3FE1039C1BAF9DEF008D53F6 /* QueryResultsTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryResultsTable.swift; sourceTree = "<group>"; };
 		3FE1039E1BAFA4D9008D53F6 /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.ttf"; sourceTree = "<group>"; };
 		962C7B73A7ADF2D69CA4F5A0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		CD93FCA11BAFCD7C009D13BF /* RestApiManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestApiManagerTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +192,7 @@
 		2BD3892B1B9BA4F2008A0A48 /* TFSTests */ = {
 			isa = PBXGroup;
 			children = (
+				CD93FC9E1BAFBD65009D13BF /* APIWrapper */,
 				2BD3892E1B9BA4F2008A0A48 /* TFSTests.swift */,
 				2BD3892C1B9BA4F2008A0A48 /* Supporting Files */,
 			);
@@ -263,6 +267,14 @@
 				962C7B73A7ADF2D69CA4F5A0 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		CD93FC9E1BAFBD65009D13BF /* APIWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				CD93FCA11BAFCD7C009D13BF /* RestApiManagerTest.swift */,
+			);
+			path = APIWrapper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -448,6 +460,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD93FC9D1BAFBC4F009D13BF /* RestApiManager.swift in Sources */,
+				CD93FCA21BAFCD7C009D13BF /* RestApiManagerTest.swift in Sources */,
 				2BD3892F1B9BA4F2008A0A48 /* TFSTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
