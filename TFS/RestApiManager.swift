@@ -22,18 +22,13 @@ class RestApiManager: NSObject {
         let route = baseURL + "/DefaultCollection/_apis/projects?api-version=2.0"            //API request route
         
         makeHTTPGetRequest(usr, pw: pw, path: route, onCompletion:  {(data: NSData) in
-//            println(data)
-//            let readableJSON = JSON(data:data,options:NSJSONReadingOptions.MutableContainers, error:nil)
 
             let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)        //parse NS data to JSON.
             onCompletion(json)
         })
     }
     
-    
     func makeHTTPGetRequest(usr: String, pw: String, path: String, onCompletion: (data: NSData) -> Void ){
-
-
         let header:String = usr + ":" + pw                                                          //build authorization header.
         let utf8str: NSData = header.dataUsingEncoding(NSUTF8StringEncoding)!                       //encode header
         let base64Encoded = utf8str.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
@@ -41,7 +36,6 @@ class RestApiManager: NSObject {
         var request = HTTPTask()
         request.requestSerializer = HTTPRequestSerializer()
         request.requestSerializer.headers["Authorization"] = "Basic " + base64Encoded               //basic auth header with auth credentials
-        
         
         //Make GET request using SwiftHTTP Pod
         request.GET(path, parameters: nil, completionHandler: {(response: HTTPResponse) in
