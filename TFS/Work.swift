@@ -17,6 +17,10 @@ class Work: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     override func viewDidLoad() {
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        
+        self.table1.rowHeight = UITableViewAutomaticDimension
+        
+        self.table1.estimatedRowHeight = 44.0
     }
     
     override func viewWillAppear(animated: Bool) {
