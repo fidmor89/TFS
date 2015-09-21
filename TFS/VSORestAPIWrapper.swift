@@ -105,7 +105,7 @@ class APIWrapper {
 }//class
 
 
-public struct teamProjects {
+public class teamProjects {
     var id: String = ""
     var name: String = ""
     var description: String = ""
