@@ -28,10 +28,6 @@ class RestApiManager: NSObject {
             let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)        //parse NS data to JSON.
             onCompletion(json)
         })
-        
-        
-
-
     }
     
     

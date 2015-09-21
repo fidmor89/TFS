@@ -14,7 +14,7 @@
 		2BD389201B9BA4F1008A0A48 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BD3891F1B9BA4F1008A0A48 /* Images.xcassets */; };
 		2BD389231B9BA4F1008A0A48 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BD389211B9BA4F1008A0A48 /* LaunchScreen.xib */; };
 		2BD3892F1B9BA4F2008A0A48 /* TFSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD3892E1B9BA4F2008A0A48 /* TFSTests.swift */; };
-		2BD3893A1B9BA6AA008A0A48 /* VSORestAPIWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD389391B9BA6AA008A0A48 /* VSORestAPIWrapper.swift */; };
+		2BDC48071BAF9EDF003F2C04 /* ADT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC48061BAF9EDF003F2C04 /* ADT.swift */; };
 		3F04901D1B9D015E00677A47 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F04901C1B9D015E00677A47 /* SWRevealViewController.m */; };
 		3F04901F1B9D0B9000677A47 /* BackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F04901E1B9D0B9000677A47 /* BackTableViewController.swift */; };
 		3F45AA1B1B9D487400B48652 /* Work.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F45AA1A1B9D487400B48652 /* Work.swift */; };
@@ -48,7 +48,7 @@
 		2BD389281B9BA4F2008A0A48 /* TFSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TFSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD3892D1B9BA4F2008A0A48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BD3892E1B9BA4F2008A0A48 /* TFSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFSTests.swift; sourceTree = "<group>"; };
-		2BD389391B9BA6AA008A0A48 /* VSORestAPIWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VSORestAPIWrapper.swift; sourceTree = "<group>"; };
+		2BDC48061BAF9EDF003F2C04 /* ADT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADT.swift; sourceTree = "<group>"; };
 		3F04901A1B9D015D00677A47 /* TFS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TFS-Bridging-Header.h"; sourceTree = "<group>"; };
 		3F04901B1B9D015E00677A47 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		3F04901C1B9D015E00677A47 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
@@ -157,8 +157,8 @@
 		2BD389381B9BA66C008A0A48 /* APIWrapper */ = {
 			isa = PBXGroup;
 			children = (
-				2BD389391B9BA6AA008A0A48 /* VSORestAPIWrapper.swift */,
 				2B2A44DF1BAF7B0F00CDD70D /* RestApiManager.swift */,
+				2BDC48061BAF9EDF003F2C04 /* ADT.swift */,
 			);
 			name = APIWrapper;
 			sourceTree = "<group>";
@@ -328,9 +328,9 @@
 				2BD3891B1B9BA4F1008A0A48 /* ViewController.swift in Sources */,
 				3F45AA1B1B9D487400B48652 /* Work.swift in Sources */,
 				3F45AA1F1B9D488A00B48652 /* Tasks.swift in Sources */,
-				2BD3893A1B9BA6AA008A0A48 /* VSORestAPIWrapper.swift in Sources */,
 				2BD389191B9BA4F1008A0A48 /* AppDelegate.swift in Sources */,
 				3F04901D1B9D015E00677A47 /* SWRevealViewController.m in Sources */,
+				2BDC48071BAF9EDF003F2C04 /* ADT.swift in Sources */,
 				2B2A44E01BAF7B0F00CDD70D /* RestApiManager.swift in Sources */,
 				3F45AA211B9D489300B48652 /* Queries.swift in Sources */,
 			);
