@@ -9,6 +9,9 @@
 import Foundation
 
 class Tasks: UIViewController {
+    
+    //var faicon =
+    
     override func viewDidLoad() {
         self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
     }

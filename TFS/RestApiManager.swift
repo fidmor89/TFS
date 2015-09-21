@@ -13,17 +13,29 @@ import SwiftHTTP
 typealias ServiceResponse = (JSON, NSError?) -> Void
 
 class RestApiManager: NSObject {
-   
-    static let sharedInstance = RestApiManager()            //To use manager class as a singleton.
-    let baseURL = "https://almlatam.visualstudio.com"
     
-    func getTeamProjects(usr: String, pw: String, onCompletion: (JSON) -> Void) {
-        
-        let route = baseURL + "/DefaultCollection/_apis/projects?api-version=2.0"            //API request route
+    static let sharedInstance = RestApiManager()            //To use manager class as a singleton.
+    internal var baseURL: String = ""
+    internal var usr: String = ""
+    internal var pw: String = ""
+    
+    func getIterationsByTeamAndProject(team: String, project: String, onCompletion: (JSON) -> Void){
+        let route = baseURL + "/DefaultCollection/\(team)/_apis/work/teamsettings/iterations?api-version=v2.0-preview"
         
         makeHTTPGetRequest(usr, pw: pw, path: route, onCompletion:  {(data: NSData) in
-
-            let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)        //parse NS data to JSON.
+            //parse NSData to JSON
+            let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
+            onCompletion(json)
+        })
+    }
+    
+    func getTeamProjects(onCompletion: (JSON) -> Void) {
+        
+        let route = baseURL + "/DefaultCollection/_apis/projects?api-version=2.0"       //API request route
+        
+        makeHTTPGetRequest(usr, pw: pw, path: route, onCompletion:  {(data: NSData) in
+            //parse NSData to JSON
+            let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
             onCompletion(json)
         })
     }
