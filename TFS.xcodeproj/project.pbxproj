@@ -21,6 +21,9 @@
 		3F45AA1D1B9D488000B48652 /* Sprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F45AA1C1B9D488000B48652 /* Sprint.swift */; };
 		3F45AA1F1B9D488A00B48652 /* Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F45AA1E1B9D488A00B48652 /* Tasks.swift */; };
 		3F45AA211B9D489300B48652 /* Queries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F45AA201B9D489300B48652 /* Queries.swift */; };
+		3FE00BC21BB8A96300017A5E /* projectIcon1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FE00BC01BB8A96300017A5E /* projectIcon1.png */; };
+		3FE00BC31BB8A96300017A5E /* projectIcon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FE00BC11BB8A96300017A5E /* projectIcon2.png */; };
+		3FE00BC51BB8ABC100017A5E /* ProjectsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE00BC41BB8ABC100017A5E /* ProjectsTableViewController.swift */; };
 		3FE1038F1BAF958A008D53F6 /* RABatchChanges.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE103731BAF958A008D53F6 /* RABatchChanges.m */; };
 		3FE103901BAF958A008D53F6 /* RATreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE103751BAF958A008D53F6 /* RATreeNode.m */; };
 		3FE103911BAF958A008D53F6 /* RATreeNodeCollectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FE103781BAF958A008D53F6 /* RATreeNodeCollectionController.m */; };
@@ -76,6 +79,9 @@
 		3F45AA1C1B9D488000B48652 /* Sprint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sprint.swift; sourceTree = "<group>"; };
 		3F45AA1E1B9D488A00B48652 /* Tasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tasks.swift; sourceTree = "<group>"; };
 		3F45AA201B9D489300B48652 /* Queries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queries.swift; sourceTree = "<group>"; };
+		3FE00BC01BB8A96300017A5E /* projectIcon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = projectIcon1.png; sourceTree = "<group>"; };
+		3FE00BC11BB8A96300017A5E /* projectIcon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = projectIcon2.png; sourceTree = "<group>"; };
+		3FE00BC41BB8ABC100017A5E /* ProjectsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectsTableViewController.swift; sourceTree = "<group>"; };
 		3FE103721BAF958A008D53F6 /* RABatchChanges.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RABatchChanges.h; sourceTree = "<group>"; };
 		3FE103731BAF958A008D53F6 /* RABatchChanges.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RABatchChanges.m; sourceTree = "<group>"; };
 		3FE103741BAF958A008D53F6 /* RATreeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RATreeNode.h; sourceTree = "<group>"; };
@@ -166,6 +172,7 @@
 				2BD389181B9BA4F1008A0A48 /* AppDelegate.swift */,
 				2BD3891A1B9BA4F1008A0A48 /* ViewController.swift */,
 				2BD3891C1B9BA4F1008A0A48 /* Main.storyboard */,
+				3FE00BC41BB8ABC100017A5E /* ProjectsTableViewController.swift */,
 				3FE1039E1BAFA4D9008D53F6 /* fontawesome-webfont.ttf */,
 				3FE1039C1BAF9DEF008D53F6 /* QueryResultsTable.swift */,
 				3F45AA1A1B9D487400B48652 /* Work.swift */,
@@ -174,6 +181,7 @@
 				3F45AA201B9D489300B48652 /* Queries.swift */,
 				3F04901E1B9D0B9000677A47 /* BackTableViewController.swift */,
 				2BD3891F1B9BA4F1008A0A48 /* Images.xcassets */,
+				3FE00BBF1BB8A96300017A5E /* Images */,
 				2BD389211B9BA4F1008A0A48 /* LaunchScreen.xib */,
 				3FE103701BAF958A008D53F6 /* RATreeView */,
 				2BD389161B9BA4F1008A0A48 /* Supporting Files */,
@@ -217,6 +225,15 @@
 				2BDC480A1BAFB44D003F2C04 /* RestApiManager.swift */,
 			);
 			name = APIWrapper;
+			sourceTree = "<group>";
+		};
+		3FE00BBF1BB8A96300017A5E /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				3FE00BC01BB8A96300017A5E /* projectIcon1.png */,
+				3FE00BC11BB8A96300017A5E /* projectIcon2.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 		3FE103701BAF958A008D53F6 /* RATreeView */ = {
@@ -365,8 +382,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BD3891E1B9BA4F1008A0A48 /* Main.storyboard in Resources */,
+				3FE00BC31BB8A96300017A5E /* projectIcon2.png in Resources */,
 				3FE1039F1BAFA4D9008D53F6 /* fontawesome-webfont.ttf in Resources */,
 				2BD389231B9BA4F1008A0A48 /* LaunchScreen.xib in Resources */,
+				3FE00BC21BB8A96300017A5E /* projectIcon1.png in Resources */,
 				2BD389201B9BA4F1008A0A48 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,6 +464,7 @@
 				3FE1039D1BAF9DEF008D53F6 /* QueryResultsTable.swift in Sources */,
 				3FE103911BAF958A008D53F6 /* RATreeNodeCollectionController.m in Sources */,
 				3FE103991BAF958A008D53F6 /* RATreeView+TableViewDelegate.m in Sources */,
+				3FE00BC51BB8ABC100017A5E /* ProjectsTableViewController.swift in Sources */,
 				3F45AA1F1B9D488A00B48652 /* Tasks.swift in Sources */,
 				3FE103971BAF958A008D53F6 /* RATreeView+RATreeNodeCollectionControllerDataSource.m in Sources */,
 				2BD389191B9BA4F1008A0A48 /* AppDelegate.swift in Sources */,
