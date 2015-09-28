@@ -19,12 +19,6 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sPx-rR-i3r" id="OP6-uU-YDM">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Project Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IfD-Oo-IGT">
-                                            <rect key="frame" x="102" y="8" width="334" height="21"/>
-                                            <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="24"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <imageView userInteractionEnabled="NO" tag="102" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="projectIcon1.png" translatesAutoresizingMaskIntoConstraints="NO" id="HZr-SA-SwY">
                                             <rect key="frame" x="8" y="8" width="63" height="63"/>
                                         </imageView>
@@ -32,6 +26,12 @@
                                             <rect key="frame" x="102" y="37" width="363" height="21"/>
                                             <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="18"/>
                                             <color key="textColor" red="0.36545138888888884" green="0.36545138888888884" blue="0.36545138888888884" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Project Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IfD-Oo-IGT">
+                                            <rect key="frame" x="102" y="8" width="334" height="21"/>
+                                            <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="24"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>

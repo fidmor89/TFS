@@ -64,9 +64,15 @@ class ProjectsTableViewController : UITableViewController {
             cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "ProjectCell")
         }
         
-        let teamProject: teamProjects = self.items[indexPath.row] as! teamProjects              //get data from model.
-        cell!.textLabel?.text = teamProject.name                                                //add some data to the cell
-        cell!.detailTextLabel?.text = teamProject.url
+        let teamProject: teamProjects = self.items[indexPath.row] as! teamProjects              //get
+        
+        if let nameLabel = cell?.viewWithTag(100) as? UILabel {
+            nameLabel.text = teamProject.name
+        }
+        if let descriptionLabel = cell?.viewWithTag(101) as? UILabel {
+            descriptionLabel.text = teamProject.description
+        }
+        
         return cell!                                                                            //return the cell to be displayed.
     }
 }
