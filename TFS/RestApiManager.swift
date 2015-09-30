@@ -39,15 +39,50 @@ class RestApiManager: NSObject {
             onCompletion(json)
         })
     }
+
+    /**
+    @brief: Creates a HTTPOperation as a HTTP POST request and starts it for you.
     
-    func makeHTTPGetRequest(usr: String, pw: String, path: String, onCompletion: (data: NSData) -> Void ){
-        let header:String = usr + ":" + pw                                                          //build authorization header.
-        let utf8str: NSData = header.dataUsingEncoding(NSUTF8StringEncoding)!                       //encode header
-        let base64Encoded = utf8str.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
+    @param: usr The user you would use for authentication.
+    @param: pw The password you would use for authentication.
+    @param: path The url you would like to make a request to.
+    @param: parameters The parameters are HTTP parameters you would like to send.
+    @param: onCompletion The closure that is run when a HTTP Request finished.
+    
+    @see: makeHTTPGetRequest
+    @see: buildAuthorizationHeader
+    */
+    func makeHTTPPostRequest(usr: String, pw: String, path: String, parameters: Dictionary<String,AnyObject>?, onCompletion: (data: NSData) -> Void ){
         
-        var request = HTTPTask()
-        request.requestSerializer = HTTPRequestSerializer()
-        request.requestSerializer.headers["Authorization"] = "Basic " + base64Encoded               //basic auth header with auth credentials
+        var request = buildAuthorizationHeader(usr, pw: pw)
+        
+        //Make POST request using SwiftHTTP Pod
+        request.POST(path, parameters: parameters, completionHandler:{(response: HTTPResponse) in
+            if let err = response.error {
+                println("error: \(err.localizedDescription)")
+                return                                                                              //notify app
+            }
+            if let data = response.responseObject as? NSData {
+                onCompletion(data: data)                                                            //return data from POST request.
+            }
+        })
+        
+    }
+
+    /**
+    @brief: Creates a HTTPOperation as a HTTP POST request and starts it for you.
+
+    @param: usr The user you would use for authentication.
+    @param: pw The password you would use for authentication.
+    @param: path The url you would like to make a request to.
+    @param: onCompletion The closure that is run when a HTTP Request finished.
+    
+    @see: makeHTTPPostRequest
+    @see: buildAuthorizationHeader
+    */
+    func makeHTTPGetRequest(usr: String, pw: String, path: String, onCompletion: (data: NSData) -> Void ){
+
+        var request = buildAuthorizationHeader(usr, pw: pw)
         
         //Make GET request using SwiftHTTP Pod
         request.GET(path, parameters: nil, completionHandler: {(response: HTTPResponse) in
@@ -59,5 +94,25 @@ class RestApiManager: NSObject {
                 onCompletion(data: data)                                                            //return data from GET request.
             }
         })
+    }
+    
+    /**
+    @brief: Creates a HTTPOperation as a HTTP POST request and starts it for you.
+    
+    @param: usr The user you would use for authentication.
+    @param: pw The password you would use for authentication.
+    
+    @see: makeHTTPGetRequest
+    @see: makeHTTPPostRequest
+    */
+    func buildAuthorizationHeader(usr: String, pw: String) -> HTTPTask{
+        let header:String = usr + ":" + pw                                                          //build authorization header.
+        let utf8str: NSData = header.dataUsingEncoding(NSUTF8StringEncoding)!                       //encode header
+        let base64Encoded = utf8str.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
+        
+        var request = HTTPTask()
+        request.requestSerializer = HTTPRequestSerializer()
+        request.requestSerializer.headers["Authorization"] = "Basic " + base64Encoded               //basic auth header with auth credentials
+        return request;
     }
 }
