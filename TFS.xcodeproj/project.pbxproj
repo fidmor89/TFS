@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B04D8091BC033F7001C9A65 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B04D8081BC033F7001C9A65 /* LoginController.swift */; };
+		2B04D80A1BC033F7001C9A65 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B04D8081BC033F7001C9A65 /* LoginController.swift */; };
 		2BD389191B9BA4F1008A0A48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD389181B9BA4F1008A0A48 /* AppDelegate.swift */; };
 		2BD3891B1B9BA4F1008A0A48 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD3891A1B9BA4F1008A0A48 /* ViewController.swift */; };
 		2BD3891E1B9BA4F1008A0A48 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BD3891C1B9BA4F1008A0A48 /* Main.storyboard */; };
@@ -37,6 +39,7 @@
 /* Begin PBXFileReference section */
 		033AFAAF83FA08C5B06301CE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		2473D57791FF230608CD470E /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B04D8081BC033F7001C9A65 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		2BD389131B9BA4F1008A0A48 /* TFS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BD389171B9BA4F1008A0A48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BD389181B9BA4F1008A0A48 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +93,7 @@
 			children = (
 				2BD3891A1B9BA4F1008A0A48 /* ViewController.swift */,
 				3F45AA1C1B9D488000B48652 /* Sprint.swift */,
+				2B04D8081BC033F7001C9A65 /* LoginController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -349,6 +353,7 @@
 				2BDC48091BAFB3F1003F2C04 /* ADT.swift in Sources */,
 				2BD389191B9BA4F1008A0A48 /* AppDelegate.swift in Sources */,
 				3F04901D1B9D015E00677A47 /* SWRevealViewController.m in Sources */,
+				2B04D8091BC033F7001C9A65 /* LoginController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,6 +362,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD93FC9D1BAFBC4F009D13BF /* RestApiManager.swift in Sources */,
+				2B04D80A1BC033F7001C9A65 /* LoginController.swift in Sources */,
 				CD93FCA41BAFD13F009D13BF /* ADTTest.swift in Sources */,
 				CD93FCA21BAFCD7C009D13BF /* RestApiManagerTest.swift in Sources */,
 				2BD3892F1B9BA4F2008A0A48 /* TFSTests.swift in Sources */,

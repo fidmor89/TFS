@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Login Controller-->
         <scene sceneID="MAG-1j-Urg">
             <objects>
-                <viewController id="2fN-57-ekd" sceneMemberID="viewController">
+                <viewController id="2fN-57-ekd" customClass="LoginController" customModule="TFS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Pfl-QV-ZTz"/>
                         <viewControllerLayoutGuide type="bottom" id="Cyc-9h-Xeq"/>
@@ -65,7 +65,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Zyd-uS-EPf"/>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iu8-EB-az8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
