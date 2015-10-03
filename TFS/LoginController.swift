@@ -17,16 +17,40 @@ class LoginController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var signedInSwitch: UISwitch!
     
-    @IBOutlet weak var caca: UITextView!
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
         if (KeychainWrapper.hasValueForKey("credentials"))
         {
-            let credential = KeychainWrapper.stringForKey("credentials")
-            self.caca.text = credential
+            let source = KeychainWrapper.stringForKey("credentials")
+            
+            var err:NSError?
+            var obj:AnyObject? = NSJSONSerialization.JSONObjectWithData(source!.dataUsingEncoding(NSUTF8StringEncoding)!, options:nil, error:&err)
+            
+            if let items = obj as? NSArray {
+                
+                let itemDict:AnyObject = items[0]
+                
+                RestApiManager.sharedInstance.baseURL = itemDict.valueForKey("baseUrl") as! String
+                RestApiManager.sharedInstance.usr = itemDict.objectForKey("user") as! String
+                RestApiManager.sharedInstance.pw = itemDict.objectForKey("password") as! String
+                
+                //Test that parameters are still valid.
+                RestApiManager.sharedInstance.validateAuthorization { auth in
+                    if(auth){
+                        NSOperationQueue.mainQueue().addOperationWithBlock {
+                            self.performSegueToLogin()
+                        }
+                    }else{
+                        println("auth failed")
+                    }
+                }
+            }
         }
-        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
     }
     
     
