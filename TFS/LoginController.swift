@@ -14,6 +14,7 @@ class LoginController: UIViewController {
     @IBOutlet weak var serverTextField: UITextField!
     @IBOutlet weak var userTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var signedInSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,18 @@ class LoginController: UIViewController {
             
             if(auth){
                 println("auth ok")
+                
+                if (self.signedInSwitch.on)
+                {
+                    var credentials = "{\"Credentials\":["
+                    credentials += "\"baseUrl\": \"" + self.serverTextField.text + "\","
+                    credentials += "\"user\": \"" + self.userTextField.text + "\","
+                    credentials += "\"password\": \"" + self.passwordTextField.text + "\""
+                    credentials += "]}"
+                    KeychainWrapper.setString(credentials,forKey:"credentials")
+                }
+                
+                
                 NSOperationQueue.mainQueue().addOperationWithBlock {
                     self.performSegueToLogin()
                 }

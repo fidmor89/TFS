@@ -19,6 +19,8 @@
 		2BD3892F1B9BA4F2008A0A48 /* TFSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD3892E1B9BA4F2008A0A48 /* TFSTests.swift */; };
 		2BDC48091BAFB3F1003F2C04 /* ADT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC48081BAFB3F1003F2C04 /* ADT.swift */; };
 		2BDC480B1BAFB44D003F2C04 /* RestApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC480A1BAFB44D003F2C04 /* RestApiManager.swift */; };
+		38A496A21BC0847800637CF6 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A496A11BC0847800637CF6 /* KeychainWrapper.swift */; };
+		38A496A31BC0847800637CF6 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A496A11BC0847800637CF6 /* KeychainWrapper.swift */; };
 		3F04901D1B9D015E00677A47 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F04901C1B9D015E00677A47 /* SWRevealViewController.m */; };
 		3F45AA1D1B9D488000B48652 /* Sprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F45AA1C1B9D488000B48652 /* Sprint.swift */; };
 		AC76679423FEAF29AE78F1C3 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2473D57791FF230608CD470E /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -55,6 +57,7 @@
 		2BD3892E1B9BA4F2008A0A48 /* TFSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFSTests.swift; sourceTree = "<group>"; };
 		2BDC48081BAFB3F1003F2C04 /* ADT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADT.swift; sourceTree = "<group>"; };
 		2BDC480A1BAFB44D003F2C04 /* RestApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestApiManager.swift; sourceTree = "<group>"; };
+		38A496A11BC0847800637CF6 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		3F04901A1B9D015D00677A47 /* TFS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TFS-Bridging-Header.h"; sourceTree = "<group>"; };
 		3F04901B1B9D015E00677A47 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		3F04901C1B9D015E00677A47 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
@@ -134,6 +137,7 @@
 		2BD389151B9BA4F1008A0A48 /* TFS */ = {
 			isa = PBXGroup;
 			children = (
+				38A4969E1BC082D300637CF6 /* KeychainWrapper */,
 				2BD389381B9BA66C008A0A48 /* APIWrapper */,
 				2BD389181B9BA4F1008A0A48 /* AppDelegate.swift */,
 				2B04D8061BC03102001C9A65 /* Controllers */,
@@ -180,6 +184,14 @@
 				2BDC480A1BAFB44D003F2C04 /* RestApiManager.swift */,
 			);
 			name = APIWrapper;
+			sourceTree = "<group>";
+		};
+		38A4969E1BC082D300637CF6 /* KeychainWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				38A496A11BC0847800637CF6 /* KeychainWrapper.swift */,
+			);
+			name = KeychainWrapper;
 			sourceTree = "<group>";
 		};
 		83E7F60B8FD1ABAEF2BD3CA8 /* Pods */ = {
@@ -351,6 +363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38A496A21BC0847800637CF6 /* KeychainWrapper.swift in Sources */,
 				3F45AA1D1B9D488000B48652 /* Sprint.swift in Sources */,
 				2BDC480B1BAFB44D003F2C04 /* RestApiManager.swift in Sources */,
 				2BD3891B1B9BA4F1008A0A48 /* ViewController.swift in Sources */,
@@ -371,6 +384,7 @@
 				2B04D80A1BC033F7001C9A65 /* LoginController.swift in Sources */,
 				CD93FCA41BAFD13F009D13BF /* ADTTest.swift in Sources */,
 				CD93FCA21BAFCD7C009D13BF /* RestApiManagerTest.swift in Sources */,
+				38A496A31BC0847800637CF6 /* KeychainWrapper.swift in Sources */,
 				2BD3892F1B9BA4F2008A0A48 /* TFSTests.swift in Sources */,
 				CD93FCA51BAFD1B4009D13BF /* ADT.swift in Sources */,
 			);
