@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SwiftyJSON
 
 class LoginController: UIViewController {
     
@@ -16,9 +17,18 @@ class LoginController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var signedInSwitch: UISwitch!
     
+    @IBOutlet weak var caca: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if (KeychainWrapper.hasValueForKey("credentials"))
+        {
+            let credential = KeychainWrapper.stringForKey("credentials")
+            self.caca.text = credential
+        }
+        
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -39,11 +49,11 @@ class LoginController: UIViewController {
                 
                 if (self.signedInSwitch.on)
                 {
-                    var credentials = "{\"Credentials\":["
+                    var credentials = "[{"
                     credentials += "\"baseUrl\": \"" + self.serverTextField.text + "\","
                     credentials += "\"user\": \"" + self.userTextField.text + "\","
                     credentials += "\"password\": \"" + self.passwordTextField.text + "\""
-                    credentials += "]}"
+                    credentials += "}]"
                     KeychainWrapper.setString(credentials,forKey:"credentials")
                 }
                 
