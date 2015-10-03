@@ -17,12 +17,10 @@ class LoginController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func onLoginButtonTouchDown(sender: AnyObject) {
@@ -36,13 +34,19 @@ class LoginController: UIViewController {
         RestApiManager.sharedInstance.validateAuthorization { auth in
             
             if(auth){
-                //make segue
-                println("logged")
+                println("auth ok")
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    self.performSegueToLogin()
+                }
             }else{
-                //let the user know there was a problem in auth.
-                println("failed auth: \(auth)")
+                println("auth failed")
             }
         }
+    }
+    
+    func performSegueToLogin() -> Void{
+        let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("MainSplit") as! UISplitViewController
+        navigationController?.presentViewController(secondViewController, animated: true, completion: nil)
     }
 }
 
