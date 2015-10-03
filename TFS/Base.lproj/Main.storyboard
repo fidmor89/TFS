@@ -35,7 +35,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EQG-Q6-7Jc">
-                                <rect key="frame" x="252" y="231" width="97" height="30"/>
+                                <rect key="frame" x="16" y="231" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -60,11 +60,19 @@
                                 <state key="normal" title="Login">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="onLoginButtonTouchDown:" destination="2fN-57-ekd" eventType="touchDown" id="iWS-Fg-Fix"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Zyd-uS-EPf"/>
+                    <connections>
+                        <outlet property="passwordTextField" destination="5db-JA-yry" id="n8Z-aC-M74"/>
+                        <outlet property="serverTextField" destination="EQG-Q6-7Jc" id="Dxh-hC-Cl6"/>
+                        <outlet property="userTextField" destination="0Dt-Oi-PEh" id="BSz-A6-oR7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iu8-EB-az8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

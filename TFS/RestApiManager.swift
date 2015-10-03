@@ -18,6 +18,25 @@ class RestApiManager: NSObject {
     internal var baseURL: String = ""
     internal var usr: String = ""
     internal var pw: String = ""
+    internal var collection: String = ""
+    internal var lastResponseCode = ""
+    
+    func validateAuthorization(onCompletionAuth: (Bool) -> Void){
+        let route = baseURL + "/_apis/projectcollections?api-version=2.0"
+        
+        makeHTTPGetRequest(usr, pw: pw, path: route, onCompletion:  {(data: NSData) in
+            
+            switch self.lastResponseCode{
+            case "200":
+                onCompletionAuth(true)
+                break;
+            default:
+                onCompletionAuth(false)
+                break;
+            }
+        })
+    }
+    
     
     func getIterationsByTeamAndProject(team: String, project: String, onCompletion: (JSON) -> Void){
         let route = baseURL + "/DefaultCollection/\(team)/_apis/work/teamsettings/iterations?api-version=v2.0-preview"
@@ -39,7 +58,7 @@ class RestApiManager: NSObject {
             onCompletion(json)
         })
     }
-
+    
     /**
     @brief: Creates a HTTPOperation as a HTTP POST request and starts it for you.
     
@@ -60,18 +79,19 @@ class RestApiManager: NSObject {
         request.POST(path, parameters: parameters, completionHandler:{(response: HTTPResponse) in
             if let err = response.error {
                 println("error: \(err.localizedDescription)")
-                return                                                                              //notify app
+                self.setLastResponseCode(response)
             }
             if let data = response.responseObject as? NSData {
+                self.setLastResponseCode(response)
                 onCompletion(data: data)                                                            //return data from POST request.
             }
         })
         
     }
-
+    
     /**
     @brief: Creates a HTTPOperation as a HTTP POST request and starts it for you.
-
+    
     @param: usr The user you would use for authentication.
     @param: pw The password you would use for authentication.
     @param: path The url you would like to make a request to.
@@ -81,19 +101,31 @@ class RestApiManager: NSObject {
     @see: buildAuthorizationHeader
     */
     func makeHTTPGetRequest(usr: String, pw: String, path: String, onCompletion: (data: NSData) -> Void ){
-
+        
         var request = buildAuthorizationHeader(usr, pw: pw)
         
         //Make GET request using SwiftHTTP Pod
         request.GET(path, parameters: nil, completionHandler: {(response: HTTPResponse) in
             if let err = response.error {
                 println("error: \(err.localizedDescription)")
-                return                                                                              //notify app
+                self.setLastResponseCode(response)
             }
             if let data = response.responseObject as? NSData {
+                self.setLastResponseCode(response)
                 onCompletion(data: data)                                                            //return data from GET request.
             }
+            
         })
+    }
+    
+    func setLastResponseCode(response: HTTPResponse){
+
+        if(response.statusCode != nil){
+            self.lastResponseCode = String(response.statusCode!)
+        }else{
+            self.lastResponseCode = "400"
+        }
+
     }
     
     /**
@@ -115,4 +147,5 @@ class RestApiManager: NSObject {
         request.requestSerializer.headers["Authorization"] = "Basic " + base64Encoded               //basic auth header with auth credentials
         return request;
     }
+    
 }
