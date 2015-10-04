@@ -16,11 +16,11 @@ public class teamProjects {
     var revision: Int = 0
     
     init(id:String, name: String, description:String, url:String, state:String, revision: Int){
-        self.id = id
-        self.name = name
-        self.description = description
-        self.url = url
-        self.state = state
-        self.revision = revision
+        self.id = id ?? ""
+        self.name = name ?? ""
+        self.description = description ?? ""
+        self.url = url ?? ""
+        self.state = state ?? ""
+        self.revision = revision ?? -1
     }
 }
