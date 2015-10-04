@@ -28,9 +28,28 @@ class menuController: UITableViewController {
                 
                 let item: (String, String, String) = (id, name, url)
                 self.collections.append(id: id, name: name, url: url)
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    tableView?.reloadData()})
             }
 //            println(self.collections)
         }
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.collections.count;
+    }
+
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        var cell = tableView.dequeueReusableCellWithIdentifier("CELL") as? UITableViewCell
+        if cell == nil{
+            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "CELL")
+        }
+        
+        cell!.textLabel?.text = self.collections[indexPath.row].name
+
+        return cell!
     }
     
     override func viewDidLoad() {
