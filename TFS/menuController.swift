@@ -113,6 +113,10 @@ class menuController: UITableViewController {
             let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
             secondViewController.displayedMenu = DisplayedMenu.Teams
             navigationController?.pushViewController(secondViewController, animated: true)
+            
+            let x = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
+            self.splitViewController?.showDetailViewController(x, sender: nil)
+            x.detailDescriptionLabel.text = self.collections[indexPath.row].name
             break
             
         case DisplayedMenu.Teams:
@@ -122,6 +126,9 @@ class menuController: UITableViewController {
             let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
             secondViewController.displayedMenu = DisplayedMenu.Projects
             navigationController?.pushViewController(secondViewController, animated: true)
+            let x = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
+            self.splitViewController?.showDetailViewController(x, sender: nil)
+            x.detailDescriptionLabel.text = self.teams[indexPath.row].name
             break
             
         case DisplayedMenu.Projects:
@@ -129,7 +136,7 @@ class menuController: UITableViewController {
 
             let DetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
             self.splitViewController?.showDetailViewController(DetailViewController, sender: nil)
-            DetailViewController.detailDescriptionLabel.text = object.name
+            DetailViewController.detailDescriptionLabel.text = self.projects[indexPath.row].name
             
             break
             
