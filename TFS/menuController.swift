@@ -42,7 +42,6 @@ class menuController: UITableViewController {
         {
         case DisplayedMenu.Collections:
             self.collections = []
-            self.backButton.hidden = true
             RestApiManager.sharedInstance.getCollections { json in
                 var count: Int = json["count"].int as Int!;         //number of objects within json obj
                 var jsonOBJ = json["value"]                         //get json with projects
@@ -60,7 +59,6 @@ class menuController: UITableViewController {
             }
         case DisplayedMenu.Teams:
             self.teams = []
-            self.backButton.hidden = false
             RestApiManager.sharedInstance.getTeams { json in
                 var count: Int = json["count"].int as Int!;         //number of objects within json obj
                 var jsonOBJ = json["value"]                         //get json with projects
@@ -80,7 +78,6 @@ class menuController: UITableViewController {
             }
         case DisplayedMenu.Projects:
             self.projects = []
-            self.backButton.hidden = false
             RestApiManager.sharedInstance.getProjects { json in
                 var count: Int = json["count"].int as Int!;         //number of objects within json obj
                 var jsonOBJ = json["value"]                         //get json with projects
@@ -107,23 +104,38 @@ class menuController: UITableViewController {
     //At menu click
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch self.displayedMenu
+            
         {
+            
         case DisplayedMenu.Collections:
             self.displayedMenu = DisplayedMenu.Teams
             RestApiManager.sharedInstance.collection =  self.collections[indexPath.row].name
-            self.populateMenu()
+            let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
+            secondViewController.displayedMenu = DisplayedMenu.Teams
+            navigationController?.pushViewController(secondViewController, animated: true)
             break
+            
         case DisplayedMenu.Teams:
+            
             self.displayedMenu = DisplayedMenu.Projects
             RestApiManager.sharedInstance.projectId =  self.teams[indexPath.row].id
-            self.populateMenu()
+            let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
+            secondViewController.displayedMenu = DisplayedMenu.Projects
+            navigationController?.pushViewController(secondViewController, animated: true)
             break
+            
         case DisplayedMenu.Projects:
-            //Update detail view.
+            let object = self.projects[indexPath.row].name
+            let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
+            secondViewController.displayedMenu = DisplayedMenu.Collections
+            navigationController?.pushViewController(secondViewController, animated: true)
             break
+            
         default:
             break
         }
+        
+        
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -182,30 +194,10 @@ class menuController: UITableViewController {
         let loginView = self.storyboard!.instantiateViewControllerWithIdentifier("LoginView") as! UINavigationController
         navigationController?.presentViewController(loginView, animated: true, completion: nil)
     }
-    
-    @IBAction func backButton(sender: AnyObject) {
-        switch self.displayedMenu
-        {
-        case DisplayedMenu.Collections:
-            break
-        case DisplayedMenu.Teams:
-            self.displayedMenu = DisplayedMenu.Collections
-            RestApiManager.sharedInstance.collection = nil
-            break
-        case DisplayedMenu.Projects:
-            self.displayedMenu = DisplayedMenu.Teams
-            RestApiManager.sharedInstance.projectId =  nil
-            break
-        default:
-            break
-        }
-        
-        self.populateMenu()
-    }
 }
 
-enum DisplayedMenu: Int {
-    case Collections
-    case Teams
-    case Projects
+enum DisplayedMenu: String {
+    case Collections = "Collections"
+    case Teams = "Teams"
+    case Projects = "Projects"
 }
