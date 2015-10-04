@@ -18,7 +18,8 @@ class RestApiManager: NSObject {
     internal var baseURL: String = ""
     internal var usr: String = ""
     internal var pw: String = ""
-    internal var collection: String = ""
+    internal var collection: String? = nil
+    internal var projectId: String? = nil
     internal var lastResponseCode = ""
     
     func validateAuthorization(onCompletionAuth: (Bool) -> Void){
@@ -34,6 +35,28 @@ class RestApiManager: NSObject {
                 onCompletionAuth(false)
                 break;
             }
+        })
+    }
+    
+    func getTeams(onCompletion: (JSON) -> Void) {
+        
+        let route = baseURL + "/\(collection!)/_apis/projects?api-version=2.0"       //API request route
+        
+        makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
+            //parse NSData to JSON
+            let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
+            onCompletion(json)
+        })
+    }
+    
+    func getProjects(onCompletion: (JSON) -> Void) {
+        let route = baseURL + "/\(collection!)/_apis/projects/\(projectId!)/teams?api-version=2.0"       //API request route
+
+        
+        makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
+            //parse NSData to JSON
+            let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
+            onCompletion(json)
         })
     }
     
