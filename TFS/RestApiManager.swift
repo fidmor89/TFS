@@ -24,7 +24,7 @@ class RestApiManager: NSObject {
     func validateAuthorization(onCompletionAuth: (Bool) -> Void){
         let route = baseURL + "/_apis/projectcollections?api-version=2.0"
         
-        makeHTTPGetRequest(usr, pw: pw, path: route, onCompletion:  {(data: NSData) in
+        makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             
             switch self.lastResponseCode{
             case "200":
@@ -37,11 +37,10 @@ class RestApiManager: NSObject {
         })
     }
     
-    
-    func getIterationsByTeamAndProject(team: String, project: String, onCompletion: (JSON) -> Void){
-        let route = baseURL + "/DefaultCollection/\(team)/_apis/work/teamsettings/iterations?api-version=v2.0-preview"
+    func getCollections(onCompletion: (JSON) -> Void) {
+        let route = baseURL + "/\(collection)/_apis/projects?api-version=2.0"       //API request route
         
-        makeHTTPGetRequest(usr, pw: pw, path: route, onCompletion:  {(data: NSData) in
+        makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             //parse NSData to JSON
             let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
             onCompletion(json)
@@ -50,9 +49,19 @@ class RestApiManager: NSObject {
     
     func getTeamProjects(onCompletion: (JSON) -> Void) {
         
-        let route = baseURL + "/DefaultCollection/_apis/projects?api-version=2.0"       //API request route
+        let route = baseURL + "/\(collection)/_apis/projects?api-version=2.0"       //API request route
         
-        makeHTTPGetRequest(usr, pw: pw, path: route, onCompletion:  {(data: NSData) in
+        makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
+            //parse NSData to JSON
+            let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
+            onCompletion(json)
+        })
+    }
+    
+    func getIterationsByTeamAndProject(team: String, onCompletion: (JSON) -> Void){
+        let route = baseURL + "/\(collection)/\(team)/_apis/work/teamsettings/iterations?api-version=v2.0-preview"
+        
+        makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             //parse NSData to JSON
             let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
             onCompletion(json)
@@ -62,8 +71,6 @@ class RestApiManager: NSObject {
     /**
     @brief: Creates a HTTPOperation as a HTTP POST request and starts it for you.
     
-    @param: usr The user you would use for authentication.
-    @param: pw The password you would use for authentication.
     @param: path The url you would like to make a request to.
     @param: parameters The parameters are HTTP parameters you would like to send.
     @param: onCompletion The closure that is run when a HTTP Request finished.
@@ -71,7 +78,7 @@ class RestApiManager: NSObject {
     @see: makeHTTPGetRequest
     @see: buildAuthorizationHeader
     */
-    func makeHTTPPostRequest(usr: String, pw: String, path: String, parameters: Dictionary<String,AnyObject>?, onCompletion: (data: NSData) -> Void ){
+    func makeHTTPPostRequest(path: String, parameters: Dictionary<String,AnyObject>?, onCompletion: (data: NSData) -> Void ){
         
         var request = buildAuthorizationHeader(usr, pw: pw)
         
@@ -92,15 +99,13 @@ class RestApiManager: NSObject {
     /**
     @brief: Creates a HTTPOperation as a HTTP POST request and starts it for you.
     
-    @param: usr The user you would use for authentication.
-    @param: pw The password you would use for authentication.
     @param: path The url you would like to make a request to.
     @param: onCompletion The closure that is run when a HTTP Request finished.
     
     @see: makeHTTPPostRequest
     @see: buildAuthorizationHeader
     */
-    func makeHTTPGetRequest(usr: String, pw: String, path: String, onCompletion: (data: NSData) -> Void ){
+    func makeHTTPGetRequest(path: String, onCompletion: (data: NSData) -> Void ){
         
         var request = buildAuthorizationHeader(usr, pw: pw)
         

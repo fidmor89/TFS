@@ -53,7 +53,6 @@ class LoginController: UIViewController {
         super.viewDidLoad()
     }
     
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

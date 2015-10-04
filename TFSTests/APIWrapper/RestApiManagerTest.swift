@@ -54,7 +54,7 @@ class RestApiManagerTest: XCTestCase {
         var tester: RestApiManager = RestApiManager()
         
         //Successful case: getting projects and team projects list.
-        tester.makeHTTPGetRequest(usr, pw: pw, path: route, onCompletion:  {(data: NSData) in
+        tester.makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             //Verify data was returned
             XCTAssertNotNil(data, "makeHTTPGetRequest should return data")
             
@@ -67,7 +67,7 @@ class RestApiManagerTest: XCTestCase {
         
         usr = "invalidUser"
         //Failed case: invalid credentials
-        tester.makeHTTPGetRequest(usr, pw: pw, path: route, onCompletion:  {(data: NSData) in
+        tester.makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             
             //Verify data was obtained
             XCTAssertNotNil(data, "makeHTTPGetRequest should return data")
