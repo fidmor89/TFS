@@ -148,6 +148,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Team Explorer" id="XAb-GP-I1Y">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="RPW-jg-X5Z">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="V0q-9B-dv2">
+                                <rect key="frame" x="-23" y="-15" width="133" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButton:" destination="GUY-sd-1aD" eventType="touchDown" id="hEA-dk-Nt4"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="7yk-nS-vAX">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0Tn-HK-j0s">
                                 <rect key="frame" x="-23" y="-15" width="133" height="30"/>
@@ -161,6 +173,9 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="backButton" destination="V0q-9B-dv2" id="INQ-Se-Hyn"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V8H-wU-stQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
