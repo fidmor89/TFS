@@ -15,7 +15,6 @@ class menuController: UITableViewController {
     var teams:[(id: String, name: String, url: String, description: String, identityUrl: String)] = []
     var projects:[(id: String, name: String, description: String, url: String, state: String, revision: String)] = []
     
-
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -23,12 +22,17 @@ class menuController: UITableViewController {
         {
             displayedMenu = "Collections"
         }
-        
-//        displayedMenu = "Teams"
-//        RestApiManager.sharedInstance.collection = "DefaultCollection"
-//        RestApiManager.sharedInstance.projectId = "b5be0374-7dea-41bb-b5e7-47f192eb5628"
         self.populateMenu()
-        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
     func populateMenu(){
@@ -36,7 +40,6 @@ class menuController: UITableViewController {
         {
         case "Collections":
             self.collections = []
-            //cal API and get project collections
             RestApiManager.sharedInstance.getCollections { json in
                 var count: Int = json["count"].int as Int!;         //number of objects within json obj
                 var jsonOBJ = json["value"]                         //get json with projects
@@ -47,11 +50,9 @@ class menuController: UITableViewController {
                     let name: String = jsonOBJ[index]["name"].string as String! ?? ""
                     let url: String = jsonOBJ[index]["url"].string as String! ?? ""
                     
-                    //                    let item: (String, String, String) = (id, name, url)
                     self.collections.append(id: id, name: name, url: url)
                     dispatch_async(dispatch_get_main_queue(), {
                         tableView?.reloadData()})
-                    
                 }
             }
         case "Teams":
@@ -71,7 +72,6 @@ class menuController: UITableViewController {
                     self.teams.append(id: id, name: name, url: url, description: description, identityUrl: identityUrl)
                     dispatch_async(dispatch_get_main_queue(), {
                         tableView?.reloadData()})
-                    
                 }
             }
         case "Projects":
@@ -98,7 +98,8 @@ class menuController: UITableViewController {
             println(self.displayedMenu)
         }
     }
-
+    
+    //At menu click
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch self.displayedMenu
         {
@@ -111,6 +112,7 @@ class menuController: UITableViewController {
             RestApiManager.sharedInstance.projectId =  self.teams[indexPath.row].id
             break
         case "Projects":
+            //Update detail view.
             break
         default:
             break
@@ -118,7 +120,9 @@ class menuController: UITableViewController {
         
         self.populateMenu()
     }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //Cuantity of items to display depending on the actual displayed menu
         switch self.displayedMenu
         {
         case "Collections":
@@ -133,7 +137,7 @@ class menuController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+
         var cell = tableView.dequeueReusableCellWithIdentifier("CELL") as? UITableViewCell
         if cell == nil{
             cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "CELL")
@@ -155,25 +159,13 @@ class menuController: UITableViewController {
             cell!.accessoryType = UITableViewCellAccessoryType.DetailDisclosureButton
             break;
         default:
-            displayedText = "bullshit"
-            
+            println(self.displayedMenu)
         }
         
         cell!.textLabel?.text = displayedText
         return cell!
-        
-        
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     //sign out button event
     @IBAction func signOutButton(sender: AnyObject) {

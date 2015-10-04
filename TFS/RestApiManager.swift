@@ -22,6 +22,11 @@ class RestApiManager: NSObject {
     internal var projectId: String? = nil
     internal var lastResponseCode = ""
     
+    func initialize(){
+        self.collection = nil
+        self.projectId = nil
+    }
+    
     func validateAuthorization(onCompletionAuth: (Bool) -> Void){
         let route = baseURL + "/_apis/projectcollections?api-version=2.0"
         
