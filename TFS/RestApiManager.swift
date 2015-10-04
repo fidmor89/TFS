@@ -38,7 +38,8 @@ class RestApiManager: NSObject {
     }
     
     func getCollections(onCompletion: (JSON) -> Void) {
-        let route = baseURL + "/\(collection)/_apis/projects?api-version=2.0"       //API request route
+
+        let route = baseURL + "/_apis/projectcollections?api-version=2.0"       //API request route
         
         makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             //parse NSData to JSON
@@ -80,7 +81,7 @@ class RestApiManager: NSObject {
     */
     func makeHTTPPostRequest(path: String, parameters: Dictionary<String,AnyObject>?, onCompletion: (data: NSData) -> Void ){
         
-        var request = buildAuthorizationHeader(usr, pw: pw)
+        var request = buildAuthorizationHeader()
         
         //Make POST request using SwiftHTTP Pod
         request.POST(path, parameters: parameters, completionHandler:{(response: HTTPResponse) in
@@ -107,7 +108,7 @@ class RestApiManager: NSObject {
     */
     func makeHTTPGetRequest(path: String, onCompletion: (data: NSData) -> Void ){
         
-        var request = buildAuthorizationHeader(usr, pw: pw)
+        var request = buildAuthorizationHeader()
         
         //Make GET request using SwiftHTTP Pod
         request.GET(path, parameters: nil, completionHandler: {(response: HTTPResponse) in
@@ -142,7 +143,7 @@ class RestApiManager: NSObject {
     @see: makeHTTPGetRequest
     @see: makeHTTPPostRequest
     */
-    func buildAuthorizationHeader(usr: String, pw: String) -> HTTPTask{
+    func buildAuthorizationHeader() -> HTTPTask{
         let header:String = usr + ":" + pw                                                          //build authorization header.
         let utf8str: NSData = header.dataUsingEncoding(NSUTF8StringEncoding)!                       //encode header
         let base64Encoded = utf8str.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)

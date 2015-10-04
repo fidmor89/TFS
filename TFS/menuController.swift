@@ -10,11 +10,27 @@ import Foundation
 
 class menuController: UITableViewController {
 
+    var collections:[(id: String, name: String, url: String)] = []
+
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         //cal API and get project collections
-//        RestApiManager.sharedInstance.
+        RestApiManager.sharedInstance.getCollections { json in
+            var count: Int = json["count"].int as Int!;         //number of objects within json obj
+            var jsonOBJ = json["value"]                         //get json with projects
+            
+            for index in 0...(count-1) {                                                    //for each obj in jsonOBJ
+                
+                let id = jsonOBJ[index]["id"].string as String! ?? ""
+                let name: String = jsonOBJ[index]["name"].string as String! ?? ""
+                let url: String = jsonOBJ[index]["url"].string as String! ?? ""
+                
+                let item: (String, String, String) = (id, name, url)
+                self.collections.append(id: id, name: name, url: url)
+            }
+//            println(self.collections)
+        }
     }
     
     override func viewDidLoad() {
