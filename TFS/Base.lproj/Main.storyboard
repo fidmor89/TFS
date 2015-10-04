@@ -108,10 +108,10 @@
             </objects>
             <point key="canvasLocation" x="-1155" y="515"/>
         </scene>
-        <!--View Controller-->
+        <!--Work Controller-->
         <scene sceneID="yeE-eZ-tvY">
             <objects>
-                <viewController id="VMS-tu-3RD" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WorkView" id="VMS-tu-3RD" customClass="WorkController" customModule="TFS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="o8p-ib-9R8"/>
                         <viewControllerLayoutGuide type="bottom" id="e1n-Y0-cRq"/>
@@ -119,8 +119,19 @@
                     <view key="view" contentMode="scaleToFill" id="m5K-jp-bZx">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4N4-yX-ddJ">
+                                <rect key="frame" x="254" y="196" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="detailDescriptionLabel" destination="4N4-yX-ddJ" id="IKA-5x-QHL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AiT-uz-rfw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -182,10 +193,10 @@
             </objects>
             <point key="canvasLocation" x="-331" y="1194"/>
         </scene>
-        <!--Work Controller-->
+        <!--Split View Controller-->
         <scene sceneID="STG-Db-3FN">
             <objects>
-                <splitViewController storyboardIdentifier="MainSplit" id="2g9-0U-bQC" customClass="WorkController" customModule="TFS" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController storyboardIdentifier="MainSplit" id="2g9-0U-bQC" sceneMemberID="viewController">
                     <connections>
                         <segue destination="v70-Sk-Fn2" kind="relationship" relationship="masterViewController" id="rcK-0W-sjD"/>
                         <segue destination="VMS-tu-3RD" kind="relationship" relationship="detailViewController" id="eBf-jW-uyU"/>

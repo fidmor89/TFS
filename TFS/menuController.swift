@@ -125,17 +125,17 @@ class menuController: UITableViewController {
             break
             
         case DisplayedMenu.Projects:
-            let object = self.projects[indexPath.row].name
-            let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
-            secondViewController.displayedMenu = DisplayedMenu.Collections
-            navigationController?.pushViewController(secondViewController, animated: true)
+            let object = self.projects[indexPath.row]
+
+            let DetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
+            self.splitViewController?.showDetailViewController(DetailViewController, sender: nil)
+            DetailViewController.detailDescriptionLabel.text = object.name
+            
             break
             
         default:
             break
         }
-        
-        
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
