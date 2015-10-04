@@ -15,7 +15,7 @@ class menuController: UITableViewController {
     var teams:[(id: String, name: String, url: String, description: String, identityUrl: String)] = []
     var projects:[(id: String, name: String, description: String, url: String, state: String, revision: String)] = []
     
-    
+
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -35,6 +35,7 @@ class menuController: UITableViewController {
         switch self.displayedMenu
         {
         case "Collections":
+            self.collections = []
             //cal API and get project collections
             RestApiManager.sharedInstance.getCollections { json in
                 var count: Int = json["count"].int as Int!;         //number of objects within json obj
@@ -54,6 +55,7 @@ class menuController: UITableViewController {
                 }
             }
         case "Teams":
+            self.teams = []
             RestApiManager.sharedInstance.getTeams { json in
                 var count: Int = json["count"].int as Int!;         //number of objects within json obj
                 var jsonOBJ = json["value"]                         //get json with projects
@@ -73,6 +75,7 @@ class menuController: UITableViewController {
                 }
             }
         case "Projects":
+            self.projects = []
             RestApiManager.sharedInstance.getProjects { json in
                 var count: Int = json["count"].int as Int!;         //number of objects within json obj
                 var jsonOBJ = json["value"]                         //get json with projects
@@ -95,7 +98,26 @@ class menuController: UITableViewController {
             println(self.displayedMenu)
         }
     }
-    
+
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        switch self.displayedMenu
+        {
+        case "Collections":
+            self.displayedMenu = "Teams"
+            RestApiManager.sharedInstance.collection =  self.collections[indexPath.row].name
+            break
+        case "Teams":
+            self.displayedMenu = "Projects"
+            RestApiManager.sharedInstance.projectId =  self.teams[indexPath.row].id
+            break
+        case "Projects":
+            break
+        default:
+            break
+        }
+        
+        self.populateMenu()
+    }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch self.displayedMenu
         {
