@@ -14,9 +14,81 @@ import XCTest
 
 class RestApiManagerTest: XCTestCase {
     
-    //
-    func testGetIterationsByTeamAndProject() {
+    func testGetTeams() {
         
+        //Success case
+        RestApiManager.sharedInstance.baseURL = "https://almlatam.visualstudio.com"
+        RestApiManager.sharedInstance.usr = "fidmor"
+        RestApiManager.sharedInstance.pw = "FIDmor12!"
+        RestApiManager.sharedInstance.collection = "DefaultCollection"
+        
+        RestApiManager.sharedInstance.getTeams() { json in
+            let count = json["count"].int as Int?
+            XCTAssertNotNil(count, "Connected to host")
+            XCTAssertGreaterThan(Int(count!), 0, "Returned with some teams")
+        }
+        
+        //Fail case
+        RestApiManager.sharedInstance.baseURL = "https://almlata.visualstudio.com"
+        RestApiManager.sharedInstance.usr = "fidmor"
+        RestApiManager.sharedInstance.pw = "FIDmor12!"
+        RestApiManager.sharedInstance.collection = "DefaultCollection"
+        
+        RestApiManager.sharedInstance.getCollections() { json in
+            let count = json["count"].int as Int?
+            XCTAssertNil(count, "Could not connect to host")
+        }
+    }
+    
+    func testGetProjects() {
+        //Success case
+        RestApiManager.sharedInstance.baseURL = "https://almlatam.visualstudio.com"
+        RestApiManager.sharedInstance.usr = "fidmor"
+        RestApiManager.sharedInstance.pw = "FIDmor12!"
+        RestApiManager.sharedInstance.collection = "DefaultCollection"
+        RestApiManager.sharedInstance.projectId = "Url2015Project"
+        
+        RestApiManager.sharedInstance.getTeams() { json in
+            let count = json["count"].int as Int?
+            XCTAssertNotNil(count, "Connected to host")
+            XCTAssertGreaterThan(Int(count!), 0, "Returned with some teams")
+        }
+        
+        //Fail case
+        RestApiManager.sharedInstance.baseURL = "https://almlata.visualstudio.com"
+        RestApiManager.sharedInstance.usr = "fidmor"
+        RestApiManager.sharedInstance.pw = "FIDmor12!"
+        RestApiManager.sharedInstance.collection = "DefaultCollection"
+        RestApiManager.sharedInstance.projectId = "Url2015Pro"
+        
+        RestApiManager.sharedInstance.getCollections() { json in
+            let count = json["count"].int as Int?
+            XCTAssertNil(count, "Could not connect to host")
+        }
+    }
+    
+    func testGetCollections() {
+        
+        //Success case
+        RestApiManager.sharedInstance.baseURL = "https://almlatam.visualstudio.com"
+        RestApiManager.sharedInstance.usr = "fidmor"
+        RestApiManager.sharedInstance.pw = "FIDmor12!"
+        
+        RestApiManager.sharedInstance.getCollections() { json in
+            let count = json["count"].int as Int?
+            XCTAssertNotNil(count, "Connected to host")
+            XCTAssertGreaterThan(Int(count!), 0, "Returned with some collections")
+        }
+        
+        //Fail Case
+        RestApiManager.sharedInstance.baseURL = "https://almlata.visualstudio.com"
+        RestApiManager.sharedInstance.usr = "fidmor"
+        RestApiManager.sharedInstance.pw = "FIDmor12!"
+        
+        RestApiManager.sharedInstance.getCollections() { json in
+            let count = json["count"].int as Int?
+            XCTAssertNil(count, "Could not connect to host")
+        }
     }
     
     func testGetTeamProjects() {
