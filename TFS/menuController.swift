@@ -12,17 +12,37 @@ class menuController: UITableViewController {
     
     @IBOutlet weak var backButton: UIButton!
     
-    var displayedMenu : DisplayedMenu = DisplayedMenu.Collections;
     var collections:[(id: String, name: String, url: String)] = []
     var teams:[(id: String, name: String, url: String, description: String, identityUrl: String)] = []
     var projects:[(id: String, name: String, description: String, url: String, state: String, revision: String)] = []
+    
+    override func viewWillDisappear(animated: Bool) {
+
+        if (find(self.navigationController!.viewControllers as! [UIViewController],self)==nil){
+            switch viewStateManager.sharedInstance.displayedMenu
+            {
+            case DisplayedMenu.Collections:
+                break;
+            case DisplayedMenu.Teams:
+                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Collections
+                break;
+            case DisplayedMenu.Projects:
+                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
+                break;
+            default:
+                break;
+            }
+
+        }
+        super.viewWillDisappear(animated)
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         if RestApiManager.sharedInstance.collection == nil
         {
-            displayedMenu = DisplayedMenu.Collections
+            viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Collections
         }
         self.populateMenu()
     }
@@ -38,7 +58,7 @@ class menuController: UITableViewController {
     }
     
     func populateMenu(){
-        switch self.displayedMenu
+        switch viewStateManager.sharedInstance.displayedMenu
         {
         case DisplayedMenu.Collections:
             self.collections = []
@@ -97,21 +117,20 @@ class menuController: UITableViewController {
                 }
             }
         default:
-            println(self.displayedMenu)
+            println(viewStateManager.sharedInstance.displayedMenu)
         }
     }
     
     //At menu click
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        switch self.displayedMenu
+        switch viewStateManager.sharedInstance.displayedMenu
             
         {
             
         case DisplayedMenu.Collections:
-            self.displayedMenu = DisplayedMenu.Teams
+            viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
             RestApiManager.sharedInstance.collection =  self.collections[indexPath.row].name
             let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
-            secondViewController.displayedMenu = DisplayedMenu.Teams
             navigationController?.pushViewController(secondViewController, animated: true)
             
             let x = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
@@ -121,10 +140,9 @@ class menuController: UITableViewController {
             
         case DisplayedMenu.Teams:
             
-            self.displayedMenu = DisplayedMenu.Projects
+            viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
             RestApiManager.sharedInstance.projectId =  self.teams[indexPath.row].id
             let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
-            secondViewController.displayedMenu = DisplayedMenu.Projects
             navigationController?.pushViewController(secondViewController, animated: true)
             let x = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
             self.splitViewController?.showDetailViewController(x, sender: nil)
@@ -147,7 +165,7 @@ class menuController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //Cuantity of items to display depending on the actual displayed menu
-        switch self.displayedMenu
+        switch viewStateManager.sharedInstance.displayedMenu
         {
         case DisplayedMenu.Collections:
             return self.collections.count
@@ -168,7 +186,7 @@ class menuController: UITableViewController {
         }
         
         var displayedText: String = ""
-        switch self.displayedMenu
+        switch viewStateManager.sharedInstance.displayedMenu
         {
         case DisplayedMenu.Collections:
             displayedText = self.collections[indexPath.row].name
@@ -183,13 +201,12 @@ class menuController: UITableViewController {
             cell!.accessoryType = UITableViewCellAccessoryType.None
             break;
         default:
-            println(self.displayedMenu)
+            println(viewStateManager.sharedInstance.displayedMenu)
         }
         
         cell!.textLabel?.text = displayedText
         return cell!
     }
-    
     
     //sign out button event
     @IBAction func signOutButton(sender: AnyObject) {
@@ -201,6 +218,13 @@ class menuController: UITableViewController {
         let loginView = self.storyboard!.instantiateViewControllerWithIdentifier("LoginView") as! UINavigationController
         navigationController?.presentViewController(loginView, animated: true, completion: nil)
     }
+}
+
+class viewStateManager {
+    
+    var displayedMenu : DisplayedMenu = DisplayedMenu.Collections
+    static let sharedInstance = viewStateManager()            //To use manager class as a singleton.
+
 }
 
 enum DisplayedMenu: String {
