@@ -87,8 +87,18 @@ class RestApiManager: NSObject {
         })
     }
     
-    func getIterationsByTeamAndProject(team: String, onCompletion: (JSON) -> Void){
-        let route = baseURL + "/\(collection)/\(team)/_apis/work/teamsettings/iterations?api-version=v2.0-preview"
+    func getIterationsByTeamAndProject(project: String, team: String, onCompletion: (JSON) -> Void){
+        let route = baseURL + "/\(collection)/\(project)/\(team)/_apis/work/teamsettings/iterations?api-version=2.0"
+        
+        makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
+            //parse NSData to JSON
+            let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
+            onCompletion(json)
+        })
+    }
+    
+    func getCurrentSprint(project: String, team: String, onCompletion: (JSON) -> Void){
+        let route = baseURL + "/\(collection)/\(project)/\(team)/_apis/work/teamsettings/iterations?$timeframe=current&api-version=2.0"
         
         makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             //parse NSData to JSON
