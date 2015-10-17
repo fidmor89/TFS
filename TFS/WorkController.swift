@@ -13,7 +13,7 @@ class WorkController: UIViewController {
     
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     
-    var iterations:[(id: String, name: String, path: String, startDate: String, endDate: String)] = []
+    var iterations:[(id: String, name: String, path: String, startDate: String, endDate: String, url: String)] = []
     
     var detailItem: AnyObject? {
         didSet {
@@ -51,24 +51,9 @@ class WorkController: UIViewController {
         case DisplayedMenu.Teams:
             break;
         case DisplayedMenu.Projects:
-            self.iterations = []
-            RestApiManager.sharedInstance.getIterationsByTeamAndProject { json in
-                var count: Int = json["count"].int as Int!;         //number of objects within json obj
-                var jsonOBJ = json["value"]                         //get json with projects
-                
-                for index in 0...(count-1) {                        //for each obj in jsonOBJ
-                    
-                    let id = jsonOBJ[index]["id"].string as String! ?? ""
-                    let name: String = jsonOBJ[index]["name"].string as String! ?? ""
-                    let path: String = jsonOBJ[index]["path"].string as String! ?? ""
-                    let startDate: String = jsonOBJ[index]["attributes"]["startDate"].string as String! ?? ""
-                    let endDate: String = jsonOBJ[index]["attributes"]["finishDate"].string as String! ?? ""
-                    
-                    self.iterations.append(id: id, name: name, path: path, startDate: startDate, endDate: endDate)
-                    
-                    //call dispatcher to update view
-                }
-            }
+            
+            let x = self.storyboard!.instantiateViewControllerWithIdentifier("SprintView") as! SprintViewController
+            self.splitViewController?.showDetailViewController(x, sender: nil)
             
             break;
         default:

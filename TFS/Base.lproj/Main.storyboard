@@ -96,7 +96,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iu8-EB-az8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-343" y="515"/>
+            <point key="canvasLocation" x="-1275" y="-213"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="YUR-XS-Jcq">
@@ -115,7 +115,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Or-SC-K1w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1155" y="515"/>
+            <point key="canvasLocation" x="-2087" y="-213"/>
         </scene>
         <!--Work Controller-->
         <scene sceneID="yeE-eZ-tvY">
@@ -156,7 +156,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AiT-uz-rfw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-331" y="1858"/>
+            <point key="canvasLocation" x="221" y="114"/>
+        </scene>
+        <!--Sprint View Controller-->
+        <scene sceneID="BcF-6B-KtA">
+            <objects>
+                <tableViewController storyboardIdentifier="SprintView" id="Sjp-An-BVa" customClass="SprintViewController" customModule="TFS" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="HdH-B7-Es5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Gfl-vq-aHZ">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Gfl-vq-aHZ" id="8nH-bA-39H">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
+                                </tableViewCellContentView>
+                                <animations/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Sjp-An-BVa" id="IPf-Nf-SfT"/>
+                            <outlet property="delegate" destination="Sjp-An-BVa" id="AOJ-1a-7gx"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QWC-sd-CrV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="219" y="808"/>
         </scene>
         <!--Team Explorer-->
         <scene sceneID="d8c-ga-Fgb">
@@ -200,7 +229,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V8H-wU-stQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="485" y="1194"/>
+            <point key="canvasLocation" x="1037" y="-550"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="P46-eO-aLD">
@@ -217,7 +246,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x4q-5b-cvt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-331" y="1194"/>
+            <point key="canvasLocation" x="221" y="-550"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="STG-Db-3FN">
@@ -230,7 +259,7 @@
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vj1-7h-Mwe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1155" y="1522"/>
+            <point key="canvasLocation" x="-603" y="-222"/>
         </scene>
     </scenes>
 </document>
