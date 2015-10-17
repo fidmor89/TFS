@@ -150,8 +150,9 @@ class menuController: UITableViewController {
             break
             
         case DisplayedMenu.Projects:
-            let object = self.projects[indexPath.row]
-
+            viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
+            RestApiManager.sharedInstance.teamId = self.projects[indexPath.row].id
+            
             let DetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
             self.splitViewController?.showDetailViewController(DetailViewController, sender: nil)
             DetailViewController.detailDescriptionLabel.text = self.projects[indexPath.row].name

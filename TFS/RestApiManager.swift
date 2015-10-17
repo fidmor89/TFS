@@ -20,6 +20,8 @@ class RestApiManager: NSObject {
     internal var pw: String = ""
     internal var collection: String? = nil
     internal var projectId: String? = nil
+    internal var teamId: String? = nil
+
     internal var lastResponseCode = ""
     
     func initialize(){

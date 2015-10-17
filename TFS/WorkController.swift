@@ -12,7 +12,7 @@ import UIKit
 class WorkController: UIViewController {
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
-
+    
     var detailItem: AnyObject? {
         didSet {
             // Update the view.
@@ -38,6 +38,11 @@ class WorkController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    @IBAction func onNavigateButtonTouchDown(sender: AnyObject) {
+
+
     }
     
 }
