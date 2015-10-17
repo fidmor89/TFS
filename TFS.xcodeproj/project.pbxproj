@@ -19,6 +19,7 @@
 		2BD389231B9BA4F1008A0A48 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BD389211B9BA4F1008A0A48 /* LaunchScreen.xib */; };
 		2BD3892F1B9BA4F2008A0A48 /* TFSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD3892E1B9BA4F2008A0A48 /* TFSTests.swift */; };
 		2BDC480B1BAFB44D003F2C04 /* RestApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC480A1BAFB44D003F2C04 /* RestApiManager.swift */; };
+		2BE06EAB1BD2BB7D0065FD0C /* ViewStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE06EAA1BD2BB7D0065FD0C /* ViewStateManager.swift */; };
 		38A496A21BC0847800637CF6 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A496A11BC0847800637CF6 /* KeychainWrapper.swift */; };
 		38A496A31BC0847800637CF6 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A496A11BC0847800637CF6 /* KeychainWrapper.swift */; };
 		3F04901D1B9D015E00677A47 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F04901C1B9D015E00677A47 /* SWRevealViewController.m */; };
@@ -54,6 +55,7 @@
 		2BD3892D1B9BA4F2008A0A48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BD3892E1B9BA4F2008A0A48 /* TFSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFSTests.swift; sourceTree = "<group>"; };
 		2BDC480A1BAFB44D003F2C04 /* RestApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestApiManager.swift; sourceTree = "<group>"; };
+		2BE06EAA1BD2BB7D0065FD0C /* ViewStateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewStateManager.swift; sourceTree = "<group>"; };
 		38A496A11BC0847800637CF6 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		3F04901A1B9D015D00677A47 /* TFS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TFS-Bridging-Header.h"; sourceTree = "<group>"; };
 		3F04901B1B9D015E00677A47 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				2B04D8081BC033F7001C9A65 /* LoginController.swift */,
 				2BCE94371BC0703000F32722 /* WorkController.swift */,
 				2BCE943A1BC0A89A00F32722 /* menuController.swift */,
+				2BE06EAA1BD2BB7D0065FD0C /* ViewStateManager.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 				2BCE943B1BC0A89A00F32722 /* menuController.swift in Sources */,
 				38A496A21BC0847800637CF6 /* KeychainWrapper.swift in Sources */,
 				2BDC480B1BAFB44D003F2C04 /* RestApiManager.swift in Sources */,
+				2BE06EAB1BD2BB7D0065FD0C /* ViewStateManager.swift in Sources */,
 				2BD3891B1B9BA4F1008A0A48 /* ViewController.swift in Sources */,
 				2BD389191B9BA4F1008A0A48 /* AppDelegate.swift in Sources */,
 				3F04901D1B9D015E00677A47 /* SWRevealViewController.m in Sources */,

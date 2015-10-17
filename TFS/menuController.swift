@@ -221,13 +221,6 @@ class menuController: UITableViewController {
     }
 }
 
-class viewStateManager {
-    
-    var displayedMenu : DisplayedMenu = DisplayedMenu.Collections
-    static let sharedInstance = viewStateManager()            //To use manager class as a singleton.
-
-}
-
 enum DisplayedMenu: String {
     case Collections = "Collections"
     case Teams = "Teams"
