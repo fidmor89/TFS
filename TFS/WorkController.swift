@@ -42,6 +42,7 @@ class WorkController: UIViewController {
     
     @IBAction func onNavigateButtonTouchDown(sender: AnyObject) {
 
+        let actualMenu = viewStateManager.sharedInstance.displayedMenu
     }
     
 }

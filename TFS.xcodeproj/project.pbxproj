@@ -9,10 +9,6 @@
 /* Begin PBXBuildFile section */
 		2B04D8091BC033F7001C9A65 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B04D8081BC033F7001C9A65 /* LoginController.swift */; };
 		2BC8E0D11BD2C60B00B7EF6C /* viewStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE06EAA1BD2BB7D0065FD0C /* viewStateManager.swift */; };
-		2BC8E0D51BD2C61000B7EF6C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD3891A1B9BA4F1008A0A48 /* ViewController.swift */; };
-		2BC8E0D61BD2C61000B7EF6C /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B04D8081BC033F7001C9A65 /* LoginController.swift */; };
-		2BC8E0D71BD2C61000B7EF6C /* WorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE94371BC0703000F32722 /* WorkController.swift */; };
-		2BC8E0D81BD2C61000B7EF6C /* menuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE943A1BC0A89A00F32722 /* menuController.swift */; };
 		2BCE94381BC0703000F32722 /* WorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE94371BC0703000F32722 /* WorkController.swift */; };
 		2BCE943B1BC0A89A00F32722 /* menuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE943A1BC0A89A00F32722 /* menuController.swift */; };
 		2BD389191B9BA4F1008A0A48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD389181B9BA4F1008A0A48 /* AppDelegate.swift */; };
@@ -387,15 +383,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BC8E0D81BD2C61000B7EF6C /* menuController.swift in Sources */,
 				CD93FC9D1BAFBC4F009D13BF /* RestApiManager.swift in Sources */,
 				CD93FCA21BAFCD7C009D13BF /* RestApiManagerTest.swift in Sources */,
 				38A496A31BC0847800637CF6 /* KeychainWrapper.swift in Sources */,
-				2BC8E0D51BD2C61000B7EF6C /* ViewController.swift in Sources */,
-				2BC8E0D61BD2C61000B7EF6C /* LoginController.swift in Sources */,
 				2BD3892F1B9BA4F2008A0A48 /* TFSTests.swift in Sources */,
 				2BC8E0D11BD2C60B00B7EF6C /* viewStateManager.swift in Sources */,
-				2BC8E0D71BD2C61000B7EF6C /* WorkController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

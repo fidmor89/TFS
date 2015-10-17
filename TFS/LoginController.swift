@@ -19,7 +19,7 @@ class LoginController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         RestApiManager.sharedInstance.initialize()
         
         if (KeychainWrapper.hasValueForKey("credentials"))
