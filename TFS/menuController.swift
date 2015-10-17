@@ -221,8 +221,3 @@ class menuController: UITableViewController {
     }
 }
 
-enum DisplayedMenu: String {
-    case Collections = "Collections"
-    case Teams = "Teams"
-    case Projects = "Projects"
-}
