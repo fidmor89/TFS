@@ -122,12 +122,12 @@ class RestApiManagerTest: XCTestCase {
         RestApiManager.sharedInstance.usr = "fidmor"
         RestApiManager.sharedInstance.pw = "FIDmor12!"
         
-        RestApiManager.sharedInstance.getIterationsByTeamAndProject("", team: "") { json in
-            let count = json["count"].int as Int?
-            //XCTAssertNotNil(count, "Connected to host")
-            //XCTAssertGreaterThan(Int(count!), 0, "Returned with Iterations")
-            XCTAssertEqual(Int(count!), 20, "Returned with Iterations")// Url2015Project iterations
-        }
+//        RestApiManager.sharedInstance.getIterationsByTeamAndProject("", team: "") { json in
+//            let count = json["count"].int as Int?
+//            //XCTAssertNotNil(count, "Connected to host")
+//            //XCTAssertGreaterThan(Int(count!), 0, "Returned with Iterations")
+//            XCTAssertEqual(Int(count!), 20, "Returned with Iterations")// Url2015Project iterations
+//        }
         
         //Fail case
         //RestApiManager.sharedInstance.baseURL = "https://almlata.visualstudio.com"
@@ -147,11 +147,11 @@ class RestApiManagerTest: XCTestCase {
         RestApiManager.sharedInstance.pw = "FIDmor12!"
         
         // Success case
-        RestApiManager.sharedInstance.getCurrentSprint("Url2015Project", team:"iOSTeamExplorer") { json in
-            let count = json["count"].int as Int?
-            XCTAssertNotNil(count, "Connected to host")
-            XCTAssertGreaterThan(Int(count!), 0, "Returned with Iterations")
-        }
+//        RestApiManager.sharedInstance.getCurrentSprint("Url2015Project", team:"iOSTeamExplorer") { json in
+//            let count = json["count"].int as Int?
+//            XCTAssertNotNil(count, "Connected to host")
+//            XCTAssertGreaterThan(Int(count!), 0, "Returned with Iterations")
+//        }
     }
     
     func testMakeHTTPGetRequest(){

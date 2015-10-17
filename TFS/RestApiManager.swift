@@ -20,13 +20,14 @@ class RestApiManager: NSObject {
     internal var pw: String = ""
     internal var collection: String? = nil
     internal var projectId: String? = nil
-    internal var teamId: String? = nil
+    internal var teamId: String = ""
 
     internal var lastResponseCode = ""
     
     func initialize(){
         self.collection = nil
         self.projectId = nil
+        self.teamId = ""
     }
     
     func validateAuthorization(onCompletionAuth: (Bool) -> Void){
@@ -80,7 +81,7 @@ class RestApiManager: NSObject {
     
     func getTeamProjects(onCompletion: (JSON) -> Void) {
         
-        let route = baseURL + "/\(collection)/_apis/projects?api-version=2.0"       //API request route
+        let route = baseURL + "/\(collection!)/_apis/projects?api-version=2.0"       //API request route
         
         makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             //parse NSData to JSON
@@ -89,8 +90,8 @@ class RestApiManager: NSObject {
         })
     }
     
-    func getIterationsByTeamAndProject(project: String, team: String, onCompletion: (JSON) -> Void){
-        let route = baseURL + "/\(collection)/\(project)/\(team)/_apis/work/teamsettings/iterations?api-version=2.0"
+    func getIterationsByTeamAndProject(onCompletion: (JSON) -> Void){
+        let route = baseURL + "/\(collection!)/\(projectId!)/\(teamId)/_apis/work/teamsettings/iterations?api-version=2.0"
         
         makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             //parse NSData to JSON
@@ -99,8 +100,8 @@ class RestApiManager: NSObject {
         })
     }
     
-    func getCurrentSprint(project: String, team: String, onCompletion: (JSON) -> Void){
-        let route = baseURL + "/\(collection)/\(project)/\(team)/_apis/work/teamsettings/iterations?$timeframe=current&api-version=2.0"
+    func getCurrentSprint(onCompletion: (JSON) -> Void){
+        let route = baseURL + "/\(collection!)/\(projectId!)/\(teamId)/_apis/work/teamsettings/iterations?$timeframe=current&api-version=2.0"
         
         makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             //parse NSData to JSON
