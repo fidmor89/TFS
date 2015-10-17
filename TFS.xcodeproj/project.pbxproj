@@ -98,7 +98,6 @@
 				2B04D8081BC033F7001C9A65 /* LoginController.swift */,
 				2BCE94371BC0703000F32722 /* WorkController.swift */,
 				2BCE943A1BC0A89A00F32722 /* menuController.swift */,
-				2BE06EAA1BD2BB7D0065FD0C /* viewStateManager.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -110,6 +109,14 @@
 				2BD389211B9BA4F1008A0A48 /* LaunchScreen.xib */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		2B393DCE1BD2C4F30055CA43 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2BE06EAA1BD2BB7D0065FD0C /* viewStateManager.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		2BD3890A1B9BA4F1008A0A48 = {
@@ -135,6 +142,7 @@
 		2BD389151B9BA4F1008A0A48 /* TFS */ = {
 			isa = PBXGroup;
 			children = (
+				2B393DCE1BD2C4F30055CA43 /* Models */,
 				38A4969E1BC082D300637CF6 /* KeychainWrapper */,
 				2BD389381B9BA66C008A0A48 /* APIWrapper */,
 				2BD389181B9BA4F1008A0A48 /* AppDelegate.swift */,
