@@ -42,7 +42,6 @@ class WorkController: UIViewController {
     
     @IBAction func onNavigateButtonTouchDown(sender: AnyObject) {
 
-
     }
     
 }
