@@ -28,13 +28,13 @@ class RestApiManagerTest: XCTestCase {
             var count: Int = jsObject["count"].int as Int!;
             XCTAssertNotNil(count, "Connected to host")
             XCTAssertGreaterThan(count, 0, "Returned with some teams")
-            var jsProjects: JSON = jsObject["value"]
-            var projectName = [String]()
+            var jsTeams: JSON = jsObject["value"]
+            var apiTeams = [String]()
             for index in 0...(count-1) {
-                projectName.append(jsProjects[index]["name"].string as String!)
+                apiTeams.append(jsTeams[index]["name"].string as String!)
             }
-            var projects = ["Url2015Project","Glimpse and Application Insights"]
-            XCTAssertEqual(projectName, projects, "Correct Projects where found")
+            var teams = ["Url2015Project","Glimpse and Application Insights"]
+            XCTAssertEqual(apiTeams, teams, "Correct Teams where found")
             expectation.fulfill()
         })
         
@@ -44,30 +44,33 @@ class RestApiManagerTest: XCTestCase {
     }
     
     func testGetProjects() {
+        let expectation = expectationWithDescription("GetProject")
+        
         //Success case
         RestApiManager.sharedInstance.baseURL = "https://almlatam.visualstudio.com"
-        RestApiManager.sharedInstance.usr = "fidmor"
-        RestApiManager.sharedInstance.pw = "FIDmor12!"
+        RestApiManager.sharedInstance.usr = "jlmruiz"
+        RestApiManager.sharedInstance.pw = "Prueba2015"
         RestApiManager.sharedInstance.collection = "DefaultCollection"
         RestApiManager.sharedInstance.projectId = "Url2015Project"
         
-        RestApiManager.sharedInstance.getTeams() { json in
-            let count = json["count"].int as Int?
+        RestApiManager.sharedInstance.getProjects( { (jsObject: JSON) -> () in
+            var count: Int = jsObject["count"].int as Int!
             XCTAssertNotNil(count, "Connected to host")
-            XCTAssertGreaterThan(Int(count!), 0, "Returned with some teams")
-        }
+            XCTAssertGreaterThan(count, 0, "Returned with some teams")
+            var jsProjects = jsObject["value"]
+            var apiProjects = [String]()
+            for index in 0...(count - 1) {
+                apiProjects.append(jsProjects[index]["name"].string as String!)
+            }
+            var Projects = ["Infraestructure_DSC", "Application", "Azure_Migration", "SLAB_Integration_with_AI", "iOSTeamExplorer", "Url2015Project Team"]
+            XCTAssertEqual(apiProjects, Projects, "Correct Projects where found")
+            expectation.fulfill()
+        })
         
-        //Fail case
-        RestApiManager.sharedInstance.baseURL = "https://almlata.visualstudio.com"
-        RestApiManager.sharedInstance.usr = "fidmor"
-        RestApiManager.sharedInstance.pw = "FIDmor12!"
-        RestApiManager.sharedInstance.collection = "DefaultCollection"
-        RestApiManager.sharedInstance.projectId = "Url2015Pro"
+        waitForExpectationsWithTimeout(5.0, handler: { error in
+            XCTAssertNil(error, "Request Timed Out")
+        })
         
-        RestApiManager.sharedInstance.getCollections() { json in
-            let count = json["count"].int as Int?
-            XCTAssertNil(count, "Could not connect to host")
-        }
     }
     
     func testGetCollections() {
