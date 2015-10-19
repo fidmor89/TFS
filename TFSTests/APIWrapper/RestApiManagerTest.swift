@@ -74,27 +74,29 @@ class RestApiManagerTest: XCTestCase {
     }
     
     func testGetCollections() {
+        let expectation = expectationWithDescription("GetCollections")
         
         //Success case
         RestApiManager.sharedInstance.baseURL = "https://almlatam.visualstudio.com"
-        RestApiManager.sharedInstance.usr = "fidmor"
-        RestApiManager.sharedInstance.pw = "FIDmor12!"
+        RestApiManager.sharedInstance.usr = "jlmruiz"
+        RestApiManager.sharedInstance.pw = "Prueba2015"
         
-        RestApiManager.sharedInstance.getCollections() { json in
-            let count = json["count"].int as Int?
+        RestApiManager.sharedInstance.getCollections( { (jsObject: JSON) -> () in
+            var count: Int = jsObject["count"].int as Int!
             XCTAssertNotNil(count, "Connected to host")
-            XCTAssertGreaterThan(Int(count!), 0, "Returned with some collections")
-        }
-        
-        //Fail Case
-        RestApiManager.sharedInstance.baseURL = "https://almlata.visualstudio.com"
-        RestApiManager.sharedInstance.usr = "fidmor"
-        RestApiManager.sharedInstance.pw = "FIDmor12!"
-        
-        RestApiManager.sharedInstance.getCollections() { json in
-            let count = json["count"].int as Int?
-            XCTAssertNil(count, "Could not connect to host")
-        }
+            XCTAssertGreaterThan(count, 0, "Returned with some collections")
+            var jsCollections = jsObject["value"]
+            var apiCollections = [String]()
+            for index in 0...(count - 1) {
+                apiCollections.append(jsCollections[index]["name"].string as String!)
+            }
+            var collections = ["DefaultCollection"]
+            XCTAssertEqual(apiCollections, collections, "Correct collections where found")
+            expectation.fulfill()
+        })
+        waitForExpectationsWithTimeout(5.0, handler: { error in
+            XCTAssertNil(error, "Request Timed Out")
+        })
     }
     
     func testGetTeamProjects() {
