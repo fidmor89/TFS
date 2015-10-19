@@ -16,28 +16,31 @@ class RestApiManagerTest: XCTestCase {
     
     func testGetTeams() {
         
+        let expectation = expectationWithDescription("GetTeam")
+        
         //Success case
         RestApiManager.sharedInstance.baseURL = "https://almlatam.visualstudio.com"
-        RestApiManager.sharedInstance.usr = "fidmor"
-        RestApiManager.sharedInstance.pw = "FIDmor12!"
+        RestApiManager.sharedInstance.usr = "jlmruiz"
+        RestApiManager.sharedInstance.pw = "Prueba2015"
         RestApiManager.sharedInstance.collection = "DefaultCollection"
         
-        RestApiManager.sharedInstance.getTeams() { json in
-            let count = json["count"].int as Int?
+        RestApiManager.sharedInstance.getTeams( { (jsObject: JSON) -> () in
+            var count: Int = jsObject["count"].int as Int!;
             XCTAssertNotNil(count, "Connected to host")
-            XCTAssertGreaterThan(Int(count!), 0, "Returned with some teams")
-        }
+            XCTAssertGreaterThan(count, 0, "Returned with some teams")
+            var jsProjects: JSON = jsObject["value"]
+            var projectName = [String]()
+            for index in 0...(count-1) {
+                projectName.append(jsProjects[index]["name"].string as String!)
+            }
+            var projects = ["Url2015Project","Glimpse and Application Insights"]
+            XCTAssertEqual(projectName, projects, "Correct Projects where found")
+            expectation.fulfill()
+        })
         
-        //Fail case
-        RestApiManager.sharedInstance.baseURL = "https://almlata.visualstudio.com"
-        RestApiManager.sharedInstance.usr = "fidmor"
-        RestApiManager.sharedInstance.pw = "FIDmor12!"
-        RestApiManager.sharedInstance.collection = "DefaultCollection"
-        
-        RestApiManager.sharedInstance.getCollections() { json in
-            let count = json["count"].int as Int?
-            XCTAssertNil(count, "Could not connect to host")
-        }
+        waitForExpectationsWithTimeout(5.0, handler: { error in
+            XCTAssertNil(error, "Request Timed Out")
+        })
     }
     
     func testGetProjects() {
