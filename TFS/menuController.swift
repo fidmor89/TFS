@@ -23,19 +23,19 @@ class menuController: UITableViewController {
             switch viewStateManager.sharedInstance.displayedMenu{
             case DisplayedMenu.Collections:
                 break
-            case DisplayedMenu.Teams:
+            case DisplayedMenu.Projects:
                 viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Collections
                 break
-            case DisplayedMenu.Projects:
-                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
+            case DisplayedMenu.Teams:
+                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
                 break
             case DisplayedMenu.Work:
                 //                RestApiManager.sharedInstance.initialize()  //Back button reloads to select user collection
                 if RestApiManager.sharedInstance.teamId == ""
                 {
-                    viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
-                }else{
                     viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
+                }else{
+                    viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
                 }
                 
                 break
@@ -107,7 +107,7 @@ class menuController: UITableViewController {
             }
             break
             
-        case DisplayedMenu.Projects:
+        case DisplayedMenu.Teams:
             self.projects = []
             RestApiManager.sharedInstance.getProjects { json in
                 var count: Int = json["count"].int as Int!         //number of objects within json obj
@@ -129,7 +129,7 @@ class menuController: UITableViewController {
             }
             break
             
-        case DisplayedMenu.Teams:
+        case DisplayedMenu.Projects:
             self.teams = []
             RestApiManager.sharedInstance.getTeams { json in
                 var count: Int = json["count"].int as Int!         //number of objects within json obj
@@ -257,7 +257,7 @@ class menuController: UITableViewController {
             break
             
         default:
-            println(viewStateManager.sharedInstance.displayedMenu)
+            println(viewStateManager.sharedInstance.displayedMenu.rawValue)
             break
         }
     }
@@ -265,15 +265,13 @@ class menuController: UITableViewController {
     //At detail Click
     override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
         switch viewStateManager.sharedInstance.displayedMenu{
-        case DisplayedMenu.Projects:
+        case DisplayedMenu.Teams:
             
-            viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
             RestApiManager.sharedInstance.teamId = self.projects[indexPath.row].id
             
             break
-        case DisplayedMenu.Teams:
+        case DisplayedMenu.Projects:
             
-            viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
             RestApiManager.sharedInstance.projectId =  self.teams[indexPath.row].id
             
             break
@@ -294,7 +292,7 @@ class menuController: UITableViewController {
             if self.collections.count == 0{
                 break
             }
-            viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
+            viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
             RestApiManager.sharedInstance.collection =  self.collections[indexPath.row].name
             let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
             navigationController?.pushViewController(secondViewController, animated: true)
@@ -304,11 +302,11 @@ class menuController: UITableViewController {
             x.detailDescriptionLabel.text = self.collections[indexPath.row].name
             break
             
-        case DisplayedMenu.Projects:
+        case DisplayedMenu.Teams:
             if self.projects.count == 0{
                 break
             }
-            viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
+            viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
             RestApiManager.sharedInstance.teamId = self.projects[indexPath.row].id
             
             let DetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
@@ -316,11 +314,11 @@ class menuController: UITableViewController {
             DetailViewController.detailDescriptionLabel.text = self.projects[indexPath.row].name
             break
             
-        case DisplayedMenu.Teams:
+        case DisplayedMenu.Projects:
             if self.teams.count == 0{
                 break
             }
-            viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
+            viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
             RestApiManager.sharedInstance.projectId =  self.teams[indexPath.row].id
             
             let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
@@ -382,9 +380,9 @@ class menuController: UITableViewController {
         {
         case DisplayedMenu.Collections:
             return self.collections.count
-        case DisplayedMenu.Teams:
-            return self.teams.count
         case DisplayedMenu.Projects:
+            return self.teams.count
+        case DisplayedMenu.Teams:
             return self.projects.count
         case DisplayedMenu.Work:
             return self.work.count
@@ -421,12 +419,12 @@ class menuController: UITableViewController {
             cell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             break
             
-        case DisplayedMenu.Teams:
+        case DisplayedMenu.Projects:
             displayedText = self.teams[indexPath.row].name
             cell!.accessoryType = UITableViewCellAccessoryType.DetailDisclosureButton
             break
             
-        case DisplayedMenu.Projects:
+        case DisplayedMenu.Teams:
             displayedText = self.projects[indexPath.row].name
             cell!.accessoryType = UITableViewCellAccessoryType.DetailButton
             break
