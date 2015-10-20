@@ -14,10 +14,16 @@ class viewStateManager {
     static let sharedInstance = viewStateManager()            //To use manager class as a singleton.
     
 }
-enum DisplayedMenu: String {
-    case Collections = "Collections"
-    case Projects = "Projects"
-    case Teams = "Teams"
-    case Work = "Work"
-    case Sprints = "Sprints"
+enum DisplayedMenu {
+    case Collections
+    case Projects
+    case Teams
+    case Work
+    case Sprints
+    case Epic
+    case Feature
+    case PBI
+    case Past
+    case Current
+    case Future
 }

@@ -31,7 +31,7 @@ class RestApiManager: NSObject {
     }
     
     func validateAuthorization(onCompletionAuth: (Bool) -> Void){
-        let route = baseURL + "/_apis/projectcollections?api-version=2.0"
+        let route = baseURL + "/_apis/projectcollections"
         
         makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             
@@ -48,7 +48,7 @@ class RestApiManager: NSObject {
     
     func getTeams(onCompletion: (JSON) -> Void) {
         
-        let route = baseURL + "/\(collection!)/_apis/projects?api-version=2.0"       //API request route
+        let route = baseURL + "/\(collection!)/_apis/projects"       //API request route
         
         makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             //parse NSData to JSON
@@ -58,7 +58,7 @@ class RestApiManager: NSObject {
     }
     
     func getProjects(onCompletion: (JSON) -> Void) {
-        let route = baseURL + "/\(collection!)/_apis/projects/\(projectId!)/teams?api-version=2.0"       //API request route
+        let route = baseURL + "/\(collection!)/_apis/projects/\(projectId!)/teams"       //API request route
 
         
         makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
@@ -70,7 +70,7 @@ class RestApiManager: NSObject {
     
     func getCollections(onCompletion: (JSON) -> Void) {
 
-        let route = baseURL + "/_apis/projectcollections?api-version=2.0"       //API request route
+        let route = baseURL + "/_apis/projectcollections"       //API request route
         
         makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             //parse NSData to JSON
@@ -81,7 +81,7 @@ class RestApiManager: NSObject {
     
     func getTeamProjects(onCompletion: (JSON) -> Void) {
         
-        let route = baseURL + "/\(collection!)/_apis/projects?api-version=2.0"       //API request route
+        let route = baseURL + "/\(collection!)/_apis/projects"       //API request route
         
         makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             //parse NSData to JSON
@@ -91,7 +91,7 @@ class RestApiManager: NSObject {
     }
     
     func getIterationsByTeamAndProject(onCompletion: (JSON) -> Void){
-        let route = baseURL + "/\(collection!)/\(projectId!)/\(teamId)/_apis/work/teamsettings/iterations?api-version=2.0"
+        let route = baseURL + "/\(collection!)/\(projectId!)/\(teamId)/_apis/work/teamsettings/iterations"
         
         makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             //parse NSData to JSON
@@ -101,7 +101,7 @@ class RestApiManager: NSObject {
     }
     
     func getCurrentSprint(onCompletion: (JSON) -> Void){
-        let route = baseURL + "/\(collection!)/\(projectId!)/\(teamId)/_apis/work/teamsettings/iterations?$timeframe=current&api-version=2.0"
+        let route = baseURL + "/\(collection!)/\(projectId!)/\(teamId)/_apis/work/teamsettings/iterations?$timeframe=current"
         
         makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             //parse NSData to JSON
@@ -110,8 +110,10 @@ class RestApiManager: NSObject {
         })
     }
     
+  
+    
     func getPBI(onCompletion: (JSON) -> Void){
-        let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
+        let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql"
 
         let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems WHERE [System.WorkItemType] = 'Product Backlog Item' AND [System.AreaPath] = 'Url2015Project\\iOSTeamExplorer' AND [System.IterationPath] = 'Url2015Project\\iOS_Team_Explorer_Collection\\SP5 - Epics, Features, PBI, Sprints and Work item views'\"}"
         
@@ -167,7 +169,7 @@ class RestApiManager: NSObject {
         var request = buildAuthorizationHeader()
         
         //Make GET request using SwiftHTTP Pod
-        request.GET(path, parameters: nil, completionHandler: {(response: HTTPResponse) in
+        request.GET(path, parameters: ["api-version": 2.0], completionHandler: {(response: HTTPResponse) in
             if let err = response.error {
                 println("error: \(err.localizedDescription)")
                 self.setLastResponseCode(response)

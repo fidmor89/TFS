@@ -10,33 +10,55 @@ import Foundation
 
 class menuController: UITableViewController {
     
-    @IBOutlet weak var backButton: UIButton!
-    var work:[String] = ["Epic", "Feature", "PBI's", "Past", "Current", "Future"]
+    
     var collections:[(id: String, name: String, url: String)] = []
     var teams:[(id: String, name: String, url: String, description: String, identityUrl: String)] = []
     var projects:[(id: String, name: String, description: String, url: String, state: String, revision: String)] = []
+    var work:[String] = ["Epic", "Feature", "PBI's", "Past", "Current", "Future"]
+    var iterations:[(id: String, name: String, path: String, startDate: String, endDate: String, url: String)] = []
     
     override func viewWillDisappear(animated: Bool) {
         
         if (find(self.navigationController!.viewControllers as! [UIViewController],self)==nil){
-            switch viewStateManager.sharedInstance.displayedMenu
-            {
+            switch viewStateManager.sharedInstance.displayedMenu{
             case DisplayedMenu.Collections:
-                break;
+                break
             case DisplayedMenu.Teams:
                 viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Collections
-                break;
+                break
             case DisplayedMenu.Projects:
                 viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
-                break;
+                break
             case DisplayedMenu.Work:
-                RestApiManager.sharedInstance.initialize()  //Back button reloads to select user collection
-                break;
+                //                RestApiManager.sharedInstance.initialize()  //Back button reloads to select user collection
+                if RestApiManager.sharedInstance.teamId == ""
+                {
+                    viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
+                }else{
+                    viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
+                }
+                
+                break
             case DisplayedMenu.Sprints:
                 viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
-                break;
+                break
+            case DisplayedMenu.Epic:
+                break
+            case DisplayedMenu.Feature:
+                break
+            case DisplayedMenu.PBI:
+                break
+            case DisplayedMenu.Past:
+                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+                break
+            case DisplayedMenu.Current:
+                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+                break
+            case DisplayedMenu.Future:
+                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+                break
             default:
-                break;
+                break
             }
             
         }
@@ -69,7 +91,7 @@ class menuController: UITableViewController {
         case DisplayedMenu.Collections:
             self.collections = []
             RestApiManager.sharedInstance.getCollections { json in
-                var count: Int = json["count"].int as Int!;         //number of objects within json obj
+                var count: Int = json["count"].int as Int!         //number of objects within json obj
                 var jsonOBJ = json["value"]                         //get json with projects
                 
                 for index in 0...(count-1) {                        //for each obj in jsonOBJ
@@ -83,29 +105,12 @@ class menuController: UITableViewController {
                         tableView?.reloadData()})
                 }
             }
-        case DisplayedMenu.Teams:
-            self.teams = []
-            RestApiManager.sharedInstance.getTeams { json in
-                var count: Int = json["count"].int as Int!;         //number of objects within json obj
-                var jsonOBJ = json["value"]                         //get json with projects
-                
-                for index in 0...(count-1) {                        //for each obj in jsonOBJ
-                    
-                    let id = jsonOBJ[index]["id"].string as String! ?? ""
-                    let name: String = jsonOBJ[index]["name"].string as String! ?? ""
-                    let url: String = jsonOBJ[index]["url"].string as String! ?? ""
-                    let description: String = jsonOBJ[index]["description"].string as String! ?? ""
-                    let identityUrl: String = jsonOBJ[index]["identityUrl"].string as String! ?? ""
-                    
-                    self.teams.append(id: id, name: name, url: url, description: description, identityUrl: identityUrl)
-                    dispatch_async(dispatch_get_main_queue(), {
-                        tableView?.reloadData()})
-                }
-            }
+            break
+            
         case DisplayedMenu.Projects:
             self.projects = []
             RestApiManager.sharedInstance.getProjects { json in
-                var count: Int = json["count"].int as Int!;         //number of objects within json obj
+                var count: Int = json["count"].int as Int!         //number of objects within json obj
                 var jsonOBJ = json["value"]                         //get json with projects
                 
                 for index in 0...(count-1) {                        //for each obj in jsonOBJ
@@ -122,8 +127,138 @@ class menuController: UITableViewController {
                         tableView?.reloadData()})
                 }
             }
+            break
+            
+        case DisplayedMenu.Teams:
+            self.teams = []
+            RestApiManager.sharedInstance.getTeams { json in
+                var count: Int = json["count"].int as Int!         //number of objects within json obj
+                var jsonOBJ = json["value"]                         //get json with projects
+                
+                for index in 0...(count-1) {                        //for each obj in jsonOBJ
+                    
+                    let id = jsonOBJ[index]["id"].string as String! ?? ""
+                    let name: String = jsonOBJ[index]["name"].string as String! ?? ""
+                    let url: String = jsonOBJ[index]["url"].string as String! ?? ""
+                    let description: String = jsonOBJ[index]["description"].string as String! ?? ""
+                    let identityUrl: String = jsonOBJ[index]["identityUrl"].string as String! ?? ""
+                    
+                    self.teams.append(id: id, name: name, url: url, description: description, identityUrl: identityUrl)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        tableView?.reloadData()})
+                }
+            }
+            break
+            
+        case DisplayedMenu.Epic:
+            break
+        case DisplayedMenu.Feature:
+            break
+        case DisplayedMenu.PBI:
+            break
+        case DisplayedMenu.Past:
+            
+            self.iterations = []
+            RestApiManager.sharedInstance.getIterationsByTeamAndProject { json in
+                var count: Int = json["count"].int as Int!         //number of objects within json obj
+                var jsonOBJ = json["value"]
+                
+                for index in 0...(count-1) {
+                    
+                    let id = jsonOBJ[index]["id"].string as String! ?? ""
+                    let name: String = jsonOBJ[index]["name"].string as String! ?? ""
+                    let path: String = jsonOBJ[index]["path"].string as String! ?? ""
+                    let startDate: String = jsonOBJ[index]["attributes"]["startDate"].string as String! ?? ""
+                    let endDate: String = jsonOBJ[index]["attributes"]["finishDate"].string as String! ?? ""
+                    let url: String = jsonOBJ[index]["url"].string as String! ?? ""
+                    
+                    if(endDate != ""){
+                        let dateFormatter = NSDateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+                        let dateEnd = dateFormatter.dateFromString(endDate)
+                        let dateNow = NSDate()
+                        //adding only sprints that has finished
+                        if dateEnd!.compare(dateNow) == NSComparisonResult.OrderedAscending
+                        {
+                            self.iterations.append(id: id, name: name, path: path, startDate: startDate, endDate: endDate, url: url)
+                            dispatch_async(dispatch_get_main_queue(), {
+                                tableView?.reloadData()
+                            })
+                        }
+                    }
+                }
+            }
+            
+            break
+            
+            
+        case DisplayedMenu.Current:
+            
+            self.iterations = []
+            RestApiManager.sharedInstance.getCurrentSprint { json in
+                var count: Int = json["count"].int as Int!         //number of objects within json obj
+                var jsonOBJ = json["value"]
+                
+                for index in 0...(count-1) {
+                    
+                    let id = jsonOBJ[index]["id"].string as String! ?? ""
+                    let name: String = jsonOBJ[index]["name"].string as String! ?? ""
+                    let path: String = jsonOBJ[index]["path"].string as String! ?? ""
+                    let startDate: String = jsonOBJ[index]["attributes"]["startDate"].string as String! ?? ""
+                    let endDate: String = jsonOBJ[index]["attributes"]["finishDate"].string as String! ?? ""
+                    let url: String = jsonOBJ[index]["url"].string as String! ?? ""
+                    
+                    self.iterations.append(id: id, name: name, path: path, startDate: startDate, endDate: endDate, url: url)
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        tableView?.reloadData()
+                    })
+                }
+            }
+            
+            break
+        case DisplayedMenu.Future:
+            self.iterations = []
+            RestApiManager.sharedInstance.getIterationsByTeamAndProject { json in
+                var count: Int = json["count"].int as Int!         //number of objects within json obj
+                var jsonOBJ = json["value"]
+                
+                for index in 0...(count-1) {
+                    
+                    let id = jsonOBJ[index]["id"].string as String! ?? ""
+                    let name: String = jsonOBJ[index]["name"].string as String! ?? ""
+                    let path: String = jsonOBJ[index]["path"].string as String! ?? ""
+                    let startDate: String = jsonOBJ[index]["attributes"]["startDate"].string as String! ?? ""
+                    let endDate: String = jsonOBJ[index]["attributes"]["finishDate"].string as String! ?? ""
+                    let url: String = jsonOBJ[index]["url"].string as String! ?? ""
+                    
+                    if(startDate != ""){
+                        let dateFormatter = NSDateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+                        let dateStart = dateFormatter.dateFromString(startDate)
+                        let dateNow = NSDate()
+                        //adding only sprints that has not started
+                        if dateStart!.compare(dateNow) == NSComparisonResult.OrderedDescending
+                        {
+                            self.iterations.append(id: id, name: name, path: path, startDate: startDate, endDate: endDate, url: url)
+                        }
+                        
+                    }else{
+                        //Display iterations with no date as future iterations
+                        self.iterations.append(id: id, name: name, path: path, startDate: startDate, endDate: endDate, url: url)
+                    }
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        tableView?.reloadData()
+                    })
+                }
+            }
+            
+            break
+            
         default:
             println(viewStateManager.sharedInstance.displayedMenu)
+            break
         }
     }
     
@@ -135,25 +270,19 @@ class menuController: UITableViewController {
             viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
             RestApiManager.sharedInstance.teamId = self.projects[indexPath.row].id
             
-            break;
+            break
         case DisplayedMenu.Teams:
             
             viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
             RestApiManager.sharedInstance.projectId =  self.teams[indexPath.row].id
             
-            break;
+            break
         default:
             break
         }
         viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
         let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
         navigationController?.pushViewController(secondViewController, animated: true)
-
-//        
-//        //reload menu model
-//        viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
-//        dispatch_async(dispatch_get_main_queue(), {
-//            tableView.reloadData()})
     }
     
     //At menu click
@@ -163,7 +292,7 @@ class menuController: UITableViewController {
             
         case DisplayedMenu.Collections:
             if self.collections.count == 0{
-                break;
+                break
             }
             viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
             RestApiManager.sharedInstance.collection =  self.collections[indexPath.row].name
@@ -177,7 +306,7 @@ class menuController: UITableViewController {
             
         case DisplayedMenu.Projects:
             if self.projects.count == 0{
-                break;
+                break
             }
             viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
             RestApiManager.sharedInstance.teamId = self.projects[indexPath.row].id
@@ -189,7 +318,7 @@ class menuController: UITableViewController {
             
         case DisplayedMenu.Teams:
             if self.teams.count == 0{
-                break;
+                break
             }
             viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
             RestApiManager.sharedInstance.projectId =  self.teams[indexPath.row].id
@@ -203,7 +332,7 @@ class menuController: UITableViewController {
             
         case DisplayedMenu.Work:
             if self.work.count == 0{
-                break;
+                break
             }
             switch self.work[indexPath.row]{
             case "Epic":
@@ -213,10 +342,25 @@ class menuController: UITableViewController {
             case "PBI's":
                 break
             case "Past":
+                
+                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Past
+                let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
+                navigationController?.pushViewController(secondViewController, animated: true)
+                
                 break
             case "Current":
+                
+                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Current
+                let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
+                navigationController?.pushViewController(secondViewController, animated: true)
+                
                 break
             case "Future":
+                
+                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Future
+                let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
+                navigationController?.pushViewController(secondViewController, animated: true)
+                
                 break
             default:
                 break
@@ -231,6 +375,7 @@ class menuController: UITableViewController {
         }
     }
     
+    //Number of cells
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //Cuantity of items to display depending on the actual displayed menu
         switch viewStateManager.sharedInstance.displayedMenu
@@ -243,11 +388,24 @@ class menuController: UITableViewController {
             return self.projects.count
         case DisplayedMenu.Work:
             return self.work.count
+            //        case DisplayedMenu.Epic:
+            //            break
+            //        case DisplayedMenu.Feature:
+            //            break
+            //        case DisplayedMenu.PBI:
+            //            break
+        case DisplayedMenu.Past:
+            return  self.iterations.count
+        case DisplayedMenu.Current:
+            return  self.iterations.count
+        case DisplayedMenu.Future:
+            return  self.iterations.count
         default:
             return 0
         }
     }
     
+    //Build cell
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell = tableView.dequeueReusableCellWithIdentifier("CELL") as? UITableViewCell
@@ -261,15 +419,18 @@ class menuController: UITableViewController {
         case DisplayedMenu.Collections:
             displayedText = self.collections[indexPath.row].name
             cell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-            break;
+            break
+            
         case DisplayedMenu.Teams:
             displayedText = self.teams[indexPath.row].name
             cell!.accessoryType = UITableViewCellAccessoryType.DetailDisclosureButton
-            break;
+            break
+            
         case DisplayedMenu.Projects:
             displayedText = self.projects[indexPath.row].name
             cell!.accessoryType = UITableViewCellAccessoryType.DetailButton
-            break;
+            break
+            
         case DisplayedMenu.Work:
             displayedText = self.work[indexPath.row]
             if indexPath.row >= 3{
@@ -277,7 +438,23 @@ class menuController: UITableViewController {
             }else{
                 cell!.accessoryType = UITableViewCellAccessoryType.None
             }
-            break;
+            break
+            
+        case DisplayedMenu.Past:
+            displayedText = self.iterations[indexPath.row].name
+            cell!.accessoryType = UITableViewCellAccessoryType.None
+            break
+        case DisplayedMenu.Current:
+            displayedText = self.iterations[indexPath.row].name
+            cell!.accessoryType = UITableViewCellAccessoryType.None
+            break
+        case DisplayedMenu.Future:
+            displayedText = self.iterations[indexPath.row].name
+            cell!.accessoryType = UITableViewCellAccessoryType.None
+            break
+            
+            
+            
         default:
             println(viewStateManager.sharedInstance.displayedMenu)
         }
@@ -286,7 +463,7 @@ class menuController: UITableViewController {
         return cell!
     }
     
-    //sign out button event
+    //sign out button touch down
     @IBAction func signOutButton(sender: AnyObject) {
         
         if (KeychainWrapper.hasValueForKey("credentials")){
@@ -296,5 +473,6 @@ class menuController: UITableViewController {
         let loginView = self.storyboard!.instantiateViewControllerWithIdentifier("LoginView") as! UINavigationController
         navigationController?.presentViewController(loginView, animated: true, completion: nil)
     }
+    
 }
 

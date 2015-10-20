@@ -15,7 +15,7 @@ class SprintViewController: UITableViewController {
     }
     
     func reload(){
-        tableView?.reloadData()
+//        tableView?.reloadData()
         self.iterations = []
         RestApiManager.sharedInstance.getIterationsByTeamAndProject { json in
             var count: Int = json["count"].int as Int!;         //number of objects within json obj
