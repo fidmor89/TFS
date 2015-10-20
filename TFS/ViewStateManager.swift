@@ -16,6 +16,8 @@ class viewStateManager {
 }
 enum DisplayedMenu: String {
     case Collections = "Collections"
-    case Teams = "Teams"
     case Projects = "Projects"
+    case Teams = "Teams"
+    case Work = "Work"
+    case Sprints = "Sprints"
 }

@@ -110,6 +110,19 @@ class RestApiManager: NSObject {
         })
     }
     
+    func getPBI(onCompletion: (JSON) -> Void){
+        let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
+
+        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems WHERE [System.WorkItemType] = 'Product Backlog Item' AND [System.AreaPath] = 'Url2015Project\\iOSTeamExplorer' AND [System.IterationPath] = 'Url2015Project\\iOS_Team_Explorer_Collection\\SP5 - Epics, Features, PBI, Sprints and Work item views'\"}"
+        
+        let params = ["Query" : query]
+        makeHTTPPostRequest(route, parameters: params, onCompletion: {(data: NSData) in
+            //parse NSData to JSON
+            let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
+            onCompletion(json)
+        })
+    }
+    
     /**
     @brief: Creates a HTTPOperation as a HTTP POST request and starts it for you.
     
@@ -123,6 +136,8 @@ class RestApiManager: NSObject {
     func makeHTTPPostRequest(path: String, parameters: Dictionary<String,AnyObject>?, onCompletion: (data: NSData) -> Void ){
         
         var request = buildAuthorizationHeader()
+        request.requestSerializer.headers["Content-Type"] = "application/json"
+        
         
         //Make POST request using SwiftHTTP Pod
         request.POST(path, parameters: parameters, completionHandler:{(response: HTTPResponse) in

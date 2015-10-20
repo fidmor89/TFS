@@ -11,13 +11,13 @@ import Foundation
 class menuController: UITableViewController {
     
     @IBOutlet weak var backButton: UIButton!
-    
+    var work:[String] = ["Epic", "Feature", "PBI's", "Past", "Current", "Future"]
     var collections:[(id: String, name: String, url: String)] = []
     var teams:[(id: String, name: String, url: String, description: String, identityUrl: String)] = []
     var projects:[(id: String, name: String, description: String, url: String, state: String, revision: String)] = []
     
     override func viewWillDisappear(animated: Bool) {
-
+        
         if (find(self.navigationController!.viewControllers as! [UIViewController],self)==nil){
             switch viewStateManager.sharedInstance.displayedMenu
             {
@@ -29,10 +29,16 @@ class menuController: UITableViewController {
             case DisplayedMenu.Projects:
                 viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
                 break;
+            case DisplayedMenu.Work:
+                RestApiManager.sharedInstance.initialize()  //Back button reloads to select user collection
+                break;
+            case DisplayedMenu.Sprints:
+                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+                break;
             default:
                 break;
             }
-
+            
         }
         super.viewWillDisappear(animated)
     }
@@ -121,13 +127,44 @@ class menuController: UITableViewController {
         }
     }
     
+    //At detail Click
+    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        switch viewStateManager.sharedInstance.displayedMenu{
+        case DisplayedMenu.Projects:
+            
+            viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
+            RestApiManager.sharedInstance.teamId = self.projects[indexPath.row].id
+            
+            break;
+        case DisplayedMenu.Teams:
+            
+            viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
+            RestApiManager.sharedInstance.projectId =  self.teams[indexPath.row].id
+            
+            break;
+        default:
+            break
+        }
+        viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+        let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
+        navigationController?.pushViewController(secondViewController, animated: true)
+
+//        
+//        //reload menu model
+//        viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+//        dispatch_async(dispatch_get_main_queue(), {
+//            tableView.reloadData()})
+    }
+    
     //At menu click
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        switch viewStateManager.sharedInstance.displayedMenu
-            
-        {
+        
+        switch viewStateManager.sharedInstance.displayedMenu{
             
         case DisplayedMenu.Collections:
+            if self.collections.count == 0{
+                break;
+            }
             viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
             RestApiManager.sharedInstance.collection =  self.collections[indexPath.row].name
             let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
@@ -138,10 +175,25 @@ class menuController: UITableViewController {
             x.detailDescriptionLabel.text = self.collections[indexPath.row].name
             break
             
-        case DisplayedMenu.Teams:
+        case DisplayedMenu.Projects:
+            if self.projects.count == 0{
+                break;
+            }
+            viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
+            RestApiManager.sharedInstance.teamId = self.projects[indexPath.row].id
             
+            let DetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
+            self.splitViewController?.showDetailViewController(DetailViewController, sender: nil)
+            DetailViewController.detailDescriptionLabel.text = self.projects[indexPath.row].name
+            break
+            
+        case DisplayedMenu.Teams:
+            if self.teams.count == 0{
+                break;
+            }
             viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
             RestApiManager.sharedInstance.projectId =  self.teams[indexPath.row].id
+            
             let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
             navigationController?.pushViewController(secondViewController, animated: true)
             let x = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
@@ -149,16 +201,31 @@ class menuController: UITableViewController {
             x.detailDescriptionLabel.text = self.teams[indexPath.row].name
             break
             
-        case DisplayedMenu.Projects:
-            viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
-            RestApiManager.sharedInstance.teamId = self.projects[indexPath.row].id
+        case DisplayedMenu.Work:
+            if self.work.count == 0{
+                break;
+            }
+            switch self.work[indexPath.row]{
+            case "Epic":
+                break
+            case "Feature":
+                break
+            case "PBI's":
+                break
+            case "Past":
+                break
+            case "Current":
+                break
+            case "Future":
+                break
+            default:
+                break
+            }
+            let x = self.storyboard!.instantiateViewControllerWithIdentifier("SprintView") as! SprintViewController
+            self.splitViewController?.showDetailViewController(x, sender: nil)
             
-            let DetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
-            self.splitViewController?.showDetailViewController(DetailViewController, sender: nil)
-            DetailViewController.detailDescriptionLabel.text = self.projects[indexPath.row].name
             
             break
-            
         default:
             break
         }
@@ -174,6 +241,8 @@ class menuController: UITableViewController {
             return self.teams.count
         case DisplayedMenu.Projects:
             return self.projects.count
+        case DisplayedMenu.Work:
+            return self.work.count
         default:
             return 0
         }
@@ -195,11 +264,19 @@ class menuController: UITableViewController {
             break;
         case DisplayedMenu.Teams:
             displayedText = self.teams[indexPath.row].name
-            cell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            cell!.accessoryType = UITableViewCellAccessoryType.DetailDisclosureButton
             break;
         case DisplayedMenu.Projects:
             displayedText = self.projects[indexPath.row].name
-            cell!.accessoryType = UITableViewCellAccessoryType.None
+            cell!.accessoryType = UITableViewCellAccessoryType.DetailButton
+            break;
+        case DisplayedMenu.Work:
+            displayedText = self.work[indexPath.row]
+            if indexPath.row >= 3{
+                cell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            }else{
+                cell!.accessoryType = UITableViewCellAccessoryType.None
+            }
             break;
         default:
             println(viewStateManager.sharedInstance.displayedMenu)
