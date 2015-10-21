@@ -10,7 +10,6 @@ import Foundation
 
 class menuController: UITableViewController {
     
-    
     var collections:[(id: String, name: String, url: String)] = []
     var teams:[(id: String, name: String, url: String, description: String, identityUrl: String)] = []
     var projects:[(id: String, name: String, description: String, url: String, state: String, revision: String)] = []
@@ -109,6 +108,27 @@ class menuController: UITableViewController {
             }
             break
             
+        case DisplayedMenu.Projects:
+            self.teams = []
+            RestApiManager.sharedInstance.getTeams { json in
+                var count: Int = json["count"].int as Int!         //number of objects within json obj
+                var jsonOBJ = json["value"]                         //get json with projects
+                
+                for index in 0...(count-1) {                        //for each obj in jsonOBJ
+                    
+                    let id = jsonOBJ[index]["id"].string as String! ?? ""
+                    let name: String = jsonOBJ[index]["name"].string as String! ?? ""
+                    let url: String = jsonOBJ[index]["url"].string as String! ?? ""
+                    let description: String = jsonOBJ[index]["description"].string as String! ?? ""
+                    let identityUrl: String = jsonOBJ[index]["identityUrl"].string as String! ?? ""
+                    
+                    self.teams.append(id: id, name: name, url: url, description: description, identityUrl: identityUrl)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        tableView?.reloadData()})
+                }
+            }
+            break
+            
         case DisplayedMenu.Teams:
             self.projects = []
             RestApiManager.sharedInstance.getProjects { json in
@@ -131,26 +151,6 @@ class menuController: UITableViewController {
             }
             break
             
-        case DisplayedMenu.Projects:
-            self.teams = []
-            RestApiManager.sharedInstance.getTeams { json in
-                var count: Int = json["count"].int as Int!         //number of objects within json obj
-                var jsonOBJ = json["value"]                         //get json with projects
-                
-                for index in 0...(count-1) {                        //for each obj in jsonOBJ
-                    
-                    let id = jsonOBJ[index]["id"].string as String! ?? ""
-                    let name: String = jsonOBJ[index]["name"].string as String! ?? ""
-                    let url: String = jsonOBJ[index]["url"].string as String! ?? ""
-                    let description: String = jsonOBJ[index]["description"].string as String! ?? ""
-                    let identityUrl: String = jsonOBJ[index]["identityUrl"].string as String! ?? ""
-                    
-                    self.teams.append(id: id, name: name, url: url, description: description, identityUrl: identityUrl)
-                    dispatch_async(dispatch_get_main_queue(), {
-                        tableView?.reloadData()})
-                }
-            }
-            break
             
         case DisplayedMenu.Epic:
             break
@@ -365,9 +365,6 @@ class menuController: UITableViewController {
             default:
                 break
             }
-            //            let x = self.storyboard!.instantiateViewControllerWithIdentifier("SprintView") as! SprintViewController
-            //            self.splitViewController?.showDetailViewController(x, sender: nil)
-            
             
             break
         default:
@@ -408,13 +405,13 @@ class menuController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-
+        
         if viewStateManager.sharedInstance.displayedMenu == DisplayedMenu.Work{
             return " "
         }
         return nil
     }
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
         if viewStateManager.sharedInstance.displayedMenu == DisplayedMenu.Work{
