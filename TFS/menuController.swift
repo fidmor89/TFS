@@ -334,7 +334,7 @@ class menuController: UITableViewController {
             if self.work.count == 0{
                 break
             }
-            switch self.work[indexPath.row]{
+            switch self.work[indexPath.row + (indexPath.section * 3)]{
             case "Epic":
                 break
             case "Feature":
@@ -365,8 +365,8 @@ class menuController: UITableViewController {
             default:
                 break
             }
-//            let x = self.storyboard!.instantiateViewControllerWithIdentifier("SprintView") as! SprintViewController
-//            self.splitViewController?.showDetailViewController(x, sender: nil)
+            //            let x = self.storyboard!.instantiateViewControllerWithIdentifier("SprintView") as! SprintViewController
+            //            self.splitViewController?.showDetailViewController(x, sender: nil)
             
             
             break
@@ -387,13 +387,15 @@ class menuController: UITableViewController {
         case DisplayedMenu.Teams:
             return self.projects.count
         case DisplayedMenu.Work:
-            return self.work.count
+            return self.work.count/2
+            
             //        case DisplayedMenu.Epic:
             //            break
             //        case DisplayedMenu.Feature:
             //            break
             //        case DisplayedMenu.PBI:
             //            break
+            
         case DisplayedMenu.Past:
             return  self.iterations.count
         case DisplayedMenu.Current:
@@ -403,6 +405,22 @@ class menuController: UITableViewController {
         default:
             return 0
         }
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+
+        if viewStateManager.sharedInstance.displayedMenu == DisplayedMenu.Work{
+            return " "
+        }
+        return nil
+    }
+
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        
+        if viewStateManager.sharedInstance.displayedMenu == DisplayedMenu.Work{
+            return 2
+        }
+        return 1
     }
     
     //Build cell
@@ -432,11 +450,11 @@ class menuController: UITableViewController {
             break
             
         case DisplayedMenu.Work:
-            displayedText = self.work[indexPath.row]
-            if indexPath.row >= 3{
-                cell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-            }else{
+            displayedText = self.work[indexPath.row + (indexPath.section * 3)]
+            if indexPath.section == 0{
                 cell!.accessoryType = UITableViewCellAccessoryType.None
+            }else{
+                cell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             }
             break
             
