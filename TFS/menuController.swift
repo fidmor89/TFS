@@ -25,9 +25,11 @@ class menuController: UITableViewController {
                 break
             case DisplayedMenu.Projects:
                 viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Collections
+                RestApiManager.sharedInstance.projectId = nil
                 break
             case DisplayedMenu.Teams:
                 viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Projects
+                RestApiManager.sharedInstance.teamId = ""
                 break
             case DisplayedMenu.Work:
                 //                RestApiManager.sharedInstance.initialize()  //Back button reloads to select user collection
@@ -363,8 +365,8 @@ class menuController: UITableViewController {
             default:
                 break
             }
-            let x = self.storyboard!.instantiateViewControllerWithIdentifier("SprintView") as! SprintViewController
-            self.splitViewController?.showDetailViewController(x, sender: nil)
+//            let x = self.storyboard!.instantiateViewControllerWithIdentifier("SprintView") as! SprintViewController
+//            self.splitViewController?.showDetailViewController(x, sender: nil)
             
             
             break

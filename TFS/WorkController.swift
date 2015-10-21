@@ -44,21 +44,10 @@ class WorkController: UIViewController {
     
     @IBAction func onNavigateButtonTouchDown(sender: AnyObject) {
         
-        switch viewStateManager.sharedInstance.displayedMenu
-        {
-        case DisplayedMenu.Collections:
-            break;
-        case DisplayedMenu.Teams:
-            break;
-        case DisplayedMenu.Projects:
-            
-            let x = self.storyboard!.instantiateViewControllerWithIdentifier("SprintView") as! SprintViewController
-            self.splitViewController?.showDetailViewController(x, sender: nil)
-            
-            break;
-        default:
-            break;
+        if RestApiManager.sharedInstance.projectId != nil {
+        
+        let x = self.storyboard!.instantiateViewControllerWithIdentifier("SprintView") as! SprintViewController
+        self.splitViewController?.showDetailViewController(x, sender: nil)
         }
     }
-    
 }
