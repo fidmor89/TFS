@@ -363,11 +363,13 @@ class menuController: UITableViewController {
                 
                 break
             default:
+                println(self.work[indexPath.row + (indexPath.section * 3)])
                 break
             }
             
             break
         default:
+            println(viewStateManager.sharedInstance.displayedMenu.rawValue)
             break
         }
     }
@@ -448,11 +450,7 @@ class menuController: UITableViewController {
             
         case DisplayedMenu.Work:
             displayedText = self.work[indexPath.row + (indexPath.section * 3)]
-            if indexPath.section == 0{
-                cell!.accessoryType = UITableViewCellAccessoryType.None
-            }else{
-                cell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-            }
+            cell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             break
             
         case DisplayedMenu.Past:
