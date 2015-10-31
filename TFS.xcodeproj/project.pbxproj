@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2B04D8091BC033F7001C9A65 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B04D8081BC033F7001C9A65 /* LoginController.swift */; };
+		2BA2FC221BE55D1900160E11 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA2FC211BE55D1900160E11 /* TaskDetailViewController.swift */; };
 		2BC8E0D11BD2C60B00B7EF6C /* viewStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE06EAA1BD2BB7D0065FD0C /* viewStateManager.swift */; };
 		2BCE94381BC0703000F32722 /* WorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE94371BC0703000F32722 /* WorkController.swift */; };
 		2BCE943B1BC0A89A00F32722 /* menuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE943A1BC0A89A00F32722 /* menuController.swift */; };
@@ -42,6 +43,7 @@
 		033AFAAF83FA08C5B06301CE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		2473D57791FF230608CD470E /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B04D8081BC033F7001C9A65 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		2BA2FC211BE55D1900160E11 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
 		2BCE94371BC0703000F32722 /* WorkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkController.swift; sourceTree = "<group>"; };
 		2BCE943A1BC0A89A00F32722 /* menuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = menuController.swift; sourceTree = "<group>"; };
 		2BD389131B9BA4F1008A0A48 /* TFS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +102,7 @@
 				2BCE94371BC0703000F32722 /* WorkController.swift */,
 				2BCE943A1BC0A89A00F32722 /* menuController.swift */,
 				2BEBF7E31BD2D53600AFEF5A /* SprintViewController.swift */,
+				2BA2FC211BE55D1900160E11 /* TaskDetailViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				2BE06EAB1BD2BB7D0065FD0C /* viewStateManager.swift in Sources */,
 				2BD3891B1B9BA4F1008A0A48 /* ViewController.swift in Sources */,
 				2BD389191B9BA4F1008A0A48 /* AppDelegate.swift in Sources */,
+				2BA2FC221BE55D1900160E11 /* TaskDetailViewController.swift in Sources */,
 				3F04901D1B9D015E00677A47 /* SWRevealViewController.m in Sources */,
 				2BCE94381BC0703000F32722 /* WorkController.swift in Sources */,
 				2BEBF7E41BD2D53600AFEF5A /* SprintViewController.swift in Sources */,

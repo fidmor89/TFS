@@ -187,10 +187,10 @@
             </objects>
             <point key="canvasLocation" x="1037" y="114"/>
         </scene>
-        <!--View Controller-->
+        <!--Task Detail View Controller-->
         <scene sceneID="v2M-qQ-wbd">
             <objects>
-                <viewController id="2Dz-Bp-FHR" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TaskDetail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2Dz-Bp-FHR" customClass="TaskDetailViewController" customModule="TFS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lqG-8v-bmg"/>
                         <viewControllerLayoutGuide type="bottom" id="3vx-sT-2o3"/>
@@ -347,7 +347,7 @@
                                 <rect key="frame" x="16" y="275" width="283" height="305"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
