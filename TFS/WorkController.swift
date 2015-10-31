@@ -44,10 +44,11 @@ class WorkController: UIViewController {
     
     @IBAction func onNavigateButtonTouchDown(sender: AnyObject) {
         
-        if RestApiManager.sharedInstance.projectId != nil {
+
         
-        let x = self.storyboard!.instantiateViewControllerWithIdentifier("SprintView") as! SprintViewController
+        let x = self.storyboard!.instantiateViewControllerWithIdentifier("TaskDetailView") as! TaskDetailViewController
+            
         self.splitViewController?.showDetailViewController(x, sender: nil)
-        }
+
     }
 }
