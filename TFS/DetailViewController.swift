@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class TaskDetailViewController: UIViewController {
+class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
