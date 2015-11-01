@@ -187,10 +187,10 @@
             </objects>
             <point key="canvasLocation" x="1037" y="114"/>
         </scene>
-        <!--Task Detail View Controller-->
+        <!--Detail View Controller-->
         <scene sceneID="v2M-qQ-wbd">
             <objects>
-                <viewController storyboardIdentifier="TaskDetailView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2Dz-Bp-FHR" customClass="TaskDetailViewController" customModule="TFS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TaskDetailView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2Dz-Bp-FHR" customClass="DetailViewController" customModule="TFS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lqG-8v-bmg"/>
                         <viewControllerLayoutGuide type="bottom" id="3vx-sT-2o3"/>
@@ -330,13 +330,6 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;RemainingWork&gt;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F9j-Ix-iZ2">
-                                <rect key="frame" x="491" y="298" width="142" height="21"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;Priority&gt;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8kI-w1-Tfy">
                                 <rect key="frame" x="420" y="271" width="75" height="21"/>
                                 <animations/>
@@ -370,6 +363,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="&lt;RemainingWork&gt;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F9j-Ix-iZ2">
+                                <rect key="frame" x="491" y="304" width="142" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -423,6 +423,19 @@
                             <constraint firstItem="Huj-63-GtJ" firstAttribute="baseline" secondItem="tBk-Uq-eYq" secondAttribute="baseline" id="y6j-6p-TI6"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="activityLabel" destination="ysv-Wz-isQ" id="1bV-PT-ww4"/>
+                        <outlet property="areaPathLabel" destination="DWP-EI-v4D" id="Hue-9f-nXw"/>
+                        <outlet property="assignedToLabel" destination="aJG-yo-1Ea" id="6V0-C6-kVp"/>
+                        <outlet property="blockedLabel" destination="0gB-Nw-0wm" id="eHp-nK-igZ"/>
+                        <outlet property="idLabel" destination="GO7-Es-wGB" id="OKK-Jz-yNp"/>
+                        <outlet property="iterationPathLabel" destination="FH3-zj-snm" id="YBF-te-DUn"/>
+                        <outlet property="priorityLabel" destination="8kI-w1-Tfy" id="Ogf-3o-u1H"/>
+                        <outlet property="reasonLabel" destination="CNJ-Cz-Yq7" id="yGa-ZR-6Eu"/>
+                        <outlet property="remainingWorkLabel" destination="F9j-Ix-iZ2" id="abZ-rG-y3A"/>
+                        <outlet property="stateLabel" destination="Vnl-oU-ni6" id="04W-Yh-zs4"/>
+                        <outlet property="titleLabel" destination="2nw-sW-p0k" id="rQY-fl-N7v"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9wY-80-5nK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
