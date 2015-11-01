@@ -13,7 +13,7 @@ import SwiftHTTP
 typealias ServiceResponse = (JSON, NSError?) -> Void
 
 class RestApiManager: NSObject {
-    
+
     static let sharedInstance = RestApiManager()            //To use manager class as a singleton.
     internal var baseURL: String = ""
     internal var usr: String = ""
@@ -111,49 +111,117 @@ class RestApiManager: NSObject {
     }
     
   
-    
-    func getPBI(onCompletion: (JSON) -> Void){
-        let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql"
+    func getTaks(onCompletion: (NSDictionary) -> Void){
 
-        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems WHERE [System.WorkItemType] = 'Product Backlog Item' AND [System.AreaPath] = 'Url2015Project\\iOSTeamExplorer' AND [System.IterationPath] = 'Url2015Project\\iOS_Team_Explorer_Collection\\SP5 - Epics, Features, PBI, Sprints and Work item views'\"}"
+        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems WHERE [System.WorkItemType] = 'Task' AND [System.AreaPath] = '\(projectId!)\\\\\(teamId)' AND [System.IterationPath] = '\(projectId!)\\\\iOS_Team_Explorer_Collection\\\\SP5 - Epics, Features, PBI, Sprints and Work item views'\"}"
         
-        let params = ["Query" : query]
-        makeHTTPPostRequest(route, parameters: params, onCompletion: {(data: NSData) in
-            //parse NSData to JSON
-            let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
-            onCompletion(json)
+        queryServer(query, onCompletion: {data in
+            onCompletion(data)                  //Pass up data
+        })
+    
+    }
+    
+    func getPBI(onCompletion: (NSDictionary) -> Void){
+
+        
+        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems WHERE [System.WorkItemType] = 'Product Backlog Item' AND [System.AreaPath] = '\(projectId!)\\\\\(teamId)' AND [System.IterationPath] = '\(projectId!)\\\\iOS_Team_Explorer_Collection\\\\SP5 - Epics, Features, PBI, Sprints and Work item views'\"}"
+        
+        queryServer(query, onCompletion: {data in
+            onCompletion(data)                  //Pass up data
         })
     }
     
-    /**
-    @brief: Creates a HTTPOperation as a HTTP POST request and starts it for you.
+    func queryServer(query: String, onCompletion: (NSDictionary) -> Void){
+        let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
+
+        makeHTTPPostRequest(route, bodyContent: query, onCompletion: {(data: NSData) in
+            //parse NSData to JSON
+            let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
+            
+            let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
+            
+            onCompletion(jsonResult)            //return results from request
+        })
+    }
     
-    @param: path The url you would like to make a request to.
-    @param: parameters The parameters are HTTP parameters you would like to send.
-    @param: onCompletion The closure that is run when a HTTP Request finished.
-    
-    @see: makeHTTPGetRequest
-    @see: buildAuthorizationHeader
-    */
-    func makeHTTPPostRequest(path: String, parameters: Dictionary<String,AnyObject>?, onCompletion: (data: NSData) -> Void ){
+    func connectToWebAPI(){
         
-        var request = buildAuthorizationHeader()
-        request.requestSerializer.headers["Content-Type"] = "application/json"
+        //setting up the base64-encoded credentials
+        let loginString = NSString(format: "%@:%@", usr, pw)
+        let loginData: NSData = loginString.dataUsingEncoding(NSUTF8StringEncoding)!
+        let base64LoginString = "Basic " + loginData.base64EncodedStringWithOptions(nil)
         
+        //creating the request
+        let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
+        let url = NSURL(string: route)
+        var request = NSMutableURLRequest(URL: url!)
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let session = NSURLSession.sharedSession()
+        request.setValue(base64LoginString, forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
         
-        //Make POST request using SwiftHTTP Pod
-        request.POST(path, parameters: parameters, completionHandler:{(response: HTTPResponse) in
-            if let err = response.error {
-                println("error: \(err.localizedDescription)")
-                self.setLastResponseCode(response)
+        let urlConnection = NSURLConnection(request: request, delegate: self)
+        request.HTTPMethod = "POST"
+
+
+        
+        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems WHERE [System.WorkItemType] = 'Product Backlog Item' AND [System.AreaPath] = 'Url2015Project\\\\iOSTeamExplorer' AND [System.IterationPath] = 'Url2015Project\\\\iOS_Team_Explorer_Collection\\\\SP5 - Epics, Features, PBI, Sprints and Work item views'\"}\"}"
+        
+        request.HTTPBody = query.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            if (error != nil) {
+                println(error)
+                
             }
-            if let data = response.responseObject as? NSData {
-                self.setLastResponseCode(response)
+            else {
+                
+                
+//                println("Response: " + response)
+                
+//                let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
+//                println(json)
+                
+                let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSDictionary
+                println(jsonResult)
+
+                
+            }
+        })  
+        
+        
+        //fire off the request
+        task.resume()
+    }
+
+    func makeHTTPPostRequest(path: String, bodyContent: String, onCompletion: (data: NSData) -> Void ){
+        
+        //create the request
+        let url = NSURL(string: path)
+        var request = NSMutableURLRequest(URL: url!)
+//        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let session = NSURLSession.sharedSession()
+        request.setValue(buildBase64EncodedCredentials(), forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+//        let urlConnection = NSURLConnection(request: request, delegate: self)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = bodyContent.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            if (error != nil) {
+                println(error)
+            }
+            else {
                 onCompletion(data: data)                                                            //return data from POST request.
             }
         })
         
+        //fire off the request
+        task.resume()
     }
+    
     
     /**
     @brief: Creates a HTTPOperation as a HTTP POST request and starts it for you.
@@ -202,14 +270,20 @@ class RestApiManager: NSObject {
     @see: makeHTTPPostRequest
     */
     func buildAuthorizationHeader() -> HTTPTask{
-        let header:String = usr + ":" + pw                                                          //build authorization header.
-        let utf8str: NSData = header.dataUsingEncoding(NSUTF8StringEncoding)!                       //encode header
-        let base64Encoded = utf8str.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
         
         var request = HTTPTask()
         request.requestSerializer = HTTPRequestSerializer()
-        request.requestSerializer.headers["Authorization"] = "Basic " + base64Encoded               //basic auth header with auth credentials
+        request.requestSerializer.headers["Authorization"] = buildBase64EncodedCredentials()             //basic auth header with auth credentials
         return request;
     }
-    
+ 
+    func buildBase64EncodedCredentials() -> String{
+        
+        //setting up the base64-encoded credentials
+        let loginString = NSString(format: "%@:%@", usr, pw)
+        let loginData: NSData = loginString.dataUsingEncoding(NSUTF8StringEncoding)!
+        let base64LoginString = loginData.base64EncodedStringWithOptions(nil)
+
+        return "Basic " + base64LoginString
+    }
 }

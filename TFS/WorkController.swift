@@ -11,6 +11,7 @@ import UIKit
 
 class WorkController: UIViewController {
     
+    @IBOutlet weak var textUI: UITextView!
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     
     var iterations:[(id: String, name: String, path: String, startDate: String, endDate: String, url: String)] = []
@@ -44,9 +45,14 @@ class WorkController: UIViewController {
     
     @IBAction func onNavigateButtonTouchDown(sender: AnyObject) {
         
+        RestApiManager.sharedInstance.getPBI{json in
+            
+            println(json);
+            
+        }
 
         
-        let x = self.storyboard!.instantiateViewControllerWithIdentifier("TaskDetailView") as! TaskDetailViewController
+        let x = self.storyboard!.instantiateViewControllerWithIdentifier("TaskDetailView") as! DetailViewController
             
         self.splitViewController?.showDetailViewController(x, sender: nil)
 

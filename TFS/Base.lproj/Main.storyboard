@@ -136,8 +136,19 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vva-dU-kZq">
+                                <rect key="frame" x="168" y="48" width="283" height="305"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="305" id="IeM-wN-tYf"/>
+                                    <constraint firstAttribute="width" constant="283" id="sDK-RJ-8hI"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dlx-04-yiW">
-                                <rect key="frame" x="227" y="356" width="61" height="30"/>
+                                <rect key="frame" x="270" y="399" width="61" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Navigate">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -152,6 +163,7 @@
                     </view>
                     <connections>
                         <outlet property="detailDescriptionLabel" destination="4N4-yX-ddJ" id="IKA-5x-QHL"/>
+                        <outlet property="textUI" destination="Vva-dU-kZq" id="0h7-Is-nmo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AiT-uz-rfw" userLabel="First Responder" sceneMemberID="firstResponder"/>

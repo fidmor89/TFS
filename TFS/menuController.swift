@@ -269,12 +269,12 @@ class menuController: UITableViewController {
         switch viewStateManager.sharedInstance.displayedMenu{
         case DisplayedMenu.Teams:
             
-            RestApiManager.sharedInstance.teamId = self.projects[indexPath.row].id
+            RestApiManager.sharedInstance.teamId = self.projects[indexPath.row].name
             
             break
         case DisplayedMenu.Projects:
             
-            RestApiManager.sharedInstance.projectId =  self.teams[indexPath.row].id
+            RestApiManager.sharedInstance.projectId =  self.teams[indexPath.row].name
             
             break
         default:
@@ -309,7 +309,7 @@ class menuController: UITableViewController {
                 break
             }
             viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
-            RestApiManager.sharedInstance.teamId = self.projects[indexPath.row].id
+            RestApiManager.sharedInstance.teamId = self.projects[indexPath.row].name
             
             let DetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
             self.splitViewController?.showDetailViewController(DetailViewController, sender: nil)
@@ -321,7 +321,7 @@ class menuController: UITableViewController {
                 break
             }
             viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
-            RestApiManager.sharedInstance.projectId =  self.teams[indexPath.row].id
+            RestApiManager.sharedInstance.projectId =  self.teams[indexPath.row].name
             
             let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
             navigationController?.pushViewController(secondViewController, animated: true)
