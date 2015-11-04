@@ -99,67 +99,68 @@ class RestApiManagerTest: XCTestCase {
         })
     }
     
-    func testGetTeamProjects() {
+    func testGetIterationsByTeamAndProject() {
+        let expectation = expectationWithDescription("GetIterations")
         
-        // Success cases
+        //Success case
         RestApiManager.sharedInstance.baseURL = "https://almlatam.visualstudio.com"
-        RestApiManager.sharedInstance.usr = "fidmor"
-        RestApiManager.sharedInstance.pw = "FIDmor12!"
-        
-        RestApiManager.sharedInstance.getTeamProjects() { json in
-            let count = json["count"].int as Int?
+        RestApiManager.sharedInstance.usr = "jlmruiz"
+        RestApiManager.sharedInstance.pw = "Prueba2015"
+        RestApiManager.sharedInstance.collection = "DefaultCollection"
+        RestApiManager.sharedInstance.projectId = "Url2015Project"
+        RestApiManager.sharedInstance.teamId = "iOSTeamExplorer"
+        RestApiManager.sharedInstance.getIterationsByTeamAndProject({ (jsObject: JSON) -> () in
+            var count: Int = jsObject["count"].int as Int!
             XCTAssertNotNil(count, "Connected to host")
-            XCTAssertGreaterThan(Int(count!), 0, "Returned with TeamProjects")
-        }
-        
-        //Fail case
-        RestApiManager.sharedInstance.baseURL = "https://almlata.visualstudio.com"
-        RestApiManager.sharedInstance.usr = "fidmor"
-        RestApiManager.sharedInstance.pw = "FIDmor12!"
-        
-        RestApiManager.sharedInstance.getTeamProjects() { json in
-            let count = json["count"].int as Int?
-            XCTAssertNil(count, "Could not connect to host")
-        }
-    }
-    
-    func testGetIterations() {
-        
-        // Success cases
-        RestApiManager.sharedInstance.baseURL = "https://almlatam.visualstudio.com"
-        RestApiManager.sharedInstance.usr = "fidmor"
-        RestApiManager.sharedInstance.pw = "FIDmor12!"
-        
-//        RestApiManager.sharedInstance.getIterationsByTeamAndProject("", team: "") { json in
-//            let count = json["count"].int as Int?
-//            //XCTAssertNotNil(count, "Connected to host")
-//            //XCTAssertGreaterThan(Int(count!), 0, "Returned with Iterations")
-//            XCTAssertEqual(Int(count!), 20, "Returned with Iterations")// Url2015Project iterations
-//        }
-        
-        //Fail case
-        //RestApiManager.sharedInstance.baseURL = "https://almlata.visualstudio.com"
-        //RestApiManager.sharedInstance.usr = "fidmor"
-        //RestApiManager.sharedInstance.pw = "FIDmor12!"
-        
-        //RestApiManager.sharedInstance.getTeamProjects() { json in
-            //let count = json["count"].int as Int?
-            //XCTAssertNil(count, "Could not connect to host")
-        //}
+            XCTAssertGreaterThan(count, 0, "Returned with some iterations")
+            var jsIterations = jsObject["value"]
+            var apiIterations = [String]()
+            for index in 0...(count - 1) {
+                apiIterations.append(jsIterations[index]["name"].string as String!)
+            }
+            XCTAssertEqual(apiIterations[0], "SP1 - roadmap, storyboard and auth", "Correct first iteration")
+            expectation.fulfill()
+        })
+        waitForExpectationsWithTimeout(5.0, handler: { error in
+            XCTAssertNil(error, "Request Timed Out")
+        })
+
     }
     
     func testGetCurrentSprint(){
-        // Credentials
-        RestApiManager.sharedInstance.baseURL = "https://almlatam.visualstudio.com"
-        RestApiManager.sharedInstance.usr = "fidmor"
-        RestApiManager.sharedInstance.pw = "FIDmor12!"
+        let expectation = expectationWithDescription("GetIterations")
         
-        // Success case
-//        RestApiManager.sharedInstance.getCurrentSprint("Url2015Project", team:"iOSTeamExplorer") { json in
-//            let count = json["count"].int as Int?
-//            XCTAssertNotNil(count, "Connected to host")
-//            XCTAssertGreaterThan(Int(count!), 0, "Returned with Iterations")
-//        }
+        //Success case
+        RestApiManager.sharedInstance.baseURL = "https://almlatam.visualstudio.com"
+        RestApiManager.sharedInstance.usr = "jlmruiz"
+        RestApiManager.sharedInstance.pw = "Prueba2015"
+        RestApiManager.sharedInstance.collection = "DefaultCollection"
+        RestApiManager.sharedInstance.projectId = "Url2015Project"
+        RestApiManager.sharedInstance.teamId = "iOSTeamExplorer"
+        RestApiManager.sharedInstance.getCurrentSprint({ (jsObject: JSON) -> () in
+            var count: Int = jsObject["count"].int as Int!
+            XCTAssertNotNil(count, "Connected to host")
+            XCTAssertEqual(count, 1, "Returned with current iteration")
+            var jsCurrentSprint = jsObject["value"]
+            var dateFormatter : NSDateFormatter = NSDateFormatter()
+            var sDate : String = jsCurrentSprint[0]["attributes"]["startDate"].string as String!
+            var eDate : String = jsCurrentSprint[0]["attributes"]["finishDate"].string as String!
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+            var startDate : NSDate = dateFormatter.dateFromString(sDate)!
+            var endDate : NSDate = dateFormatter.dateFromString(eDate)!
+            endDate = endDate.dateByAddingTimeInterval(60*60*24)
+            var now : NSDate = NSDate()
+            if (((NSCalendar.currentCalendar().compareDate(startDate, toDate: now, toUnitGranularity: NSCalendarUnit.CalendarUnitHour) == NSComparisonResult.OrderedAscending) || (NSCalendar.currentCalendar().compareDate(startDate, toDate: now, toUnitGranularity: NSCalendarUnit.CalendarUnitHour) == NSComparisonResult.OrderedSame)) && ((NSCalendar.currentCalendar().compareDate(endDate, toDate: now, toUnitGranularity: NSCalendarUnit.CalendarUnitHour) == NSComparisonResult.OrderedDescending) || ((NSCalendar.currentCalendar().compareDate(endDate, toDate: now, toUnitGranularity: NSCalendarUnit.CalendarUnitHour) == NSComparisonResult.OrderedSame)))) {
+                XCTAssertTrue(true, "It's the current sprint")
+            }
+            else {
+                XCTAssertTrue(false, "It's not the current sprint")
+            }
+            expectation.fulfill()
+        })
+        waitForExpectationsWithTimeout(5.0, handler: { error in
+            XCTAssertNil(error, "Request Timed Out")
+        })
     }
     
     func testMakeHTTPGetRequest(){
