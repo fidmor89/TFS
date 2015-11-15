@@ -14,6 +14,7 @@
 		2BA5A9D31BF941AD00BBD4A6 /* inProgress.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA5A9CF1BF941AD00BBD4A6 /* inProgress.png */; };
 		2BA5A9D41BF941AD00BBD4A6 /* removed.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA5A9D01BF941AD00BBD4A6 /* removed.png */; };
 		2BA5A9D51BF941AD00BBD4A6 /* toDo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA5A9D11BF941AD00BBD4A6 /* toDo.png */; };
+		2BA5A9D71BF947B500BBD4A6 /* sad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA5A9D61BF947B500BBD4A6 /* sad.png */; };
 		2BC8E0D11BD2C60B00B7EF6C /* viewStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE06EAA1BD2BB7D0065FD0C /* viewStateManager.swift */; };
 		2BCE94381BC0703000F32722 /* WorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE94371BC0703000F32722 /* WorkController.swift */; };
 		2BCE943B1BC0A89A00F32722 /* menuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE943A1BC0A89A00F32722 /* menuController.swift */; };
@@ -60,6 +61,7 @@
 		2BA5A9CF1BF941AD00BBD4A6 /* inProgress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inProgress.png; sourceTree = "<group>"; };
 		2BA5A9D01BF941AD00BBD4A6 /* removed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = removed.png; sourceTree = "<group>"; };
 		2BA5A9D11BF941AD00BBD4A6 /* toDo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toDo.png; sourceTree = "<group>"; };
+		2BA5A9D61BF947B500BBD4A6 /* sad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sad.png; sourceTree = "<group>"; };
 		2BCE94371BC0703000F32722 /* WorkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkController.swift; sourceTree = "<group>"; };
 		2BCE943A1BC0A89A00F32722 /* menuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = menuController.swift; sourceTree = "<group>"; };
 		2BD389131B9BA4F1008A0A48 /* TFS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,6 +153,7 @@
 		2BA5A9CD1BF9419C00BBD4A6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				2BA5A9D61BF947B500BBD4A6 /* sad.png */,
 				2BA5A9CE1BF941AD00BBD4A6 /* done.png */,
 				2BA5A9CF1BF941AD00BBD4A6 /* inProgress.png */,
 				2BA5A9D01BF941AD00BBD4A6 /* removed.png */,
@@ -352,6 +355,7 @@
 				2BA5A9D21BF941AD00BBD4A6 /* done.png in Resources */,
 				326629891BF86F88003D7CA2 /* vso.png in Resources */,
 				2BA5A9D51BF941AD00BBD4A6 /* toDo.png in Resources */,
+				2BA5A9D71BF947B500BBD4A6 /* sad.png in Resources */,
 				2BD389231B9BA4F1008A0A48 /* LaunchScreen.xib in Resources */,
 				2BA5A9D31BF941AD00BBD4A6 /* inProgress.png in Resources */,
 				326629851BF86579003D7CA2 /* vsicon2.png in Resources */,

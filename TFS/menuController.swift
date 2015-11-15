@@ -346,21 +346,33 @@ class menuController: UITableViewController {
                 let workItems = json["workItems"].arrayValue
                 let count = workItems.count
                 
-                for index in 0...(count-1) {
-                    
-                    let url = workItems[index]["url"].string as String! ?? ""
-                    
-                    RestApiManager.sharedInstance.makeHTTPGetRequest(url, onCompletion:  {(data: NSData) in
-                        
-                        //parse NSData to JSON
-                        let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
-                        
+                if count>0{
+                    for index in 0...(count-1) {
+                        let url = workItems[index]["url"].string as String! ?? ""
+                        RestApiManager.sharedInstance.makeHTTPGetRequest(url, onCompletion:  {(data: NSData) in
+                            
+                            //parse NSData to JSON
+                            let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
+                            
+                            self.tasks.append(json)
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.tableView?.reloadData()
+                                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                            })
+                        })
+                    }
+                } else{
+
+                    let json = "{\"fields\":{\"System.State\": \"You don't have any work scheduled\",\"System.AssignedTo\": \"\",\"System.Title\": \"It's lonely in here!\",}}"
+
+                    if let data = json.dataUsingEncoding(NSUTF8StringEncoding) {
+                        let json = JSON(data: data)
                         self.tasks.append(json)
                         dispatch_async(dispatch_get_main_queue(), {
                             self.tableView?.reloadData()
                             MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                         })
-                    })
+                    }
                 }
                 
                 
@@ -685,6 +697,7 @@ class menuController: UITableViewController {
                 imagePath = "removed.png"
                 break
             default:
+                imagePath = "sad.png"
                 break
             }
             
