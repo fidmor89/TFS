@@ -51,25 +51,29 @@ class menuController: UITableViewController {
                 }
                 
                 break
-            case DisplayedMenu.Sprints:
-                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
-                break
-            case DisplayedMenu.Epic:
-                break
-            case DisplayedMenu.Feature:
-                break
-            case DisplayedMenu.PBI:
-                break
-            case DisplayedMenu.Past:
-                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
-                break
-            case DisplayedMenu.Current:
-                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
-                break
-            case DisplayedMenu.Future:
-                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
-                break
+//            case DisplayedMenu.Sprints:
+//                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+//                break
+//            case DisplayedMenu.Epic:
+//                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+//                break
+//            case DisplayedMenu.Feature:
+//                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+//                break
+//            case DisplayedMenu.PBI:
+//                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+//                break
+//            case DisplayedMenu.Past:
+//                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+//                break
+//            case DisplayedMenu.Current:
+//                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+//                break
+//            case DisplayedMenu.Future:
+//                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+//                break
             default:
+                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
                 break
             }
             
@@ -180,22 +184,36 @@ class menuController: UITableViewController {
             
             
         case DisplayedMenu.Epic:
-            dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
-                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-            })
+            
+            RestApiManager.sharedInstance.getEpics() { json in
+
+                
+                
+                
+                
+                dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                })
+            }
+            
             
             break
         case DisplayedMenu.Feature:
-            dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
-                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-            })
-            
+            RestApiManager.sharedInstance.getFeatures() { json in
+                
+                dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                })
+            }
             break
         case DisplayedMenu.PBI:
+            RestApiManager.sharedInstance.getPBI() { json in
+                
+                dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                })
+            }
             
-            dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
-                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-            })
             break
         case DisplayedMenu.Past:
             
@@ -406,36 +424,31 @@ class menuController: UITableViewController {
             }
             switch self.work[indexPath.row + (indexPath.section * 3)]{
             case "Epic":
+                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Epic
                 break
             case "Feature":
+                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Feature
                 break
             case "PBI's":
+                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.PBI
                 break
             case "Past":
-                
                 viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Past
-                let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
-                navigationController?.pushViewController(secondViewController, animated: true)
-                
                 break
             case "Current":
-                
                 viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Current
-                let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
-                navigationController?.pushViewController(secondViewController, animated: true)
-                
                 break
             case "Future":
-                
                 viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Future
-                let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
-                navigationController?.pushViewController(secondViewController, animated: true)
-                
                 break
             default:
                 println(self.work[indexPath.row + (indexPath.section * 3)])
                 break
             }
+            
+            let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
+            navigationController?.pushViewController(secondViewController, animated: true)
+            
             
             break
         default:

@@ -109,30 +109,55 @@ class RestApiManager: NSObject {
             onCompletion(json)
         })
     }
-    
-  
+
     func getTaks(onCompletion: (NSDictionary) -> Void){
 
         let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems WHERE [System.WorkItemType] = 'Task' AND [System.AreaPath] = '\(projectId!)\\\\\(teamId)' AND [System.IterationPath] = '\(projectId!)\\\\iOS_Team_Explorer_Collection\\\\SP5 - Epics, Features, PBI, Sprints and Work item views'\"}"
         
-        queryServer(query, onCompletion: {data in
+        let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
+        
+        queryServer(route, query: query, onCompletion: {data in
             onCompletion(data)                  //Pass up data
         })
     
+    }
+    
+    func getEpics(onCompletion: (NSDictionary) -> Void){
+
+        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems  WHERE [System.WorkItemType] = 'Epic' AND [System.AreaPath] under '\(projectId!)\\\\\(teamId)'\"}"
+
+        let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
+        
+        queryServer(route, query: query, onCompletion: {data in
+            onCompletion(data)                  //Pass up data
+        })
+    }
+    
+    func getFeatures(onCompletion: (NSDictionary) -> Void){
+        
+        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems  WHERE [System.WorkItemType] = 'Feature' AND [System.AreaPath] under '\(projectId!)\\\\\(teamId)'\"}"
+        
+        let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
+        
+        queryServer(route, query: query, onCompletion: {data in
+            onCompletion(data)                  //Pass up data
+        })
     }
     
     func getPBI(onCompletion: (NSDictionary) -> Void){
-
         
-        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems WHERE [System.WorkItemType] = 'Product Backlog Item' AND [System.AreaPath] = '\(projectId!)\\\\\(teamId)' AND [System.IterationPath] = '\(projectId!)\\\\iOS_Team_Explorer_Collection\\\\SP5 - Epics, Features, PBI, Sprints and Work item views'\"}"
+        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems  WHERE [System.WorkItemType] = 'Product Backlog Item' AND [System.AreaPath] under '\(projectId!)\\\\\(teamId)'\"}"
         
-        queryServer(query, onCompletion: {data in
+        let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
+        
+        queryServer(route, query: query, onCompletion: {data in
             onCompletion(data)                  //Pass up data
         })
     }
     
-    func queryServer(query: String, onCompletion: (NSDictionary) -> Void){
-        let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
+    
+    func queryServer(route: String, query: String, onCompletion: (NSDictionary) -> Void){
+
 
         makeHTTPPostRequest(route, bodyContent: query, onCompletion: {(data: NSData) in
             //parse NSData to JSON
