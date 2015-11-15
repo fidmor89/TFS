@@ -13,7 +13,7 @@ import SwiftHTTP
 typealias ServiceResponse = (JSON, NSError?) -> Void
 
 class RestApiManager: NSObject {
-
+    
     static let sharedInstance = RestApiManager()            //To use manager class as a singleton.
     internal var baseURL: String = ""
     internal var usr: String = ""
@@ -21,7 +21,9 @@ class RestApiManager: NSObject {
     internal var collection: String? = nil
     internal var projectId: String? = nil
     internal var teamId: String = ""
-
+    
+    internal var iterationPath: String = ""
+    
     internal var lastResponseCode = ""
     
     func initialize(){
@@ -59,7 +61,7 @@ class RestApiManager: NSObject {
     
     func getProjects(onCompletion: (JSON) -> Void) {
         let route = baseURL + "/\(collection!)/_apis/projects/\(projectId!)/teams"       //API request route
-
+        
         
         makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
             //parse NSData to JSON
@@ -69,7 +71,7 @@ class RestApiManager: NSObject {
     }
     
     func getCollections(onCompletion: (JSON) -> Void) {
-
+        
         let route = baseURL + "/_apis/projectcollections"       //API request route
         
         makeHTTPGetRequest(route, onCompletion:  {(data: NSData) in
@@ -109,36 +111,26 @@ class RestApiManager: NSObject {
             onCompletion(json)
         })
     }
+    
+    func getTaks(onCompletion: (JSON) -> Void){
+        
+        let newIteration = self.iterationPath.stringByReplacingOccurrencesOfString("\\", withString: "\\\\", options: NSStringCompareOptions.LiteralSearch, range: nil)
 
-    func getTaks(onCompletion: (NSDictionary) -> Void){
-
-        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems WHERE [System.WorkItemType] = 'Task' AND [System.AreaPath] = '\(projectId!)\\\\\(teamId)' AND [System.IterationPath] = '\(projectId!)\\\\iOS_Team_Explorer_Collection\\\\SP5 - Epics, Features, PBI, Sprints and Work item views'\"}"
+        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems WHERE [System.WorkItemType] = 'Task'  AND [System.IterationPath] = '\(newIteration)'\"}"
+        println (query)
         
         let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
-        
-        queryServer(route, query: query, onCompletion: {data in
-            onCompletion(data)                  //Pass up data
-        })
-    
-    }
-    
-    func getTaks(IterationPath: String, onCompletion: (NSDictionary) -> Void){
-        
-        
-        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems WHERE [System.WorkItemType] = 'Task'  AND [System.IterationPath] = '\(IterationPath)'\"}"
-        
-        let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
-        
+        println (route)
         queryServer(route, query: query, onCompletion: {data in
             onCompletion(data)                  //Pass up data
         })
         
     }
     
-    func getEpics(onCompletion: (NSDictionary) -> Void){
-
+    func getEpics(onCompletion: (JSON) -> Void){
+        
         let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems  WHERE [System.WorkItemType] = 'Epic' AND [System.AreaPath] under '\(projectId!)\\\\\(teamId)'\"}"
-
+        
         let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
         
         queryServer(route, query: query, onCompletion: {data in
@@ -146,7 +138,7 @@ class RestApiManager: NSObject {
         })
     }
     
-    func getFeatures(onCompletion: (NSDictionary) -> Void){
+    func getFeatures(onCompletion: (JSON) -> Void){
         
         let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems  WHERE [System.WorkItemType] = 'Feature' AND [System.AreaPath] under '\(projectId!)\\\\\(teamId)'\"}"
         
@@ -157,7 +149,7 @@ class RestApiManager: NSObject {
         })
     }
     
-    func getPBI(onCompletion: (NSDictionary) -> Void){
+    func getPBI(onCompletion: (JSON) -> Void){
         
         let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems  WHERE [System.WorkItemType] = 'Product Backlog Item' AND [System.AreaPath] under '\(projectId!)\\\\\(teamId)'\"}"
         
@@ -169,16 +161,16 @@ class RestApiManager: NSObject {
     }
     
     
-    func queryServer(route: String, query: String, onCompletion: (NSDictionary) -> Void){
-
-
+    func queryServer(route: String, query: String, onCompletion: (JSON) -> Void){
+        
+        
         makeHTTPPostRequest(route, bodyContent: query, onCompletion: {(data: NSData) in
             //parse NSData to JSON
             let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
             
-            let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
+//            let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
             
-            onCompletion(jsonResult)            //return results from request
+            onCompletion(json)            //return results from request
         })
     }
     
@@ -201,8 +193,8 @@ class RestApiManager: NSObject {
         
         let urlConnection = NSURLConnection(request: request, delegate: self)
         request.HTTPMethod = "POST"
-
-
+        
+        
         
         let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems WHERE [System.WorkItemType] = 'Product Backlog Item' AND [System.AreaPath] = 'Url2015Project\\\\iOSTeamExplorer' AND [System.IterationPath] = 'Url2015Project\\\\iOS_Team_Explorer_Collection\\\\SP5 - Epics, Features, PBI, Sprints and Work item views'\"}\"}"
         
@@ -216,34 +208,34 @@ class RestApiManager: NSObject {
             else {
                 
                 
-//                println("Response: " + response)
+                //                println("Response: " + response)
                 
-//                let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
-//                println(json)
+                //                let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
+                //                println(json)
                 
                 let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSDictionary
                 println(jsonResult)
-
+                
                 
             }
-        })  
+        })
         
         
         //fire off the request
         task.resume()
     }
-
+    
     func makeHTTPPostRequest(path: String, bodyContent: String, onCompletion: (data: NSData) -> Void ){
         
         //create the request
         let url = NSURL(string: path)
         var request = NSMutableURLRequest(URL: url!)
-//        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        //        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
         let session = NSURLSession.sharedSession()
         request.setValue(buildBase64EncodedCredentials(), forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
-//        let urlConnection = NSURLConnection(request: request, delegate: self)
+        //        let urlConnection = NSURLConnection(request: request, delegate: self)
         request.HTTPMethod = "POST"
         request.HTTPBody = bodyContent.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -289,13 +281,13 @@ class RestApiManager: NSObject {
     }
     
     func setLastResponseCode(response: HTTPResponse){
-
+        
         if(response.statusCode != nil){
             self.lastResponseCode = String(response.statusCode!)
         }else{
             self.lastResponseCode = "400"
         }
-
+        
     }
     
     /**
@@ -314,14 +306,14 @@ class RestApiManager: NSObject {
         request.requestSerializer.headers["Authorization"] = buildBase64EncodedCredentials()             //basic auth header with auth credentials
         return request;
     }
- 
+    
     func buildBase64EncodedCredentials() -> String{
         
         //setting up the base64-encoded credentials
         let loginString = NSString(format: "%@:%@", usr, pw)
         let loginData: NSData = loginString.dataUsingEncoding(NSUTF8StringEncoding)!
         let base64LoginString = loginData.base64EncodedStringWithOptions(nil)
-
+        
         return "Basic " + base64LoginString
     }
 }

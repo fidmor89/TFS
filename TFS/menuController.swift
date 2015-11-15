@@ -16,7 +16,7 @@ class menuController: UITableViewController {
     var projects:[(id: String, name: String, description: String, url: String, state: String, revision: String)] = []
     var work:[String] = ["Epic", "Feature", "PBI's", "Past", "Current", "Future"]
     var iterations:[(id: String, name: String, path: String, startDate: String, endDate: String, url: String)] = []
-    
+    var tasks:[(id: String, url: String)] = []
     
     var workColor:[UIColor] = [ UIColor.orangeColor(),
         UIColor.purpleColor(),
@@ -51,27 +51,30 @@ class menuController: UITableViewController {
                 }
                 
                 break
-//            case DisplayedMenu.Sprints:
-//                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
-//                break
-//            case DisplayedMenu.Epic:
-//                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
-//                break
-//            case DisplayedMenu.Feature:
-//                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
-//                break
-//            case DisplayedMenu.PBI:
-//                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
-//                break
-//            case DisplayedMenu.Past:
-//                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
-//                break
-//            case DisplayedMenu.Current:
-//                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
-//                break
-//            case DisplayedMenu.Future:
-//                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
-//                break
+            case DisplayedMenu.Tasks:
+                viewStateManager.sharedInstance.displayedMenu = viewStateManager.sharedInstance.previousMenu!
+                break
+                //            case DisplayedMenu.Sprints:
+                //                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+                //                break
+                //            case DisplayedMenu.Epic:
+                //                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+                //                break
+                //            case DisplayedMenu.Feature:
+                //                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+                //                break
+                //            case DisplayedMenu.PBI:
+                //                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+                //                break
+                //            case DisplayedMenu.Past:
+                //                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+                //                break
+                //            case DisplayedMenu.Current:
+                //                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+                //                break
+                //            case DisplayedMenu.Future:
+                //                viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
+                //                break
             default:
                 viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Work
                 break
@@ -186,7 +189,7 @@ class menuController: UITableViewController {
         case DisplayedMenu.Epic:
             
             RestApiManager.sharedInstance.getEpics() { json in
-
+                
                 
                 
                 
@@ -337,8 +340,29 @@ class menuController: UITableViewController {
             
             break
             
+        case DisplayedMenu.Tasks:
+            self.tasks = []
+            RestApiManager.sharedInstance.getTaks() { json in
+                
+                var jsonOBJ = json["workItems"]
+
+                
+                for i in 0...25 {
+
+                    let id = jsonOBJ[i]["id"].string as String! ?? ""
+                    let url = jsonOBJ[i]["url"].string as String! ?? ""
+
+                    println(NSString(format: "ID: %@  - URL:%@", id, url))
+                    
+                }
+            }
+            break
+            
         default:
             println(viewStateManager.sharedInstance.displayedMenu.rawValue)
+            dispatch_async(dispatch_get_main_queue(), {
+                tableView?.reloadData()
+            })
             dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
                 MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
             })
@@ -448,9 +472,42 @@ class menuController: UITableViewController {
             
             let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
             navigationController?.pushViewController(secondViewController, animated: true)
-            
-            
             break
+            
+            
+        case DisplayedMenu.Epic:
+            break
+            
+        case DisplayedMenu.Feature:
+            break
+            
+        case DisplayedMenu.PBI:
+            break
+            
+        case DisplayedMenu.Past:
+            viewStateManager.sharedInstance.savePrevious(DisplayedMenu.Tasks)
+            RestApiManager.sharedInstance.iterationPath = self.iterations[indexPath.row].path
+            
+            let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
+            navigationController?.pushViewController(secondViewController, animated: true)
+            break
+            
+        case DisplayedMenu.Current:
+            viewStateManager.sharedInstance.savePrevious(DisplayedMenu.Tasks)
+            RestApiManager.sharedInstance.iterationPath = self.iterations[indexPath.row].path
+            
+            let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
+            navigationController?.pushViewController(secondViewController, animated: true)
+            break
+            
+        case DisplayedMenu.Future:
+            viewStateManager.sharedInstance.savePrevious(DisplayedMenu.Tasks)
+            RestApiManager.sharedInstance.iterationPath = self.iterations[indexPath.row].path
+            
+            let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
+            navigationController?.pushViewController(secondViewController, animated: true)
+            break
+            
         default:
             println(viewStateManager.sharedInstance.displayedMenu.rawValue)
             break
