@@ -15,6 +15,16 @@ class menuController: UITableViewController {
     var projects:[(id: String, name: String, description: String, url: String, state: String, revision: String)] = []
     var work:[String] = ["Epic", "Feature", "PBI's", "Past", "Current", "Future"]
     var iterations:[(id: String, name: String, path: String, startDate: String, endDate: String, url: String)] = []
+
+    
+    var workColor:[UIColor] = [ UIColor.orangeColor(),
+                                UIColor.purpleColor(),
+                                UIColor.blueColor(),
+                                UIColor(red: 0, green: 0, blue: 0, alpha: 0),
+                                UIColor(red: 0, green: 0, blue: 0, alpha: 0),
+                                UIColor(red: 0, green: 0, blue: 0, alpha: 0)]
+
+    
     
     override func viewWillDisappear(animated: Bool) {
         
@@ -182,7 +192,9 @@ class menuController: UITableViewController {
                         //adding only sprints that has finished
                         if dateEnd!.compare(dateNow) == NSComparisonResult.OrderedAscending
                         {
-                            self.iterations.append(id: id, name: name, path: path, startDate: startDate, endDate: endDate, url: url)
+                            dateFormatter.dateFormat = "MMM dd,YY"
+                            
+                            self.iterations.append(id: id, name: name, path: path, startDate: dateFormatter.stringFromDate(dateNow), endDate: dateFormatter.stringFromDate(dateEnd!), url: url)
                             dispatch_async(dispatch_get_main_queue(), {
                                 tableView?.reloadData()
                             })
@@ -210,7 +222,14 @@ class menuController: UITableViewController {
                     let endDate: String = jsonOBJ[index]["attributes"]["finishDate"].string as String! ?? ""
                     let url: String = jsonOBJ[index]["url"].string as String! ?? ""
                     
-                    self.iterations.append(id: id, name: name, path: path, startDate: startDate, endDate: endDate, url: url)
+                    let dateFormatter = NSDateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+                    let dateStart = dateFormatter.dateFromString(startDate)
+                    let dateEnd = dateFormatter.dateFromString(endDate)
+            
+                    dateFormatter.dateFormat = "MMM dd,YY"
+                    
+                    self.iterations.append(id: id, name: name, path: path, startDate: dateFormatter.stringFromDate(dateStart!), endDate: dateFormatter.stringFromDate(dateEnd!), url: url)
                     
                     dispatch_async(dispatch_get_main_queue(), {
                         tableView?.reloadData()
@@ -238,11 +257,13 @@ class menuController: UITableViewController {
                         let dateFormatter = NSDateFormatter()
                         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
                         let dateStart = dateFormatter.dateFromString(startDate)
+                        let dateEnd = dateFormatter.dateFromString(endDate)
                         let dateNow = NSDate()
                         //adding only sprints that has not started
                         if dateStart!.compare(dateNow) == NSComparisonResult.OrderedDescending
                         {
-                            self.iterations.append(id: id, name: name, path: path, startDate: startDate, endDate: endDate, url: url)
+                            dateFormatter.dateFormat = "MMM dd,YY"
+                            self.iterations.append(id: id, name: name, path: path, startDate: dateFormatter.stringFromDate(dateStart!), endDate: dateFormatter.stringFromDate(dateEnd!), url: url)
                         }
                         
                     }else{
@@ -406,10 +427,16 @@ class menuController: UITableViewController {
         }
     }
     
+    
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         if viewStateManager.sharedInstance.displayedMenu == DisplayedMenu.Work{
-            return " "
+            if section == 0{
+                return "Backlogs"
+            }else{
+                return "Sprints"
+            }
+            
         }
         return nil
     }
@@ -422,57 +449,89 @@ class menuController: UITableViewController {
         return 1
     }
     
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 60
+    }
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+
+        if viewStateManager.sharedInstance.displayedMenu == DisplayedMenu.Work{
+            return 40
+        }
+        return 0
+    }
+    
     //Build cell
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = tableView.dequeueReusableCellWithIdentifier("CELL") as? UITableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier("WorkItemCell") as? WorkItemCellModel
         if cell == nil{
-            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "CELL")
+            cell = WorkItemCellModel(style: UITableViewCellStyle.Value1, reuseIdentifier: "WorkItemCell")
         }
         
-        var displayedText: String = ""
+        var titleText: String = ""
+        var detailText: String = ""
+        var imagePath: String = ""
         switch viewStateManager.sharedInstance.displayedMenu
         {
         case DisplayedMenu.Collections:
-            displayedText = self.collections[indexPath.row].name
+            titleText = self.collections[indexPath.row].name
+            detailText = ""
+            imagePath = ""
             cell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             break
             
         case DisplayedMenu.Projects:
-            displayedText = self.teams[indexPath.row].name
+            titleText = self.teams[indexPath.row].name
+            detailText = self.teams[indexPath.row].description
+            imagePath = "collectionIcon.png"
             cell!.accessoryType = UITableViewCellAccessoryType.DetailDisclosureButton
             break
             
         case DisplayedMenu.Teams:
-            displayedText = self.projects[indexPath.row].name
+            titleText = self.projects[indexPath.row].name
+            detailText = self.projects[indexPath.row].description
+            imagePath = "projectIcon.png"
             cell!.accessoryType = UITableViewCellAccessoryType.DetailButton
             break
             
         case DisplayedMenu.Work:
-            displayedText = self.work[indexPath.row + (indexPath.section * 3)]
+            cell = tableView.dequeueReusableCellWithIdentifier("WorkItemCell2") as? WorkItemCellModel
+            if cell == nil{
+                cell = WorkItemCellModel(style: UITableViewCellStyle.Value1, reuseIdentifier: "WorkItemCell2")
+            }
+            titleText = self.work[indexPath.row + (indexPath.section * 3)]
             cell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            cell!.iconImage.backgroundColor = workColor[indexPath.row + (indexPath.section * 3)]
+            imagePath = ""
             break
             
         case DisplayedMenu.Past:
-            displayedText = self.iterations[indexPath.row].name
+            titleText = self.iterations[indexPath.row].name
+            detailText = NSString(format: "%@ - %@", self.iterations[indexPath.row].startDate, self.iterations[indexPath.row].endDate) as String
+            
             cell!.accessoryType = UITableViewCellAccessoryType.None
             break
         case DisplayedMenu.Current:
-            displayedText = self.iterations[indexPath.row].name
+            titleText = self.iterations[indexPath.row].name
+            detailText = NSString(format: "%@ - %@", self.iterations[indexPath.row].startDate, self.iterations[indexPath.row].endDate) as String
+
             cell!.accessoryType = UITableViewCellAccessoryType.None
             break
         case DisplayedMenu.Future:
-            displayedText = self.iterations[indexPath.row].name
+            titleText = self.iterations[indexPath.row].name
+            detailText = NSString(format: "%@ - %@", self.iterations[indexPath.row].startDate, self.iterations[indexPath.row].endDate) as String
+
             cell!.accessoryType = UITableViewCellAccessoryType.None
             break
-            
             
             
         default:
             println(viewStateManager.sharedInstance.displayedMenu)
         }
         
-        cell!.textLabel?.text = displayedText
+        cell!.titleText.text = titleText
+        cell!.detailText.text = detailText
+        cell!.iconImage.image = UIImage(named: imagePath)
         return cell!
     }
     
