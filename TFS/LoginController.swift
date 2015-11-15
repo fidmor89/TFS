@@ -26,8 +26,6 @@ class LoginController: UIViewController {
         
         if (KeychainWrapper.hasValueForKey("credentials"))
         {
-            self.showOverlay()
-
             let source = KeychainWrapper.stringForKey("credentials")
             
             var err:NSError?
@@ -50,7 +48,6 @@ class LoginController: UIViewController {
                     }else{
                         println("auth failed")
                     }
-                    self.hideOverlay()
                 }
             }
         }
@@ -71,7 +68,6 @@ class LoginController: UIViewController {
         RestApiManager.sharedInstance.usr = self.userTextField.text
         RestApiManager.sharedInstance.pw = self.passwordTextField.text
         
-        self.showOverlay()
         //Test conection
         RestApiManager.sharedInstance.validateAuthorization { auth in
             
@@ -95,7 +91,6 @@ class LoginController: UIViewController {
             }else{
                 println("auth failed")
             }
-            self.hideOverlay()
         }
     }
     
@@ -103,24 +98,5 @@ class LoginController: UIViewController {
         let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("MainSplit") as! UISplitViewController
         navigationController?.presentViewController(secondViewController, animated: true, completion: nil)
     }
-
-    func showOverlay(){
-        self.overlay = UIView(frame: self.view.frame)
-        self.overlay!.backgroundColor = UIColor.blackColor()
-        self.overlay!.alpha = 0.8
-        self.navigationController!.view.addSubview(self.overlay!)
-    }
-    
-    private func hideOverlay(){
-        
-        UIView.animateWithDuration(0.5, animations: {
-            //                self.showOverlay()
-            }, completion: {
-                (value: Bool)in
-                self.overlay?.removeFromSuperview()
-            }
-        )
-    }
-   
 }
 
