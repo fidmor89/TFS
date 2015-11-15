@@ -50,11 +50,13 @@ class LoginController: UIViewController {
                     if(auth){
                         NSOperationQueue.mainQueue().addOperationWithBlock {
                             self.performSegueToLogin()
-
+                            
                         }
                     }else{
                         println("auth failed")
-                        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                        dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+                            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                        })
                     }
                 }
             }
@@ -73,7 +75,8 @@ class LoginController: UIViewController {
         let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         loadingNotification.mode = MBProgressHUDMode.Indeterminate
         loadingNotification.labelText = "Loading"
-
+        
+        
         //Pass parameters to RestApiManager
         RestApiManager.sharedInstance.baseURL = self.serverTextField.text
         RestApiManager.sharedInstance.usr = self.userTextField.text
@@ -100,9 +103,12 @@ class LoginController: UIViewController {
                 }
             }else{
                 println("auth failed")
-                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                })
             }
         }
+        
     }
     
     func performSegueToLogin() -> Void{

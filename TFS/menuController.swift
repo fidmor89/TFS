@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MBProgressHUD
 
 class menuController: UITableViewController {
     
@@ -79,6 +80,10 @@ class menuController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        loadingNotification.mode = MBProgressHUDMode.Indeterminate
+        loadingNotification.labelText = "Loading"
+        
         if RestApiManager.sharedInstance.collection == nil
         {
             viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Collections
@@ -115,6 +120,10 @@ class menuController: UITableViewController {
                     dispatch_async(dispatch_get_main_queue(), {
                         tableView?.reloadData()})
                 }
+                dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                })
+                
             }
             break
             
@@ -136,6 +145,10 @@ class menuController: UITableViewController {
                     dispatch_async(dispatch_get_main_queue(), {
                         tableView?.reloadData()})
                 }
+                dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                })
+
             }
             break
             
@@ -158,15 +171,31 @@ class menuController: UITableViewController {
                     dispatch_async(dispatch_get_main_queue(), {
                         tableView?.reloadData()})
                 }
+                dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                })
+
             }
             break
             
             
         case DisplayedMenu.Epic:
+            dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+            })
+
             break
         case DisplayedMenu.Feature:
+            dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+            })
+
             break
         case DisplayedMenu.PBI:
+            
+            dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+            })
             break
         case DisplayedMenu.Past:
             
@@ -201,6 +230,9 @@ class menuController: UITableViewController {
                         }
                     }
                 }
+                dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                })
             }
             
             break
@@ -235,6 +267,10 @@ class menuController: UITableViewController {
                         tableView?.reloadData()
                     })
                 }
+                dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                })
+
             }
             
             break
@@ -275,14 +311,27 @@ class menuController: UITableViewController {
                         tableView?.reloadData()
                     })
                 }
+                dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                })
+
             }
             
             break
             
         default:
             println(viewStateManager.sharedInstance.displayedMenu.rawValue)
+            dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+            })
+
             break
         }
+        
+//        dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+//            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+//        })
+
     }
     
     //At detail Click
