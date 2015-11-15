@@ -25,6 +25,8 @@
 		326629791BF80EBB003D7CA2 /* projectIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 326629771BF80EBB003D7CA2 /* projectIcon.png */; };
 		3266297D1BF817FA003D7CA2 /* WorkItemCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3266297C1BF817FA003D7CA2 /* WorkItemCellModel.swift */; };
 		326629851BF86579003D7CA2 /* vsicon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 326629841BF86579003D7CA2 /* vsicon2.png */; };
+		326629871BF86A29003D7CA2 /* vsLoginIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 326629861BF86A29003D7CA2 /* vsLoginIcon.png */; };
+		326629891BF86F88003D7CA2 /* vso.png in Resources */ = {isa = PBXBuildFile; fileRef = 326629881BF86F88003D7CA2 /* vso.png */; };
 		38A496A21BC0847800637CF6 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A496A11BC0847800637CF6 /* KeychainWrapper.swift */; };
 		38A496A31BC0847800637CF6 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A496A11BC0847800637CF6 /* KeychainWrapper.swift */; };
 		3F04901D1B9D015E00677A47 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F04901C1B9D015E00677A47 /* SWRevealViewController.m */; };
@@ -67,6 +69,8 @@
 		326629771BF80EBB003D7CA2 /* projectIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = projectIcon.png; sourceTree = "<group>"; };
 		3266297C1BF817FA003D7CA2 /* WorkItemCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkItemCellModel.swift; sourceTree = "<group>"; };
 		326629841BF86579003D7CA2 /* vsicon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vsicon2.png; sourceTree = "<group>"; };
+		326629861BF86A29003D7CA2 /* vsLoginIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vsLoginIcon.png; sourceTree = "<group>"; };
+		326629881BF86F88003D7CA2 /* vso.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vso.png; sourceTree = "<group>"; };
 		38A496A11BC0847800637CF6 /* KeychainWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		3F04901A1B9D015D00677A47 /* TFS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TFS-Bridging-Header.h"; sourceTree = "<group>"; };
 		3F04901B1B9D015E00677A47 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
@@ -163,6 +167,8 @@
 				2B04D8061BC03102001C9A65 /* Controllers */,
 				2B04D8071BC0310E001C9A65 /* Views */,
 				2BD3891F1B9BA4F1008A0A48 /* Images.xcassets */,
+				326629881BF86F88003D7CA2 /* vso.png */,
+				326629861BF86A29003D7CA2 /* vsLoginIcon.png */,
 				326629841BF86579003D7CA2 /* vsicon2.png */,
 				326629761BF80EBB003D7CA2 /* collectionIcon.png */,
 				326629771BF80EBB003D7CA2 /* projectIcon.png */,
@@ -317,7 +323,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				326629871BF86A29003D7CA2 /* vsLoginIcon.png in Resources */,
 				2BD3891E1B9BA4F1008A0A48 /* Main.storyboard in Resources */,
+				326629891BF86F88003D7CA2 /* vso.png in Resources */,
 				2BD389231B9BA4F1008A0A48 /* LaunchScreen.xib in Resources */,
 				326629851BF86579003D7CA2 /* vsicon2.png in Resources */,
 				326629791BF80EBB003D7CA2 /* projectIcon.png in Resources */,
