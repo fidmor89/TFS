@@ -16,15 +16,15 @@ class menuController: UITableViewController {
     var projects:[(id: String, name: String, description: String, url: String, state: String, revision: String)] = []
     var work:[String] = ["Epic", "Feature", "PBI's", "Past", "Current", "Future"]
     var iterations:[(id: String, name: String, path: String, startDate: String, endDate: String, url: String)] = []
-
+    
     
     var workColor:[UIColor] = [ UIColor.orangeColor(),
-                                UIColor.purpleColor(),
-                                UIColor.blueColor(),
-                                UIColor(red: 0, green: 0, blue: 0, alpha: 0),
-                                UIColor(red: 0, green: 0, blue: 0, alpha: 0),
-                                UIColor(red: 0, green: 0, blue: 0, alpha: 0)]
-
+        UIColor.purpleColor(),
+        UIColor.blueColor(),
+        UIColor(red: 0, green: 0, blue: 0, alpha: 0),
+        UIColor(red: 0, green: 0, blue: 0, alpha: 0),
+        UIColor(red: 0, green: 0, blue: 0, alpha: 0)]
+    
     
     
     override func viewWillDisappear(animated: Bool) {
@@ -148,7 +148,7 @@ class menuController: UITableViewController {
                 dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
                     MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                 })
-
+                
             }
             break
             
@@ -174,7 +174,7 @@ class menuController: UITableViewController {
                 dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
                     MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                 })
-
+                
             }
             break
             
@@ -183,13 +183,13 @@ class menuController: UITableViewController {
             dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
                 MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
             })
-
+            
             break
         case DisplayedMenu.Feature:
             dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
                 MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
             })
-
+            
             break
         case DisplayedMenu.PBI:
             
@@ -258,7 +258,7 @@ class menuController: UITableViewController {
                     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
                     let dateStart = dateFormatter.dateFromString(startDate)
                     let dateEnd = dateFormatter.dateFromString(endDate)
-            
+                    
                     dateFormatter.dateFormat = "MMM dd,YY"
                     
                     self.iterations.append(id: id, name: name, path: path, startDate: dateFormatter.stringFromDate(dateStart!), endDate: dateFormatter.stringFromDate(dateEnd!), url: url)
@@ -270,7 +270,7 @@ class menuController: UITableViewController {
                 dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
                     MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                 })
-
+                
             }
             
             break
@@ -314,7 +314,7 @@ class menuController: UITableViewController {
                 dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
                     MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                 })
-
+                
             }
             
             break
@@ -324,14 +324,14 @@ class menuController: UITableViewController {
             dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
                 MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
             })
-
+            
             break
         }
         
-//        dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
-//            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-//        })
-
+        //        dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
+        //            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+        //        })
+        
     }
     
     //At detail Click
@@ -502,7 +502,7 @@ class menuController: UITableViewController {
         return 60
     }
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-
+        
         if viewStateManager.sharedInstance.displayedMenu == DisplayedMenu.Work{
             return 40
         }
@@ -563,13 +563,13 @@ class menuController: UITableViewController {
         case DisplayedMenu.Current:
             titleText = self.iterations[indexPath.row].name
             detailText = NSString(format: "%@ - %@", self.iterations[indexPath.row].startDate, self.iterations[indexPath.row].endDate) as String
-
+            
             cell!.accessoryType = UITableViewCellAccessoryType.None
             break
         case DisplayedMenu.Future:
             titleText = self.iterations[indexPath.row].name
             detailText = NSString(format: "%@ - %@", self.iterations[indexPath.row].startDate, self.iterations[indexPath.row].endDate) as String
-
+            
             cell!.accessoryType = UITableViewCellAccessoryType.None
             break
             
