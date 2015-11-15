@@ -142,6 +142,7 @@ public class HTTPOperation : NSOperation {
     override public func cancel() {
         super.cancel()
         task.cancel()
+        finish()
     }
     
     /// Sets the task to finished.
@@ -216,8 +217,8 @@ public class HTTPTask : NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate
                     serialResponse.error = error
                     if let d = data {
                         serialResponse.responseObject = d
-                        if let resSerializer = self.responseSerializer {
-                            let resObj = resSerializer.responseObjectFromResponse(response, data: d)
+                        if let resSerializer = self.responseSerializer, let resp = response {
+                            let resObj = resSerializer.responseObjectFromResponse(resp, data: d)
                             serialResponse.responseObject = resObj.object
                             serialResponse.error = resObj.error
                         }
@@ -380,17 +381,19 @@ public class HTTPTask : NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate
     
         :returns: A NSURLRequest from configured requestSerializer.
     */
-   private func createRequest(url: String, method: HTTPMethod, parameters: Dictionary<String,AnyObject>!) -> (request: NSURLRequest, error: NSError?) {
+    private func createRequest(url: String, method: HTTPMethod, parameters: Dictionary<String,AnyObject>!) -> (request: NSURLRequest, error: NSError?) {
         var urlVal = url
         //probably should change the 'http' to something more generic
-        if !url.hasPrefix("http") && self.baseURL != nil {
+        if  let base = self.baseURL where !url.hasPrefix("http") {
             var split = url.hasPrefix("/") ? "" : "/"
-            urlVal = "\(self.baseURL!)\(split)\(url)"
+            urlVal = "\(base)\(split)\(url)"
         }
-    if let u = NSURL(string: urlVal) {
-        return self.requestSerializer.createRequest(u, method: method, parameters: parameters)
-    }
-    return (NSURLRequest(),createError(-1001))
+        if let encoded = urlVal.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding) {
+            if let u = NSURL(string: encoded) {
+                return self.requestSerializer.createRequest(u, method: method, parameters: parameters)
+            }
+        }
+        return (NSURLRequest(),createError(-1001))
     }
     
     /**
@@ -416,14 +419,8 @@ public class HTTPTask : NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate
         :returns: An NSError.
     */
     private func createError(code: Int) -> NSError {
-        var text = "An error occured"
-        if code == 404 {
-            text = "Page not found"
-        } else if code == 401 {
-            text = "Access denied"
-        } else if code == -1001 {
-            text = "Invalid URL"
-        }
+        var text: String = HTTPStatusCode(statusCode: code).statusDescription
+        
         return NSError(domain: "HTTPTask", code: code, userInfo: [NSLocalizedDescriptionKey: text])
     }
     
