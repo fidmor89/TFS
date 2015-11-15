@@ -11,7 +11,14 @@ import Foundation
 class viewStateManager {
     
     var displayedMenu : DisplayedMenu = DisplayedMenu.Collections
+    var previousMenu : DisplayedMenu? = nil
     static let sharedInstance = viewStateManager()            //To use manager class as a singleton.
+    
+    
+    func savePrevious(newMenu : DisplayedMenu){
+        self.previousMenu = self.displayedMenu
+        self.displayedMenu = newMenu
+    }
     
 }
 enum DisplayedMenu: Int {
@@ -26,4 +33,5 @@ enum DisplayedMenu: Int {
     case Past = 9
     case Current = 10
     case Future = 11
+    case Tasks = 12
 }
