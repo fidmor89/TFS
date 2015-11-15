@@ -115,12 +115,11 @@ class RestApiManager: NSObject {
     func getTaks(onCompletion: (JSON) -> Void){
         
         let newIteration = self.iterationPath.stringByReplacingOccurrencesOfString("\\", withString: "\\\\", options: NSStringCompareOptions.LiteralSearch, range: nil)
-
-        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems WHERE [System.WorkItemType] = 'Task'  AND [System.IterationPath] = '\(newIteration)'\"}"
-        println (query)
         
         let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
-        println (route)
+        
+        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems WHERE [System.WorkItemType] = 'Task'  AND [System.IterationPath] = '\(newIteration)'\"}"
+        
         queryServer(route, query: query, onCompletion: {data in
             onCompletion(data)                  //Pass up data
         })
@@ -168,7 +167,7 @@ class RestApiManager: NSObject {
             //parse NSData to JSON
             let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
             
-//            let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
+            //            let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as! NSDictionary
             
             onCompletion(json)            //return results from request
         })

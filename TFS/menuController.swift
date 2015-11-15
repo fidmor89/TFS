@@ -8,6 +8,7 @@
 
 import Foundation
 import MBProgressHUD
+import SwiftyJSON
 
 class menuController: UITableViewController {
     
@@ -16,7 +17,7 @@ class menuController: UITableViewController {
     var projects:[(id: String, name: String, description: String, url: String, state: String, revision: String)] = []
     var work:[String] = ["Epic", "Feature", "PBI's", "Past", "Current", "Future"]
     var iterations:[(id: String, name: String, path: String, startDate: String, endDate: String, url: String)] = []
-    var tasks:[(id: String, url: String)] = []
+    var tasks:[JSON] = []
     
     var workColor:[UIColor] = [ UIColor.orangeColor(),
         UIColor.purpleColor(),
@@ -192,8 +193,6 @@ class menuController: UITableViewController {
                 
                 
                 
-                
-                
                 dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
                     MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                 })
@@ -344,17 +343,27 @@ class menuController: UITableViewController {
             self.tasks = []
             RestApiManager.sharedInstance.getTaks() { json in
                 
-                var jsonOBJ = json["workItems"]
-
+                let workItems = json["workItems"].arrayValue
+                let count = workItems.count
                 
-                for i in 0...25 {
-
-                    let id = jsonOBJ[i]["id"].string as String! ?? ""
-                    let url = jsonOBJ[i]["url"].string as String! ?? ""
-
-                    println(NSString(format: "ID: %@  - URL:%@", id, url))
+                for index in 0...(count-1) {
                     
+                    let url = workItems[index]["url"].string as String! ?? ""
+                    
+                    RestApiManager.sharedInstance.makeHTTPGetRequest(url, onCompletion:  {(data: NSData) in
+                        
+                        //parse NSData to JSON
+                        let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
+                        
+                        self.tasks.append(json)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.tableView?.reloadData()
+                            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                        })
+                    })
                 }
+                
+                
             }
             break
             
@@ -508,6 +517,13 @@ class menuController: UITableViewController {
             navigationController?.pushViewController(secondViewController, animated: true)
             break
             
+        case DisplayedMenu.Tasks:
+            
+            let DetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
+            self.splitViewController?.showDetailViewController(DetailViewController, sender: nil)
+            DetailViewController.detailDescriptionLabel.text = self.tasks[indexPath.row]["fields"]["System.Title"].stringValue
+            break
+            
         default:
             println(viewStateManager.sharedInstance.displayedMenu.rawValue)
             break
@@ -541,6 +557,8 @@ class menuController: UITableViewController {
             return  self.iterations.count
         case DisplayedMenu.Future:
             return  self.iterations.count
+        case DisplayedMenu.Tasks:
+            return self.tasks.count
         default:
             return 0
         }
@@ -571,6 +589,7 @@ class menuController: UITableViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 60
     }
+    
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         if viewStateManager.sharedInstance.displayedMenu == DisplayedMenu.Work{
@@ -643,6 +662,30 @@ class menuController: UITableViewController {
             cell!.accessoryType = UITableViewCellAccessoryType.None
             break
             
+        case DisplayedMenu.Tasks:
+            
+            titleText = self.tasks[indexPath.row]["fields"]["System.Title"].stringValue
+            
+            let state = self.tasks[indexPath.row]["fields"]["System.State"]
+            let assignedTo = self.tasks[indexPath.row]["fields"]["System.AssignedTo"]
+            
+            detailText = "\(state) - \(assignedTo)"
+            
+            switch state{
+            case "Done":
+                break
+            case "In Progress":
+                break
+            case "To Do":
+                break
+            case "Removed":
+                break
+            default:
+                break
+            }
+            
+            cell!.accessoryType = UITableViewCellAccessoryType.None
+            break
             
         default:
             println(viewStateManager.sharedInstance.displayedMenu)

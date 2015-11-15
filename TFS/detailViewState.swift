@@ -7,10 +7,9 @@
 //
 
 import Foundation
+import SwiftyJSON
+
 class detailViewState{
 
-    var areaPath : String? = nil
-    var iterationPath : String? = nil
-    
     static let sharedInstance = detailViewState()            //To use manager class as a singleton.
 }
