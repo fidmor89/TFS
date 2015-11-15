@@ -4,3 +4,4 @@ use_frameworks!
 
 pod 'SwiftHTTP', '~> 0.9.4'
 pod 'SwiftyJSON', '~> 2.2.1'
+pod 'MBProgressHUD', '~> 0.9.1'

@@ -27,7 +27,7 @@
 		38A496A21BC0847800637CF6 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A496A11BC0847800637CF6 /* KeychainWrapper.swift */; };
 		38A496A31BC0847800637CF6 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A496A11BC0847800637CF6 /* KeychainWrapper.swift */; };
 		3F04901D1B9D015E00677A47 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F04901C1B9D015E00677A47 /* SWRevealViewController.m */; };
-		AC76679423FEAF29AE78F1C3 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2473D57791FF230608CD470E /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		AC76679423FEAF29AE78F1C3 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2473D57791FF230608CD470E /* Pods.framework */; };
 		CD93FC9D1BAFBC4F009D13BF /* RestApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC480A1BAFB44D003F2C04 /* RestApiManager.swift */; };
 		CD93FCA21BAFCD7C009D13BF /* RestApiManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD93FCA11BAFCD7C009D13BF /* RestApiManagerTest.swift */; };
 /* End PBXBuildFile section */

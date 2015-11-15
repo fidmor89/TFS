@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SwiftyJSON
+import MBProgressHUD
 
 class LoginController: UIViewController {
     
@@ -26,7 +27,12 @@ class LoginController: UIViewController {
         
         if (KeychainWrapper.hasValueForKey("credentials"))
         {
+            
             let source = KeychainWrapper.stringForKey("credentials")
+            
+            let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            loadingNotification.mode = MBProgressHUDMode.Indeterminate
+            loadingNotification.labelText = "Loading"
             
             var err:NSError?
             var obj:AnyObject? = NSJSONSerialization.JSONObjectWithData(source!.dataUsingEncoding(NSUTF8StringEncoding)!, options:nil, error:&err)
@@ -44,9 +50,11 @@ class LoginController: UIViewController {
                     if(auth){
                         NSOperationQueue.mainQueue().addOperationWithBlock {
                             self.performSegueToLogin()
+
                         }
                     }else{
                         println("auth failed")
+                        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                     }
                 }
             }
@@ -62,7 +70,10 @@ class LoginController: UIViewController {
     }
     
     @IBAction func onLoginButtonTouchDown(sender: AnyObject) {
-        
+        let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        loadingNotification.mode = MBProgressHUDMode.Indeterminate
+        loadingNotification.labelText = "Loading"
+
         //Pass parameters to RestApiManager
         RestApiManager.sharedInstance.baseURL = self.serverTextField.text
         RestApiManager.sharedInstance.usr = self.userTextField.text
@@ -73,7 +84,6 @@ class LoginController: UIViewController {
             
             if(auth){
                 println("auth ok")
-                
                 if (self.signedInSwitch.on)
                 {
                     var credentials = "[{"
@@ -90,6 +100,7 @@ class LoginController: UIViewController {
                 }
             }else{
                 println("auth failed")
+                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
             }
         }
     }
