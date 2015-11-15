@@ -673,12 +673,16 @@ class menuController: UITableViewController {
             
             switch state{
             case "Done":
+                imagePath = "done.png"
                 break
             case "In Progress":
+                imagePath = "inProgress.png"
                 break
             case "To Do":
+                imagePath = "toDo.png"
                 break
             case "Removed":
+                imagePath = "removed.png"
                 break
             default:
                 break
