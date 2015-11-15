@@ -122,6 +122,19 @@ class RestApiManager: NSObject {
     
     }
     
+    func getTaks(IterationPath: String, onCompletion: (NSDictionary) -> Void){
+        
+        
+        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems WHERE [System.WorkItemType] = 'Task'  AND [System.IterationPath] = '\(IterationPath)'\"}"
+        
+        let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
+        
+        queryServer(route, query: query, onCompletion: {data in
+            onCompletion(data)                  //Pass up data
+        })
+        
+    }
+    
     func getEpics(onCompletion: (NSDictionary) -> Void){
 
         let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems  WHERE [System.WorkItemType] = 'Epic' AND [System.AreaPath] under '\(projectId!)\\\\\(teamId)'\"}"
