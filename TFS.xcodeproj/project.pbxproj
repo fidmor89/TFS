@@ -15,6 +15,7 @@
 		2BA5A9D41BF941AD00BBD4A6 /* removed.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA5A9D01BF941AD00BBD4A6 /* removed.png */; };
 		2BA5A9D51BF941AD00BBD4A6 /* toDo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA5A9D11BF941AD00BBD4A6 /* toDo.png */; };
 		2BA5A9D71BF947B500BBD4A6 /* sad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA5A9D61BF947B500BBD4A6 /* sad.png */; };
+		2BA5A9DB1BF9565900BBD4A6 /* new.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA5A9DA1BF9565900BBD4A6 /* new.png */; };
 		2BC8E0D11BD2C60B00B7EF6C /* viewStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE06EAA1BD2BB7D0065FD0C /* viewStateManager.swift */; };
 		2BCE94381BC0703000F32722 /* WorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE94371BC0703000F32722 /* WorkController.swift */; };
 		2BCE943B1BC0A89A00F32722 /* menuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE943A1BC0A89A00F32722 /* menuController.swift */; };
@@ -62,6 +63,7 @@
 		2BA5A9D01BF941AD00BBD4A6 /* removed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = removed.png; sourceTree = "<group>"; };
 		2BA5A9D11BF941AD00BBD4A6 /* toDo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toDo.png; sourceTree = "<group>"; };
 		2BA5A9D61BF947B500BBD4A6 /* sad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sad.png; sourceTree = "<group>"; };
+		2BA5A9DA1BF9565900BBD4A6 /* new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new.png; sourceTree = "<group>"; };
 		2BCE94371BC0703000F32722 /* WorkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkController.swift; sourceTree = "<group>"; };
 		2BCE943A1BC0A89A00F32722 /* menuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = menuController.swift; sourceTree = "<group>"; };
 		2BD389131B9BA4F1008A0A48 /* TFS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,6 +155,7 @@
 		2BA5A9CD1BF9419C00BBD4A6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				2BA5A9DA1BF9565900BBD4A6 /* new.png */,
 				2BA5A9D61BF947B500BBD4A6 /* sad.png */,
 				2BA5A9CE1BF941AD00BBD4A6 /* done.png */,
 				2BA5A9CF1BF941AD00BBD4A6 /* inProgress.png */,
@@ -357,6 +360,7 @@
 				2BA5A9D51BF941AD00BBD4A6 /* toDo.png in Resources */,
 				2BA5A9D71BF947B500BBD4A6 /* sad.png in Resources */,
 				2BD389231B9BA4F1008A0A48 /* LaunchScreen.xib in Resources */,
+				2BA5A9DB1BF9565900BBD4A6 /* new.png in Resources */,
 				2BA5A9D31BF941AD00BBD4A6 /* inProgress.png in Resources */,
 				326629851BF86579003D7CA2 /* vsicon2.png in Resources */,
 				326629791BF80EBB003D7CA2 /* projectIcon.png in Resources */,
@@ -582,7 +586,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TFS/TFS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -599,7 +603,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "TFS/TFS-Bridging-Header.h";
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

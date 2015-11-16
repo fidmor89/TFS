@@ -128,7 +128,7 @@ class RestApiManager: NSObject {
     
     func getEpics(onCompletion: (JSON) -> Void){
         
-        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems  WHERE [System.WorkItemType] = 'Epic' AND [System.AreaPath] under '\(projectId!)\\\\\(teamId)'\"}"
+        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems  WHERE [System.WorkItemType] = 'Epic' AND [System.AreaPath] = '\(projectId!)\\\\\(teamId)'\"}"
         
         let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
         
@@ -139,7 +139,7 @@ class RestApiManager: NSObject {
     
     func getFeatures(onCompletion: (JSON) -> Void){
         
-        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems  WHERE [System.WorkItemType] = 'Feature' AND [System.AreaPath] under '\(projectId!)\\\\\(teamId)'\"}"
+        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems  WHERE [System.WorkItemType] = 'Feature' AND [System.AreaPath] = '\(projectId!)\\\\\(teamId)'\"}"
         
         let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
         
@@ -150,7 +150,7 @@ class RestApiManager: NSObject {
     
     func getPBI(onCompletion: (JSON) -> Void){
         
-        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems  WHERE [System.WorkItemType] = 'Product Backlog Item' AND [System.AreaPath] under '\(projectId!)\\\\\(teamId)'\"}"
+        let query = "{\"query\": \"SELECT [System.Id] FROM WorkItems  WHERE [System.WorkItemType] = 'Product Backlog Item' AND [System.AreaPath] = '\(projectId!)\\\\\(teamId)'\"}"
         
         let route = baseURL + "/\(collection!)/\(projectId!)/_apis/wit/wiql?api-version=2.0"
         

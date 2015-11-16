@@ -188,35 +188,25 @@ class menuController: UITableViewController {
             
             
         case DisplayedMenu.Epic:
-            
-            RestApiManager.sharedInstance.getEpics() { json in
-                
-                
-                
-                dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
-                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                })
+            self.tasks = []
+            RestApiManager.sharedInstance.getEpics { json in
+                self.restfullyEnqueueTasks(json)
             }
-            
-            
             break
         case DisplayedMenu.Feature:
-            RestApiManager.sharedInstance.getFeatures() { json in
-                
-                dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
-                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                })
+            self.tasks = []
+            RestApiManager.sharedInstance.getFeatures { json in
+                self.restfullyEnqueueTasks(json)
             }
             break
         case DisplayedMenu.PBI:
-            RestApiManager.sharedInstance.getPBI() { json in
-                
-                dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
-                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                })
+            self.tasks = []
+            RestApiManager.sharedInstance.getPBI { json in
+                self.restfullyEnqueueTasks(json)
             }
-            
             break
+            
+            
         case DisplayedMenu.Past:
             
             self.iterations = []
@@ -342,40 +332,7 @@ class menuController: UITableViewController {
         case DisplayedMenu.Tasks:
             self.tasks = []
             RestApiManager.sharedInstance.getTaks() { json in
-                
-                let workItems = json["workItems"].arrayValue
-                let count = workItems.count
-                
-                if count>0{
-                    for index in 0...(count-1) {
-                        let url = workItems[index]["url"].string as String! ?? ""
-                        RestApiManager.sharedInstance.makeHTTPGetRequest(url, onCompletion:  {(data: NSData) in
-                            
-                            //parse NSData to JSON
-                            let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
-                            
-                            self.tasks.append(json)
-                            dispatch_async(dispatch_get_main_queue(), {
-                                self.tableView?.reloadData()
-                                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                            })
-                        })
-                    }
-                } else{
-
-                    let json = "{\"fields\":{\"System.State\": \"You don't have any work scheduled\",\"System.AssignedTo\": \"\",\"System.Title\": \"It's lonely in here!\",}}"
-
-                    if let data = json.dataUsingEncoding(NSUTF8StringEncoding) {
-                        let json = JSON(data: data)
-                        self.tasks.append(json)
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self.tableView?.reloadData()
-                            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                        })
-                    }
-                }
-                
-                
+                self.restfullyEnqueueTasks(json)
             }
             break
             
@@ -390,11 +347,6 @@ class menuController: UITableViewController {
             
             break
         }
-        
-        //        dispatch_async(dispatch_get_main_queue(), {                                         //run in the main GUI thread
-        //            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-        //        })
-        
     }
     
     //At detail Click
@@ -432,9 +384,9 @@ class menuController: UITableViewController {
             let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
             navigationController?.pushViewController(secondViewController, animated: true)
             
-            let x = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
-            self.splitViewController?.showDetailViewController(x, sender: nil)
-            x.detailDescriptionLabel.text = self.collections[indexPath.row].name
+//            let x = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
+//            self.splitViewController?.showDetailViewController(x, sender: nil)
+//            x.detailDescriptionLabel.text = self.collections[indexPath.row].name
             break
             
         case DisplayedMenu.Teams:
@@ -444,9 +396,9 @@ class menuController: UITableViewController {
             viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
             RestApiManager.sharedInstance.teamId = self.projects[indexPath.row].name
             
-            let DetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
-            self.splitViewController?.showDetailViewController(DetailViewController, sender: nil)
-            DetailViewController.detailDescriptionLabel.text = self.projects[indexPath.row].name
+//            let DetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
+//            self.splitViewController?.showDetailViewController(DetailViewController, sender: nil)
+//            DetailViewController.detailDescriptionLabel.text = self.projects[indexPath.row].name
             break
             
         case DisplayedMenu.Projects:
@@ -458,9 +410,9 @@ class menuController: UITableViewController {
             
             let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
             navigationController?.pushViewController(secondViewController, animated: true)
-            let x = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
-            self.splitViewController?.showDetailViewController(x, sender: nil)
-            x.detailDescriptionLabel.text = self.teams[indexPath.row].name
+//            let x = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
+//            self.splitViewController?.showDetailViewController(x, sender: nil)
+//            x.detailDescriptionLabel.text = self.teams[indexPath.row].name
             break
             
         case DisplayedMenu.Work:
@@ -556,13 +508,12 @@ class menuController: UITableViewController {
         case DisplayedMenu.Work:
             return self.work.count/2
             
-            //        case DisplayedMenu.Epic:
-            //            break
-            //        case DisplayedMenu.Feature:
-            //            break
-            //        case DisplayedMenu.PBI:
-            //            break
-            
+        case DisplayedMenu.Epic:
+            return self.tasks.count
+        case DisplayedMenu.Feature:
+            return self.tasks.count
+        case DisplayedMenu.PBI:
+            return self.tasks.count
         case DisplayedMenu.Past:
             return  self.iterations.count
         case DisplayedMenu.Current:
@@ -572,10 +523,10 @@ class menuController: UITableViewController {
         case DisplayedMenu.Tasks:
             return self.tasks.count
         default:
+            println(viewStateManager.sharedInstance.displayedMenu.rawValue)
             return 0
         }
     }
-    
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
@@ -673,34 +624,20 @@ class menuController: UITableViewController {
             
             cell!.accessoryType = UITableViewCellAccessoryType.None
             break
-            
+        case DisplayedMenu.Epic:
+            parseWorkItems(indexPath.row, titleText: &titleText, detailText: &detailText, imagePath: &imagePath)
+            cell!.accessoryType = UITableViewCellAccessoryType.None
+            break
+        case DisplayedMenu.Feature:
+            parseWorkItems(indexPath.row, titleText: &titleText, detailText: &detailText, imagePath: &imagePath)
+            cell!.accessoryType = UITableViewCellAccessoryType.None
+            break
+        case DisplayedMenu.PBI:
+            parseWorkItems(indexPath.row, titleText: &titleText, detailText: &detailText, imagePath: &imagePath)
+            cell!.accessoryType = UITableViewCellAccessoryType.None
+            break
         case DisplayedMenu.Tasks:
-            
-            titleText = self.tasks[indexPath.row]["fields"]["System.Title"].stringValue
-            
-            let state = self.tasks[indexPath.row]["fields"]["System.State"]
-            let assignedTo = self.tasks[indexPath.row]["fields"]["System.AssignedTo"]
-            
-            detailText = "\(state) - \(assignedTo)"
-            
-            switch state{
-            case "Done":
-                imagePath = "done.png"
-                break
-            case "In Progress":
-                imagePath = "inProgress.png"
-                break
-            case "To Do":
-                imagePath = "toDo.png"
-                break
-            case "Removed":
-                imagePath = "removed.png"
-                break
-            default:
-                imagePath = "sad.png"
-                break
-            }
-            
+            parseWorkItems(indexPath.row, titleText: &titleText, detailText: &detailText, imagePath: &imagePath)
             cell!.accessoryType = UITableViewCellAccessoryType.None
             break
             
@@ -725,5 +662,71 @@ class menuController: UITableViewController {
         navigationController?.presentViewController(loginView, animated: true, completion: nil)
     }
     
+    func parseWorkItems(indexPath: Int, inout titleText: String, inout detailText: String, inout imagePath: String) {
+        titleText = self.tasks[indexPath]["fields"]["System.Title"].stringValue
+        
+        let state = self.tasks[indexPath]["fields"]["System.State"]
+        let assignedTo = self.tasks[indexPath]["fields"]["System.AssignedTo"]
+        
+        detailText = "\(state) - \(assignedTo)"
+        
+        switch state{
+        case "Done":
+            imagePath = "done.png"
+            break
+        case "In Progress":
+            imagePath = "inProgress.png"
+            break
+        case "To Do":
+            imagePath = "toDo.png"
+            break
+        case "Removed":
+            imagePath = "removed.png"
+            break
+        case "New":
+            imagePath = "new.png"
+            break
+        default:
+            imagePath = "sad.png"
+            break
+        }
+    }
+    
+    func restfullyEnqueueTasks(json: JSON){
+        let workItems = json["workItems"].arrayValue
+        
+        println(workItems)
+        
+        let count = workItems.count
+        
+        if count>0{
+            for index in 0...(count-1) {
+                let url = workItems[index]["url"].string as String! ?? ""
+                RestApiManager.sharedInstance.makeHTTPGetRequest(url, onCompletion:  {(data: NSData) in
+                    
+                    //parse NSData to JSON
+                    let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
+                    
+                    self.tasks.append(json)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.tableView?.reloadData()
+                        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                    })
+                })
+            }
+        } else{
+            
+            let json = "{\"fields\":{\"System.State\": \"You don't have any work scheduled\",\"System.AssignedTo\": \"\",\"System.Title\": \"It's lonely in here!\",}}"
+            
+            if let data = json.dataUsingEncoding(NSUTF8StringEncoding) {
+                let json = JSON(data: data)
+                self.tasks.append(json)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.tableView?.reloadData()
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                })
+            }
+        }
+    }
 }
 
