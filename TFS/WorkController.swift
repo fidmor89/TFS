@@ -11,7 +11,7 @@ import UIKit
 
 class WorkController: UIViewController {
     
-    @IBOutlet weak var textUI: UITextView!
+
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     
     var iterations:[(id: String, name: String, path: String, startDate: String, endDate: String, url: String)] = []

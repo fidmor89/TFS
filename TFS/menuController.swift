@@ -10,6 +10,7 @@ import Foundation
 import MBProgressHUD
 import SwiftyJSON
 
+
 class menuController: UITableViewController {
     
     var collections:[(id: String, name: String, url: String)] = []
@@ -384,9 +385,6 @@ class menuController: UITableViewController {
             let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
             navigationController?.pushViewController(secondViewController, animated: true)
             
-//            let x = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
-//            self.splitViewController?.showDetailViewController(x, sender: nil)
-//            x.detailDescriptionLabel.text = self.collections[indexPath.row].name
             break
             
         case DisplayedMenu.Teams:
@@ -396,9 +394,6 @@ class menuController: UITableViewController {
             viewStateManager.sharedInstance.displayedMenu = DisplayedMenu.Teams
             RestApiManager.sharedInstance.teamId = self.projects[indexPath.row].name
             
-//            let DetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
-//            self.splitViewController?.showDetailViewController(DetailViewController, sender: nil)
-//            DetailViewController.detailDescriptionLabel.text = self.projects[indexPath.row].name
             break
             
         case DisplayedMenu.Projects:
@@ -410,9 +405,6 @@ class menuController: UITableViewController {
             
             let secondViewController = self.storyboard!.instantiateViewControllerWithIdentifier("menuView") as! menuController
             navigationController?.pushViewController(secondViewController, animated: true)
-//            let x = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
-//            self.splitViewController?.showDetailViewController(x, sender: nil)
-//            x.detailDescriptionLabel.text = self.teams[indexPath.row].name
             break
             
         case DisplayedMenu.Work:
@@ -449,12 +441,27 @@ class menuController: UITableViewController {
             
             
         case DisplayedMenu.Epic:
+            detailViewState.sharedInstance.tasks = self.tasks
+            detailViewState.sharedInstance.index = indexPath.row
+            let x = self.storyboard!.instantiateViewControllerWithIdentifier("TaskDetailView") as! DetailViewController
+            self.splitViewController?.showDetailViewController(x, sender: nil)
+            
             break
             
         case DisplayedMenu.Feature:
+            detailViewState.sharedInstance.tasks = self.tasks
+            detailViewState.sharedInstance.index = indexPath.row
+            let x = self.storyboard!.instantiateViewControllerWithIdentifier("TaskDetailView") as! DetailViewController
+            self.splitViewController?.showDetailViewController(x, sender: nil)
+            
             break
             
         case DisplayedMenu.PBI:
+            detailViewState.sharedInstance.tasks = self.tasks
+            detailViewState.sharedInstance.index = indexPath.row
+            let x = self.storyboard!.instantiateViewControllerWithIdentifier("TaskDetailView") as! DetailViewController
+            self.splitViewController?.showDetailViewController(x, sender: nil)
+            
             break
             
         case DisplayedMenu.Past:
@@ -482,10 +489,10 @@ class menuController: UITableViewController {
             break
             
         case DisplayedMenu.Tasks:
-            
-            let DetailViewController = self.storyboard!.instantiateViewControllerWithIdentifier("WorkView") as! WorkController
-            self.splitViewController?.showDetailViewController(DetailViewController, sender: nil)
-            DetailViewController.detailDescriptionLabel.text = self.tasks[indexPath.row]["fields"]["System.Title"].stringValue
+            detailViewState.sharedInstance.tasks = self.tasks
+            detailViewState.sharedInstance.index = indexPath.row
+            let x = self.storyboard!.instantiateViewControllerWithIdentifier("TaskDetailView") as! DetailViewController
+            self.splitViewController?.showDetailViewController(x, sender: nil)
             break
             
         default:
@@ -663,6 +670,7 @@ class menuController: UITableViewController {
     }
     
     func parseWorkItems(indexPath: Int, inout titleText: String, inout detailText: String, inout imagePath: String) {
+
         titleText = self.tasks[indexPath]["fields"]["System.Title"].stringValue
         
         let state = self.tasks[indexPath]["fields"]["System.State"]
