@@ -18,7 +18,7 @@ class menuController: UITableViewController {
     var projects:[(id: String, name: String, description: String, url: String, state: String, revision: String)] = []
     var work:[String] = ["Epic", "Feature", "PBI's", "Past", "Current", "Future"]
     var iterations:[(id: String, name: String, path: String, startDate: String, endDate: String, url: String)] = []
-    var tasks:[JSON] = []
+    var tasks:[(id: Int, data: JSON)] = []
     
     var workColor:[UIColor] = [ UIColor.orangeColor(),
         UIColor.purpleColor(),
@@ -671,10 +671,13 @@ class menuController: UITableViewController {
     
     func parseWorkItems(indexPath: Int, inout titleText: String, inout detailText: String, inout imagePath: String) {
 
-        titleText = self.tasks[indexPath]["fields"]["System.Title"].stringValue
+        if self.tasks.count == 0  {
+            return
+        }
+        titleText = self.tasks[indexPath].data["fields"]["System.Title"].stringValue
         
-        let state = self.tasks[indexPath]["fields"]["System.State"]
-        let assignedTo = self.tasks[indexPath]["fields"]["System.AssignedTo"]
+        let state = self.tasks[indexPath].data["fields"]["System.State"]
+        let assignedTo = self.tasks[indexPath].data["fields"]["System.AssignedTo"]
         
         detailText = "\(state) - \(assignedTo)"
         
@@ -709,13 +712,14 @@ class menuController: UITableViewController {
         
         if count>0{
             for index in 0...(count-1) {
+                let id = workItems[index]["id"].int as Int?
                 let url = workItems[index]["url"].string as String! ?? ""
                 RestApiManager.sharedInstance.makeHTTPGetRequest(url, onCompletion:  {(data: NSData) in
                     
                     //parse NSData to JSON
                     let json:JSON = JSON(data: data, options:NSJSONReadingOptions.MutableContainers, error:nil)
                     
-                    self.tasks.append(json)
+                    self.tasks.append(id: id!, data: json)
                     dispatch_async(dispatch_get_main_queue(), {
                         self.tableView?.reloadData()
                         MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
@@ -728,7 +732,7 @@ class menuController: UITableViewController {
             
             if let data = json.dataUsingEncoding(NSUTF8StringEncoding) {
                 let json = JSON(data: data)
-                self.tasks.append(json)
+                self.tasks.append(id: -1, data: json)
                 dispatch_async(dispatch_get_main_queue(), {
                     self.tableView?.reloadData()
                     MBProgressHUD.hideAllHUDsForView(self.view, animated: true)

@@ -13,8 +13,7 @@ import MBProgressHUD
 
 class LoginController: UIViewController {
     
-    var overlay: UIView?
-    
+    @IBOutlet weak var vsoImage: UIImageView!
     @IBOutlet weak var serverTextField: UITextField!
     @IBOutlet weak var userTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -65,6 +64,10 @@ class LoginController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if UIDevice.currentDevice().userInterfaceIdiom == .Phone  {
+            vsoImage.hidden = true                          //hide bottom image if user is on iphone
+        }
     }
     
     override func didReceiveMemoryWarning() {

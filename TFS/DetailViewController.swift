@@ -32,25 +32,29 @@ class DetailViewController: UIViewController {
         
         let index = detailViewState.sharedInstance.index
         
-//        let id = detailViewState.sharedInstance.tasks[index]["fields"]["ID"].int as NSNumber?
-//        idLabel.text = id
+        let id = (detailViewState.sharedInstance.tasks[index].id) as NSNumber
+        if( id != -1){
+            idLabel.text = id.stringValue
+        }else{
+            idLabel.text = ""
+        }
         
-        titleLabel.text = detailViewState.sharedInstance.tasks[index]["fields"]["System.Title"].stringValue ?? "None"
-        let state = detailViewState.sharedInstance.tasks[index]["fields"]["System.State"].stringValue ?? "None"
+        titleLabel.text = detailViewState.sharedInstance.tasks[index].data["fields"]["System.Title"].stringValue ?? "None"
+        let state = detailViewState.sharedInstance.tasks[index].data["fields"]["System.State"].stringValue ?? "None"
         stateLabel.text = state
         
-        reasonLabel.text = detailViewState.sharedInstance.tasks[index]["fields"]["System.Reason"].stringValue ?? "None"
-        assignedToLabel.text = detailViewState.sharedInstance.tasks[index]["fields"]["System.AssignedTo"].stringValue ?? "None"
-        areaPathLabel.text = detailViewState.sharedInstance.tasks[index]["fields"]["System.AreaPath"].stringValue ?? "None"
+        reasonLabel.text = detailViewState.sharedInstance.tasks[index].data["fields"]["System.Reason"].stringValue ?? "None"
+        assignedToLabel.text = detailViewState.sharedInstance.tasks[index].data["fields"]["System.AssignedTo"].stringValue ?? "None"
+        areaPathLabel.text = detailViewState.sharedInstance.tasks[index].data["fields"]["System.AreaPath"].stringValue ?? "None"
         
-        iterationPathLabel.text = detailViewState.sharedInstance.tasks[index]["fields"]["System.IterationPath"].stringValue ?? "None"
+        iterationPathLabel.text = detailViewState.sharedInstance.tasks[index].data["fields"]["System.IterationPath"].stringValue ?? "None"
 
-        priorityLabel.text = (detailViewState.sharedInstance.tasks[index]["fields"]["Microsoft.VSTS.Common.Priority"].int as NSNumber?)?.stringValue
-        remainingWorkLabel.text = (detailViewState.sharedInstance.tasks[index]["fields"]["Microsoft.VSTS.Scheduling.RemainingWork"].int as NSNumber?)?.stringValue
+        priorityLabel.text = (detailViewState.sharedInstance.tasks[index].data["fields"]["Microsoft.VSTS.Common.Priority"].int as NSNumber?)?.stringValue
+        remainingWorkLabel.text = (detailViewState.sharedInstance.tasks[index].data["fields"]["Microsoft.VSTS.Scheduling.RemainingWork"].int as NSNumber?)?.stringValue
         
-        activityLabel.text = detailViewState.sharedInstance.tasks[index]["fields"]["Microsoft.VSTS.Common.Activity"].stringValue ?? "None"
-        blockedLabel.text = detailViewState.sharedInstance.tasks[index]["fields"]["System.Blocked"].stringValue ?? "None"
-        let html = detailViewState.sharedInstance.tasks[index]["fields"]["System.Description"].stringValue ?? "None"
+        activityLabel.text = detailViewState.sharedInstance.tasks[index].data["fields"]["Microsoft.VSTS.Common.Activity"].stringValue ?? "None"
+        blockedLabel.text = detailViewState.sharedInstance.tasks[index].data["fields"]["System.Blocked"].stringValue ?? "None"
+        let html = detailViewState.sharedInstance.tasks[index].data["fields"]["System.Description"].stringValue ?? "None"
         
         var url = NSURL(fileURLWithPath: "")
         descriptionWebView.loadHTMLString(html, baseURL: url)

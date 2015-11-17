@@ -12,6 +12,6 @@ import SwiftyJSON
 class detailViewState{
 
     static let sharedInstance = detailViewState()            //To use manager class as a singleton.
-    var tasks:[JSON] = []
+    var tasks:[(id: Int, data: JSON)] = []
     var index: Int = 0
 }
