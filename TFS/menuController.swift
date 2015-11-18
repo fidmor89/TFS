@@ -102,6 +102,13 @@ class menuController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //add header and footer to remove the extra separator lines
+        let v: UIView = UIView()
+        v.backgroundColor = UIColor.clearColor()
+        self.tableView.tableHeaderView = v
+        self.tableView.tableFooterView = v
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -489,10 +496,12 @@ class menuController: UITableViewController {
             break
             
         case DisplayedMenu.Tasks:
-            detailViewState.sharedInstance.tasks = self.tasks
-            detailViewState.sharedInstance.index = indexPath.row
-            let x = self.storyboard!.instantiateViewControllerWithIdentifier("TaskDetailView") as! DetailViewController
-            self.splitViewController?.showDetailViewController(x, sender: nil)
+            if self.tasks[indexPath.row].id != -1 {
+                detailViewState.sharedInstance.tasks = self.tasks
+                detailViewState.sharedInstance.index = indexPath.row
+                let x = self.storyboard!.instantiateViewControllerWithIdentifier("TaskDetailView") as! DetailViewController
+                self.splitViewController?.showDetailViewController(x, sender: nil)
+            }
             break
             
         default:
@@ -670,7 +679,7 @@ class menuController: UITableViewController {
     }
     
     func parseWorkItems(indexPath: Int, inout titleText: String, inout detailText: String, inout imagePath: String) {
-
+        
         if self.tasks.count == 0  {
             return
         }
