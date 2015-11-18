@@ -163,6 +163,100 @@ class RestApiManagerTest: XCTestCase {
         })
     }
     
+    func testGetTask() {
+        let expectation = expectationWithDescription("getTasks")
+        //Success case
+        RestApiManager.sharedInstance.baseURL = "https://almlatam.visualstudio.com"
+        RestApiManager.sharedInstance.usr = "jlmruiz"
+        RestApiManager.sharedInstance.pw = "Prueba2015"
+        RestApiManager.sharedInstance.collection = "DefaultCollection"
+        RestApiManager.sharedInstance.projectId = "Url2015Project"
+        RestApiManager.sharedInstance.teamId = "iOSTeamExplorer"
+        RestApiManager.sharedInstance.iterationPath = "Url2015Project\\iOS_Team_Explorer_Collection\\SP7 - Display Work Items and Look and Feel"
+        
+        RestApiManager.sharedInstance.getTaks({ (jsObject: JSON) -> () in
+            var jsTasks: JSON = jsObject["workItems"]
+            var count: Int = jsTasks.count
+            XCTAssertGreaterThan(count, 0, "Returned with some tasks")
+            expectation.fulfill()
+            
+        })
+        
+        waitForExpectationsWithTimeout(5.0, handler: {error in
+            XCTAssertNil(error, "Request Timed Out")
+        })
+        
+    }
+    
+    func testGetEpics() {
+        let expectation = expectationWithDescription("getEpics")
+        //Success case
+        RestApiManager.sharedInstance.baseURL = "https://almlatam.visualstudio.com"
+        RestApiManager.sharedInstance.usr = "jlmruiz"
+        RestApiManager.sharedInstance.pw = "Prueba2015"
+        RestApiManager.sharedInstance.collection = "DefaultCollection"
+        RestApiManager.sharedInstance.projectId = "Url2015Project"
+        RestApiManager.sharedInstance.teamId = "iOSTeamExplorer"
+        
+        RestApiManager.sharedInstance.getEpics({ (jsObject: JSON) -> () in
+            var jsTasks: JSON = jsObject["workItems"]
+            var count: Int = jsTasks.count
+            XCTAssertGreaterThan(count, 0, "Returned with some epics")
+            expectation.fulfill()
+            
+        })
+        
+        waitForExpectationsWithTimeout(5.0, handler: {error in
+            XCTAssertNil(error, "Request Timed Out")
+        })
+    }
+    
+    func testGetFeatures() {
+        let expectation = expectationWithDescription("getFeatures")
+        //Success case
+        RestApiManager.sharedInstance.baseURL = "https://almlatam.visualstudio.com"
+        RestApiManager.sharedInstance.usr = "jlmruiz"
+        RestApiManager.sharedInstance.pw = "Prueba2015"
+        RestApiManager.sharedInstance.collection = "DefaultCollection"
+        RestApiManager.sharedInstance.projectId = "Url2015Project"
+        RestApiManager.sharedInstance.teamId = "iOSTeamExplorer"
+        
+        RestApiManager.sharedInstance.getFeatures({ (jsObject: JSON) -> () in
+            var jsTasks: JSON = jsObject["workItems"]
+            var count: Int = jsTasks.count
+            XCTAssertGreaterThan(count, 0, "Returned with some epics")
+            expectation.fulfill()
+            
+        })
+        
+        waitForExpectationsWithTimeout(5.0, handler: {error in
+            XCTAssertNil(error, "Request Timed Out")
+        })
+    }
+    
+    func testGetPBI() {
+        let expectation = expectationWithDescription("getPBI")
+        //Success case
+        RestApiManager.sharedInstance.baseURL = "https://almlatam.visualstudio.com"
+        RestApiManager.sharedInstance.usr = "jlmruiz"
+        RestApiManager.sharedInstance.pw = "Prueba2015"
+        RestApiManager.sharedInstance.collection = "DefaultCollection"
+        RestApiManager.sharedInstance.projectId = "Url2015Project"
+        RestApiManager.sharedInstance.teamId = "iOSTeamExplorer"
+        
+        RestApiManager.sharedInstance.getPBI({ (jsObject: JSON) -> () in
+            var jsTasks: JSON = jsObject["workItems"]
+            var count: Int = jsTasks.count
+            XCTAssertGreaterThan(count, 0, "Returned with some epics")
+            expectation.fulfill()
+            
+        })
+        
+        waitForExpectationsWithTimeout(5.0, handler: {error in
+            XCTAssertNil(error, "Request Timed Out")
+        })
+    }
+    
     func testMakeHTTPGetRequest(){
         // Happy path
         
