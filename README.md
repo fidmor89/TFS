@@ -2,10 +2,12 @@
 
 Main development repository for iOS application for Visual Studio Team Services.
 
+## Deprecated ##
+
+This project is no longer maintained or supported. The code its here just as a reference. This project was deprecated in favor of the Visual Studio Team Dashboard for iOS
+
 ## Contributors ##
 
-- Raul Guerra Gomez
-- Jose Rodrigo Gonzales
 - <a href='https://github.com/fidmor89'>Fidel Esteban Morales Cifuentes</a>.
 - <a href='https://github.com/giobt'>Giorgio Andre Balconi Taracena</a>.
 - <a href='https://github.com/chirislash'>Luis Roberto Rosales Enriquez</a>.
@@ -49,4 +51,4 @@ pod install
 
 ## Tags ##
 
-VSO, TFS, Visual Studio Online, Visual Studio Team Services
+VSO, TFS, Visual Studio Online, VSTS, Visual Studio Team Services
